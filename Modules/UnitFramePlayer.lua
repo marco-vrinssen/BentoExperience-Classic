@@ -27,6 +27,7 @@ PlayerPortraitBackdrop:SetAttribute("type2", "togglemenu")
 
 
 
+
 local function PlayerFrameUpdate()
     PlayerFrame:ClearAllPoints()
     PlayerFrame:SetPoint("TOPLEFT", PlayerPortraitBackdrop, "TOPLEFT", 0, 0)
