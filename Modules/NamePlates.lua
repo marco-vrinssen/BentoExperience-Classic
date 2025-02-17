@@ -10,11 +10,11 @@ local function NameplateUpdate(Nameplate, unitID)
 
     if not NameplateHealthbar.CastbarBackdrop then
         NameplateHealthbar.CastbarBackdrop = CreateFrame("Frame", nil, NameplateHealthbar, "BackdropTemplate")
-        NameplateHealthbar.CastbarBackdrop:SetPoint("TOPLEFT", NameplateHealthbar, -2, 2)
-        NameplateHealthbar.CastbarBackdrop:SetPoint("BOTTOMRIGHT", NameplateHealthbar, 2, -2)
+        NameplateHealthbar.CastbarBackdrop:SetPoint("TOPLEFT", NameplateHealthbar, -3, 3)
+        NameplateHealthbar.CastbarBackdrop:SetPoint("BOTTOMRIGHT", NameplateHealthbar, 3, -3)
         NameplateHealthbar.CastbarBackdrop:SetFrameStrata("HIGH")
-        NameplateHealthbar.CastbarBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 10})
-        NameplateHealthbar.CastbarBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5)
+        NameplateHealthbar.CastbarBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 12})
+        NameplateHealthbar.CastbarBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
     end
 
     NameplateHealthbar.border:Hide()

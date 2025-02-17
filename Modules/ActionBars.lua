@@ -1,3 +1,4 @@
+-- Function to update the main action bar and additional bars
 local function ActionBarUpdate()
     MainMenuBar:SetWidth(512)
     MainMenuBar:ClearAllPoints()
@@ -51,10 +52,12 @@ local function ActionBarUpdate()
     MainMenuBarPerformanceBar:Hide()
 end
 
+-- Register event to update action bars when the player enters the world
 local ActionBarEvents = CreateFrame("Frame")
 ActionBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 ActionBarEvents:SetScript("OnEvent", ActionBarUpdate)
 
+-- Function to update action button usability and range
 function ActionButtonUpdate(self)
     if self.action then
         local ActionRange = IsActionInRange(self.action)
@@ -68,8 +71,49 @@ function ActionButtonUpdate(self)
     end
 end
 
+-- Hook the action button update function
 hooksecurefunc("ActionButton_OnUpdate", ActionButtonUpdate)
 
+-- Function to update text outlines on action buttons
+local function UpdateTextOutlines()
+    local function updateButtonFonts(button)
+        if button then
+            local macroName = _G[button:GetName() .. "Name"]
+            if macroName then
+                macroName:SetFont(macroName:GetFont(), 10, "OUTLINE")
+                macroName:SetTextColor(1, 1, 1, 0.75)
+            end
+            local hotkey = _G[button:GetName() .. "HotKey"]
+            if hotkey then
+                hotkey:SetFont(hotkey:GetFont(), 12, "OUTLINE")
+                hotkey:SetTextColor(1, 1, 1, 0.75)
+            end
+            local cooldown = _G[button:GetName() .. "Cooldown"]
+            if cooldown then
+                local cooldownText = cooldown:GetRegions()
+                if cooldownText and cooldownText:GetObjectType() == "FontString" then
+                    cooldownText:SetFont(cooldownText:GetFont(), 20, "OUTLINE")
+                    cooldownText:SetTextColor(1, 1, 1, 1)
+                end
+            end
+        end
+    end
+
+    for i = 1, 12 do
+        updateButtonFonts(_G["ActionButton" .. i])
+        updateButtonFonts(_G["MultiBarBottomLeftButton" .. i])
+        updateButtonFonts(_G["MultiBarBottomRightButton" .. i])
+        updateButtonFonts(_G["MultiBarRightButton" .. i])
+        updateButtonFonts(_G["MultiBarLeftButton" .. i])
+    end
+end
+
+-- Register event to update text outlines when the player enters the world
+local TextOutlineEvents = CreateFrame("Frame")
+TextOutlineEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+TextOutlineEvents:SetScript("OnEvent", UpdateTextOutlines)
+
+-- Function to update the pet action bar
 local function PetBarUpdate()
     local PreviousPetButton
 
@@ -91,12 +135,14 @@ local function PetBarUpdate()
     end
 end
 
+-- Register events to update the pet action bar
 local PetBarEvents = CreateFrame("Frame")
 PetBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 PetBarEvents:RegisterEvent("UNIT_PET")
 PetBarEvents:RegisterEvent("PET_BAR_UPDATE")
 PetBarEvents:SetScript("OnEvent", PetBarUpdate)
 
+-- Function to update the class stance bar
 local function ClassBarUpdate()
     if InCombatLockdown() then return end
     local PreviousClassButton
@@ -132,6 +178,7 @@ local function ClassBarUpdate()
     StanceBarRight:SetTexture(nil)
 end
 
+-- Register events to update the class stance bar
 local ClassBarEvents = CreateFrame("Frame")
 ClassBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 ClassBarEvents:RegisterEvent("UPDATE_STEALTH")
@@ -147,10 +194,12 @@ ClassBarEvents:SetScript("OnEvent", function(self, event, ...)
     end
 end)
 
+-- Function to update the vehicle leave button
 local function VehicleButtonUpdate()
     MainMenuBarVehicleLeaveButton:SetSize(24, 24)
     MainMenuBarVehicleLeaveButton:ClearAllPoints()
     MainMenuBarVehicleLeaveButton:SetPoint("CENTER", UIParent, "CENTER", 0, -80)
 end
 
+-- Hook the vehicle leave button update function
 MainMenuBarVehicleLeaveButton:HookScript("OnShow", VehicleButtonUpdate)
