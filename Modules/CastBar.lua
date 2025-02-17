@@ -9,7 +9,7 @@ end
 
 local function UpdateCastBarColor(event)
     if event == "UNIT_SPELLCAST_START" then
-        CastingBarFrame:SetStatusBarColor(1, 1, 0) -- Yellow
+        CastingBarFrame:SetStatusBarColor(1, 0.75, 0) -- Yellow
     elseif event == "UNIT_SPELLCAST_INTERRUPTED" or event == "UNIT_SPELLCAST_FAILED" then
         CastingBarFrame:SetStatusBarColor(1, 0, 0) -- Red
     elseif event == "UNIT_SPELLCAST_SUCCEEDED" then
