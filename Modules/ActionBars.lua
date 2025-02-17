@@ -196,9 +196,9 @@ end)
 
 -- Function to update the vehicle leave button
 local function VehicleButtonUpdate()
-    MainMenuBarVehicleLeaveButton:SetSize(24, 24)
+    MainMenuBarVehicleLeaveButton:SetSize(36, 36)
     MainMenuBarVehicleLeaveButton:ClearAllPoints()
-    MainMenuBarVehicleLeaveButton:SetPoint("CENTER", UIParent, "CENTER", 0, -80)
+    MainMenuBarVehicleLeaveButton:SetPoint("CENTER", UIParent, "CENTER", 0, -160)
 end
 
 -- Hook the vehicle leave button update function
