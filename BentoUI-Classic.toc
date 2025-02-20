@@ -16,6 +16,7 @@ Modules/MicroMenu.lua
 Modules/MiniMap.lua
 Modules/NamePlates.lua
 Modules/RaidFrames.lua
+Modules/RunesFrame.lua
 Modules/Support.lua
 Modules/Tooltips.lua
 Modules/TrackingBars.lua
