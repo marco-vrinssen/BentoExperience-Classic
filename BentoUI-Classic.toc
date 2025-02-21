@@ -1,4 +1,4 @@
-## Interface: 11503
+## Interface: 11500
 ## Title: Bento UI Classic
 ## Notes: Simple and efficient user interface enhancements.
 ## Version: 1.0
@@ -6,6 +6,7 @@
 
 Modules/ActionBars.lua
 Modules/AddonButtons.lua
+Modules/AddonCompatibility.lua
 Modules/Auras.lua
 Modules/Bags.lua
 Modules/CastBar.lua
@@ -17,7 +18,6 @@ Modules/MiniMap.lua
 Modules/NamePlates.lua
 Modules/RaidFrames.lua
 Modules/RunesFrame.lua
-Modules/Support.lua
 Modules/Tooltips.lua
 Modules/TrackingBars.lua
 Modules/UnitFramePlayer.lua
