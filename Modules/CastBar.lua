@@ -22,7 +22,7 @@ local function ConfigureCastBar()
     CastingBarFrame:SetSize(160, 24)
     CastingBarFrame:SetMovable(true)
     CastingBarFrame:SetUserPlaced(true)
-    CastingBarFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 226)
+    CastingBarFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 228)
     CastingBarFrame:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 
     CastingBarFrame.Border:Hide()
