@@ -57,36 +57,68 @@ local ActionBarEvents = CreateFrame("Frame")
 ActionBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 ActionBarEvents:SetScript("OnEvent", ActionBarUpdate)
 
--- Function to update action button usability and range
-function ActionButtonUpdate(self)
-    if self.action then
-        local ActionRange = IsActionInRange(self.action)
-        local ActionUsability = IsUsableAction(self.action)
-        
-        if not ActionUsability or ActionRange == false then
-            self.icon:SetVertexColor(0.25, 0.25, 0.25, 1)
-        else
-            self.icon:SetVertexColor(1, 1, 1, 1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Unified function to update button appearance and text outlines
+local function UpdateActionButtonAppearance()
+    local function hideNormalTexture(button)
+        if button then
+            local normalTexture = _G[button:GetName() .. "NormalTexture"]
+            if normalTexture then
+                normalTexture:SetAlpha(0)
+                normalTexture:SetTexture(nil)
+            end
+            local floatingBG = _G[button:GetName() .. "FloatingBG"]
+            if floatingBG then
+                floatingBG:SetAlpha(0)
+                floatingBG:SetTexture(nil)
+            end
         end
     end
-end
 
--- Hook the action button update function
-hooksecurefunc("ActionButton_OnUpdate", ActionButtonUpdate)
+    local function customizeButton(button)
+        if button then
+            -- Create a custom border if one doesn't already exist
+            if not button.customBorder then
+                local backdrop = CreateFrame("Frame", nil, button, "BackdropTemplate")
+                backdrop:SetPoint("TOPLEFT", button, "TOPLEFT", -3, 3)
+                backdrop:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 3, -3)
+                backdrop:SetBackdrop({ edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 12 })
+                backdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
+                backdrop:SetFrameStrata("HIGH")
+                button.customBorder = backdrop
+            end
 
--- Function to update text outlines on action buttons
-local function UpdateTextOutlines()
+            -- Adjust the icon texture coordinates
+            local icon = _G[button:GetName() .. "Icon"]
+            if icon then
+                icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+            end
+        end
+    end
+
     local function updateButtonFonts(button)
         if button then
             local macroName = _G[button:GetName() .. "Name"]
             if macroName then
                 macroName:SetFont(macroName:GetFont(), 10, "OUTLINE")
-                macroName:SetTextColor(1, 1, 1, 0.75)
+                macroName:SetTextColor(1, 1, 1, 0.5)
             end
             local hotkey = _G[button:GetName() .. "HotKey"]
             if hotkey then
                 hotkey:SetFont(hotkey:GetFont(), 12, "OUTLINE")
-                hotkey:SetTextColor(1, 1, 1, 0.75)
+                hotkey:SetTextColor(1, 1, 1, 0.5)
             end
             local cooldown = _G[button:GetName() .. "Cooldown"]
             if cooldown then
@@ -100,18 +132,58 @@ local function UpdateTextOutlines()
     end
 
     for i = 1, 12 do
-        updateButtonFonts(_G["ActionButton" .. i])
-        updateButtonFonts(_G["MultiBarBottomLeftButton" .. i])
-        updateButtonFonts(_G["MultiBarBottomRightButton" .. i])
-        updateButtonFonts(_G["MultiBarRightButton" .. i])
-        updateButtonFonts(_G["MultiBarLeftButton" .. i])
+        local buttons = {
+            _G["ActionButton" .. i],
+            _G["MultiBarBottomLeftButton" .. i],
+            _G["MultiBarBottomRightButton" .. i],
+            _G["MultiBarRightButton" .. i],
+            _G["MultiBarLeftButton" .. i]
+        }
+        for _, button in ipairs(buttons) do
+            hideNormalTexture(button)
+            customizeButton(button)
+            updateButtonFonts(button)
+        end
     end
 end
 
--- Register event to update text outlines when the player enters the world
-local TextOutlineEvents = CreateFrame("Frame")
-TextOutlineEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
-TextOutlineEvents:SetScript("OnEvent", UpdateTextOutlines)
+-- Register event to update button appearance and text outlines when the player enters the world
+local ButtonAppearanceEvents = CreateFrame("Frame")
+ButtonAppearanceEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+ButtonAppearanceEvents:SetScript("OnEvent", UpdateActionButtonAppearance)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Helper function to hide pet button textures
+local function HidePetButtonTextures(button)
+    local normalTexture = _G[button:GetName() .. "NormalTexture"]
+    if normalTexture then
+        normalTexture:SetAlpha(0)
+        normalTexture:SetTexture(nil)
+    end
+    local normalTexture2 = _G[button:GetName() .. "NormalTexture2"]
+    if normalTexture2 then
+        normalTexture2:SetAlpha(0)
+        normalTexture2:SetTexture(nil)
+    end
+end
 
 -- Function to update the pet action bar
 local function PetBarUpdate()
@@ -122,7 +194,7 @@ local function PetBarUpdate()
         PetButton:ClearAllPoints()
 
         if not PreviousPetButton then
-            PetButton:SetPoint("BOTTOMLEFT", MultiBarBottomLeft, "TOPLEFT", 0, 8)
+            PetButton:SetPoint("BOTTOMLEFT", MultiBarBottomLeft, "TOPLEFT", -2, 8)
         else
             PetButton:SetPoint("LEFT", PreviousPetButton, "RIGHT", 4, 0)
         end
@@ -130,6 +202,9 @@ local function PetBarUpdate()
         PetButton:SetScale(0.8)
         PetButton:SetAlpha(0.5)
         PetButton:Show()
+
+        -- Hide both NormalTexture and NormalTexture2 for the pet button
+        HidePetButtonTextures(PetButton)
 
         PreviousPetButton = PetButton
     end
@@ -141,6 +216,13 @@ PetBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 PetBarEvents:RegisterEvent("UNIT_PET")
 PetBarEvents:RegisterEvent("PET_BAR_UPDATE")
 PetBarEvents:SetScript("OnEvent", PetBarUpdate)
+
+
+
+
+
+
+
 
 -- Function to update the class stance bar
 local function ClassBarUpdate()

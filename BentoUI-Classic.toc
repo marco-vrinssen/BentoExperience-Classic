@@ -4,7 +4,7 @@
 ## Version: 1.0
 ## Author: MIYANKO
 
-Modules/ActionBars.lua
+Modules/ActionButtons.lua
 Modules/AddonButtons.lua
 Modules/AddonCompatibility.lua
 Modules/Auras.lua
