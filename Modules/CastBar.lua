@@ -6,7 +6,7 @@ CastingBarBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 CastingBarBackdrop:SetFrameStrata("HIGH")
 
 
-local function ConfigureCastBar()
+local function UpdateCastBar()
     CastingBarFrame:ClearAllPoints()
     CastingBarFrame:SetSize(160, 24)
     CastingBarFrame:SetMovable(true)
@@ -23,14 +23,11 @@ end
 
 
 local StateColors = {
-    UNIT_SPELLCAST_START       = {1, 0.5, 0},
-    UNIT_SPELLCAST_INTERRUPTED = {1, 0, 0},
-    UNIT_SPELLCAST_FAILED      = {1, 0, 0},
-    UNIT_SPELLCAST_SUCCEEDED   = {0, 1, 0}
+    UNIT_SPELLCAST_START = {1, 0.5, 0}
 }
 
 
-local function UpdateCastBarColor(event)
+local function RecolorCastBar(event)
     local CastStateColor = StateColors[event]
     if CastStateColor then
         CastingBarFrame:SetStatusBarColor(unpack(CastStateColor))
@@ -38,22 +35,14 @@ local function UpdateCastBarColor(event)
 end  
 
 
-local function InitializeCastBar()
-    ConfigureCastBar()
-end  
-
-
 local CastBarEvents = CreateFrame("Frame")
 CastBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 CastBarEvents:RegisterEvent("UNIT_SPELLCAST_START")
-CastBarEvents:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
-CastBarEvents:RegisterEvent("UNIT_SPELLCAST_FAILED")
-CastBarEvents:RegisterEvent("UNIT_SPELLCAST_STOP")
 CastBarEvents:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 CastBarEvents:SetScript("OnEvent", function(self, event, ...)
     if event == "PLAYER_ENTERING_WORLD" then
-        InitializeCastBar()
+        UpdateCastBar()
     else
-        UpdateCastBarColor(event)
+        RecolorCastBar(event)
     end
 end)
