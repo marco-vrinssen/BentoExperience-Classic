@@ -1,4 +1,5 @@
--- Function to update the main action bar and additional bars
+-- ACTION BARS
+
 local function ActionBarUpdate()
     MainMenuBar:SetWidth(512)
     MainMenuBar:ClearAllPoints()
@@ -8,7 +9,7 @@ local function ActionBarUpdate()
 
     MultiBarBottomLeft:Show()
     MultiBarBottomLeft:ClearAllPoints()
-    MultiBarBottomLeft:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 136)
+    MultiBarBottomLeft:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 134)
     MultiBarBottomLeft:SetMovable(true)
     MultiBarBottomLeft:SetUserPlaced(true)
 
@@ -52,7 +53,6 @@ local function ActionBarUpdate()
     MainMenuBarPerformanceBar:Hide()
 end
 
--- Register event to update action bars when the player enters the world
 local ActionBarEvents = CreateFrame("Frame")
 ActionBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 ActionBarEvents:SetScript("OnEvent", ActionBarUpdate)
@@ -60,17 +60,8 @@ ActionBarEvents:SetScript("OnEvent", ActionBarUpdate)
 
 
 
+-- ACTION BUTTONS
 
-
-
-
-
-
-
-
-
-
--- Unified function to update button appearance and text outlines
 local function UpdateActionButtonAppearance()
     local function hideNormalTexture(button)
         if button then
@@ -89,7 +80,6 @@ local function UpdateActionButtonAppearance()
 
     local function customizeButton(button)
         if button then
-            -- Create a custom border if one doesn't already exist
             if not button.customBorder then
                 local backdrop = CreateFrame("Frame", nil, button, "BackdropTemplate")
                 backdrop:SetPoint("TOPLEFT", button, "TOPLEFT", -3, 3)
@@ -100,7 +90,6 @@ local function UpdateActionButtonAppearance()
                 button.customBorder = backdrop
             end
 
-            -- Adjust the icon texture coordinates
             local icon = _G[button:GetName() .. "Icon"]
             if icon then
                 icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
@@ -147,7 +136,6 @@ local function UpdateActionButtonAppearance()
     end
 end
 
--- Register event to update button appearance and text outlines when the player enters the world
 local ButtonAppearanceEvents = CreateFrame("Frame")
 ButtonAppearanceEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 ButtonAppearanceEvents:SetScript("OnEvent", UpdateActionButtonAppearance)
@@ -155,23 +143,8 @@ ButtonAppearanceEvents:SetScript("OnEvent", UpdateActionButtonAppearance)
 
 
 
+-- PET BAR
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- Helper function to hide pet button textures
 local function HidePetButtonTextures(button)
     local normalTexture = _G[button:GetName() .. "NormalTexture"]
     if normalTexture then
@@ -185,7 +158,6 @@ local function HidePetButtonTextures(button)
     end
 end
 
--- Function to update the pet action bar
 local function PetBarUpdate()
     local PreviousPetButton
 
@@ -203,14 +175,12 @@ local function PetBarUpdate()
         PetButton:SetAlpha(0.5)
         PetButton:Show()
 
-        -- Hide both NormalTexture and NormalTexture2 for the pet button
         HidePetButtonTextures(PetButton)
 
         PreviousPetButton = PetButton
     end
 end
 
--- Register events to update the pet action bar
 local PetBarEvents = CreateFrame("Frame")
 PetBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 PetBarEvents:RegisterEvent("UNIT_PET")
@@ -220,11 +190,8 @@ PetBarEvents:SetScript("OnEvent", PetBarUpdate)
 
 
 
+-- STANCE BAR
 
-
-
-
--- Function to update the class stance bar
 local function ClassBarUpdate()
     if InCombatLockdown() then return end
     local PreviousClassButton
@@ -260,7 +227,6 @@ local function ClassBarUpdate()
     StanceBarRight:SetTexture(nil)
 end
 
--- Register events to update the class stance bar
 local ClassBarEvents = CreateFrame("Frame")
 ClassBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 ClassBarEvents:RegisterEvent("UPDATE_STEALTH")
@@ -276,12 +242,15 @@ ClassBarEvents:SetScript("OnEvent", function(self, event, ...)
     end
 end)
 
--- Function to update the vehicle leave button
+
+
+
+-- VEHICLE LEAVE BUTTON
+
 local function VehicleButtonUpdate()
     MainMenuBarVehicleLeaveButton:SetSize(36, 36)
     MainMenuBarVehicleLeaveButton:ClearAllPoints()
     MainMenuBarVehicleLeaveButton:SetPoint("CENTER", UIParent, "CENTER", 0, -160)
 end
 
--- Hook the vehicle leave button update function
 MainMenuBarVehicleLeaveButton:HookScript("OnShow", VehicleButtonUpdate)
