@@ -9,7 +9,7 @@ end
 
 local function UpdateCastBarColor(event)
     if event == "UNIT_SPELLCAST_START" then
-        CastingBarFrame:SetStatusBarColor(1, 0.75, 0) -- Yellow
+        CastingBarFrame:SetStatusBarColor(1, 0.5, 0) -- Yellow
     elseif event == "UNIT_SPELLCAST_INTERRUPTED" or event == "UNIT_SPELLCAST_FAILED" then
         CastingBarFrame:SetStatusBarColor(1, 0, 0) -- Red
     elseif event == "UNIT_SPELLCAST_SUCCEEDED" then
@@ -32,11 +32,28 @@ local function ConfigureCastBar()
     CastingBarFrame.Text:ClearAllPoints()
     CastingBarFrame.Text:SetPoint("CENTER", CastingBarFrame, "CENTER", 0, 0)
     CastingBarFrame.Text:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
+    
+    -- Add fade texture to the right side of the text to mask overflow
+    local fade = CastingBarFrame:CreateTexture(nil, "OVERLAY")
+    fade:SetPoint("TOPRIGHT", CastingBarFrame.Text, "TOPRIGHT", 0, 0)
+    fade:SetPoint("BOTTOMRIGHT", CastingBarFrame.Text, "BOTTOMRIGHT", 0, 0)
+    fade:SetWidth(25)
+    -- Gradient: left side opaque (alpha=1) fading to fully transparent (alpha=0) on right
+    fade:SetGradientAlpha("Horizontal", 1,1,1,1, 1,1,1,0)
+    fade:Hide()
+    CastingBarFrame.Text.fadeTexture = fade
 end
 
 local function OnCastBarUpdate(self, elapsed)
     if self.casting and self.maxValue - self.value <= 0.2 then
         self:SetStatusBarColor(0, 1, 0) -- Green
+    end
+    -- Update fade effect for overflow text
+    local textWidth = CastingBarFrame.Text:GetStringWidth()
+    if textWidth > CastingBarFrame:GetWidth() then
+        CastingBarFrame.Text.fadeTexture:Show()
+    else
+        CastingBarFrame.Text.fadeTexture:Hide()
     end
 end
 
