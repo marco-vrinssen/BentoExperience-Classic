@@ -1,48 +1,30 @@
+-- Player Frame Backdrop Setup
 local PlayerFrameBackdrop = CreateFrame("Button", nil, PlayerFrame, "SecureUnitButtonTemplate, BackdropTemplate")
 PlayerFrameBackdrop:SetPoint("BOTTOM", UIParent, "BOTTOM", -190, 224)
 PlayerFrameBackdrop:SetSize(124, 48)
 PlayerFrameBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 12})
 PlayerFrameBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 PlayerFrameBackdrop:SetFrameStrata("HIGH")
-
 PlayerFrameBackdrop:SetAttribute("unit", "player")
 PlayerFrameBackdrop:RegisterForClicks("AnyUp")
 PlayerFrameBackdrop:SetAttribute("type1", "target")
 PlayerFrameBackdrop:SetAttribute("type2", "togglemenu")
 
-
-
-
+-- Player Portrait Backdrop Setup
 local PlayerPortraitBackdrop = CreateFrame("Button", nil, PlayerFrame, "SecureUnitButtonTemplate, BackdropTemplate")
 PlayerPortraitBackdrop:SetPoint("RIGHT", PlayerFrameBackdrop, "LEFT", 0, 0)
-PlayerPortraitBackdrop:SetSize(48 ,48)
+PlayerPortraitBackdrop:SetSize(48, 48)
 PlayerPortraitBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 12})
 PlayerPortraitBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 PlayerPortraitBackdrop:SetFrameStrata("HIGH")
-
 PlayerPortraitBackdrop:SetAttribute("unit", "player")
 PlayerPortraitBackdrop:RegisterForClicks("AnyUp")
 PlayerPortraitBackdrop:SetAttribute("type1", "target")
 PlayerPortraitBackdrop:SetAttribute("type2", "togglemenu")
 
-
-
-
--- New: SmoothStatusBar function to animate status bar changes
-local function SmoothStatusBar(statusBar, targetValue)
-    statusBar.smooth = statusBar.smooth or statusBar:GetValue()
-    statusBar:SetScript("OnUpdate", function(self, elapsed)
-        self.smooth = self.smooth + (targetValue - self.smooth) * elapsed * 4  -- multiplier adjusts speed
-        self:SetValue(self.smooth)
-        if math.abs(targetValue - self.smooth) < 0.1 then
-            self:SetValue(targetValue)
-            self.smooth = targetValue
-            self:SetScript("OnUpdate", nil)
-        end
-    end)
-end
-
+-- Player Frame Update Function
 local function PlayerFrameUpdate()
+	-- Position and sizing updates
     PlayerFrame:ClearAllPoints()
     PlayerFrame:SetPoint("TOPLEFT", PlayerPortraitBackdrop, "TOPLEFT", 0, 0)
     PlayerFrame:SetPoint("BOTTOMRIGHT", PlayerFrameBackdrop, "BOTTOMRIGHT", 0, 0)
@@ -66,9 +48,10 @@ local function PlayerFrameUpdate()
     PlayerPVPTimerText:Hide()
     PlayerPVPIcon:SetAlpha(0)
 
+    -- Font and Text adjustments for player name, health and mana bars
     PlayerName:ClearAllPoints()
     PlayerName:SetPoint("TOP", PlayerFrameBackdrop, "TOP", 0, -5)
-    PlayerName:SetFont(STANDARD_TEXT_FONT, 12)
+    PlayerName:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
     PlayerName:SetTextColor(1, 1, 1, 1)
 
     PlayerFrameHealthBar:ClearAllPoints()
@@ -94,18 +77,10 @@ local function PlayerFrameUpdate()
     PlayerFrameManaBarTextLeft:SetFont(STANDARD_TEXT_FONT, 8, "OUTLINE")
     PlayerFrameManaBarTextRight:SetPoint("RIGHT", PlayerFrameManaBar, "RIGHT", -4, 0)
     PlayerFrameManaBarTextRight:SetFont(STANDARD_TEXT_FONT, 8, "OUTLINE")
-    
-    local newHealth = UnitHealth("player")
-    local maxHealth = UnitHealthMax("player")
-    PlayerFrameHealthBar:SetMinMaxValues(0, maxHealth)
-    SmoothStatusBar(PlayerFrameHealthBar, newHealth)
-    
-    local newMana = UnitPower("player", Enum.PowerType.Mana)
-    local maxMana = UnitPowerMax("player", Enum.PowerType.Mana)
-    PlayerFrameManaBar:SetMinMaxValues(0, maxMana)
-    SmoothStatusBar(PlayerFrameManaBar, newMana)
+
 end
 
+-- Event Registrations for Player Frame
 local PlayerFrameEvents = CreateFrame("Frame")
 PlayerFrameEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 PlayerFrameEvents:RegisterEvent("PLAYER_REGEN_DISABLED")
@@ -124,8 +99,7 @@ PlayerFrameEvents:SetScript("OnEvent", function(self, event, ...)
     end
 end)
 
-
-
+-- Player Portrait Update Function and Events
 local function PlayerPortraitUpdate()
     PlayerPortrait:ClearAllPoints()
     PlayerPortrait:SetPoint("CENTER", PlayerPortraitBackdrop, "CENTER", 0, 0)
@@ -151,9 +125,7 @@ local PlayerPortraitEvents = CreateFrame("Frame")
 PlayerPortraitEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 PlayerPortraitEvents:SetScript("OnEvent", PlayerPortraitUpdate)
 
-
-
-
+-- Player Group Update Function and Events
 local function PlayerGroupUpdate()
     PlayerFrameGroupIndicator:SetAlpha(0)
     PlayerFrameGroupIndicator:Hide()
@@ -176,9 +148,7 @@ local PlayerGroupEvents = CreateFrame("Frame")
 PlayerGroupEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 PlayerGroupEvents:SetScript("OnEvent", PlayerGroupUpdate)
 
-
-
-
+-- Player Level Update Function and Events
 local function PlayerLevelUpdate()
     PlayerLevelText:ClearAllPoints()
     PlayerLevelText:SetPoint("TOP", PlayerPortraitBackdrop, "BOTTOM", 0, -4)
@@ -198,9 +168,7 @@ PlayerLevelEvents:RegisterEvent("PLAYER_LEVEL_UP")
 PlayerLevelEvents:RegisterEvent("PLAYER_XP_UPDATE")
 PlayerLevelEvents:SetScript("OnEvent", PlayerLevelUpdate)
 
-
-
-
+-- Druid Mana Bar Setup (for DRUID class only)
 local _, ClassIdentifier = UnitClass("player")
 
 if ClassIdentifier == "DRUID" then
@@ -249,16 +217,13 @@ if ClassIdentifier == "DRUID" then
     DruidManaBarEvents:SetScript("OnEvent", DruidManaBarUpdate)
 end
 
-
-
-
+-- Pet Frame Backdrop and Update
 local PetFrameBackdrop = CreateFrame("Button", nil, PetFrame, "SecureUnitButtonTemplate, BackdropTemplate")
 PetFrameBackdrop:SetPoint("BOTTOMRIGHT", PlayerPortraitBackdrop, "BOTTOMLEFT", 0, 0)
 PetFrameBackdrop:SetSize(64, 24)
 PetFrameBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", tile = true, edgeSize = 12})
 PetFrameBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 PetFrameBackdrop:SetFrameStrata("HIGH")
-
 PetFrameBackdrop:SetAttribute("unit", "pet")
 PetFrameBackdrop:RegisterForClicks("AnyUp")
 PetFrameBackdrop:SetAttribute("type1", "target")
@@ -321,15 +286,7 @@ PetFrameEvents:RegisterEvent("UNIT_PET")
 PetFrameEvents:RegisterEvent("PET_UI_UPDATE")
 PetFrameEvents:SetScript("OnEvent", PetFrameUpdate)
 
-
-
-
-
-
-
-
-
-
+-- Combo Points Frame Setup (for ROGUE/DRUID only)
 local _, ClassIdentifier = UnitClass("player")
 if ClassIdentifier ~= "ROGUE" and ClassIdentifier ~= "DRUID" then
     return
@@ -346,9 +303,9 @@ ComboPointsFrame:SetPoint("BOTTOM", CastingBarFrame, "TOP", 0, 4)
 local ComboPoints = {}
 
 local function CreateComboPoint()
-    local ComboPoint = CreateFrame("Frame", nil, ComboPointsFrame, "BackdropTemplate")
-    ComboPoint:SetSize(PointSize, PointSize)
-    ComboPoint:SetBackdrop({
+    local cp = CreateFrame("Frame", nil, ComboPointsFrame, "BackdropTemplate")
+    cp:SetSize(PointSize, PointSize)
+    cp:SetBackdrop({
         bgFile = "Interface/ChatFrame/ChatFrameBackground",
         edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
         tile = false,
@@ -356,39 +313,33 @@ local function CreateComboPoint()
         edgeSize = 12,
         insets = {left = 2, right = 2, top = 2, bottom = 2}
     })
-    ComboPoint:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
-    ComboPoint:SetBackdropColor(0, 0, 0, 0.5)
-    return ComboPoint
+    cp:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
+    cp:SetBackdropColor(0, 0, 0, 0.5)
+    return cp
 end
 
-local function ComboPointTextures(ComboPoint, ActiveState)
-    if ActiveState then
-        ComboPoint:SetBackdropColor(0.75, 0, 0, 1)
+local function ComboPointTextures(cp, active)
+    if active then
+        cp:SetBackdropColor(0.75, 0, 0, 1)
     else
-        ComboPoint:SetBackdropColor(0, 0, 0, 0.5)
+        cp:SetBackdropColor(0, 0, 0, 0.5)
     end
 end
 
 for i = 1, 5 do
-    local ComboPoint = CreateComboPoint()
-    ComboPointTextures(ComboPoint, false)
-    ComboPoints[i] = ComboPoint
-end
-
-ComboPointsFrame:SetWidth(PointSize * 5 + PointMargin * 4)
-for i, ComboPoint in ipairs(ComboPoints) do
-    ComboPoint:SetPoint("LEFT", ComboPointsFrame, "LEFT", PointSize * (i - 1) + PointMargin * (i - 1), 0)
+    ComboPoints[i] = CreateComboPoint()
+    ComboPointTextures(ComboPoints[i], false)
+    ComboPoints[i]:SetPoint("LEFT", ComboPointsFrame, "LEFT", PointSize * (i - 1) + PointMargin * (i - 1), 0)
 end
 
 local function ComboPointsUpdate()
     ComboFrame:UnregisterAllEvents()
     ComboFrame:Hide()
-
-    local ComboPointsCount = GetComboPoints("player", "target") or 0
-    if ComboPointsCount > 0 then
+    local count = GetComboPoints("player", "target") or 0
+    if count > 0 then
         ComboPointsFrame:Show()
         for i = 1, 5 do
-            ComboPointTextures(ComboPoints[i], i <= ComboPointsCount)
+            ComboPointTextures(ComboPoints[i], i <= count)
         end
     else
         ComboPointsFrame:Hide()

@@ -1,3 +1,4 @@
+-- Create frame backdrops
 local TargetFrameBackdrop = CreateFrame("Button", nil, TargetFrame, "SecureUnitButtonTemplate, BackdropTemplate")
 TargetFrameBackdrop:SetPoint("BOTTOM", UIParent, "BOTTOM", 190, 224)
 TargetFrameBackdrop:SetSize(124, 48)
@@ -21,36 +22,18 @@ TargetPortraitBackdrop:SetAttribute("type1", "target")
 TargetPortraitBackdrop:SetAttribute("type2", "togglemenu")
 
 local CLASS_COLORS = {
-	["WARRIOR"] = { 1, 0.78, 0.55 },
-	["MAGE"]    = { 0.41, 0.8, 0.94 },
-	["ROGUE"]   = { 1, 0.96, 0.41 },
-	["DRUID"]   = { 1, 0.49, 0.04 },
-	["HUNTER"]  = { 0.67, 0.83, 0.45 },
-	["SHAMAN"]  = { 0, 0.44, 0.87 },
-	["PRIEST"]  = { 1, 1, 1 },
-	["WARLOCK"] = { 0.58, 0.51, 0.79 },
-	["PALADIN"] = { 0.96, 0.55, 0.73 },
+    WARRIOR = { 1, 0.78, 0.55 },
+    MAGE    = { 0.41, 0.8, 0.94 },
+    ROGUE   = { 1, 0.96, 0.41 },
+    DRUID   = { 1, 0.49, 0.04 },
+    HUNTER  = { 0.67, 0.83, 0.45 },
+    SHAMAN  = { 0, 0.44, 0.87 },
+    PRIEST  = { 1, 1, 1 },
+    WARLOCK = { 0.58, 0.51, 0.79 },
+    PALADIN = { 0.96, 0.55, 0.73 },
 }
 
-
-
-
-
-
-
-local function SmoothStatusBar(statusBar, targetValue)
-    statusBar.smooth = statusBar.smooth or statusBar:GetValue()
-    statusBar:SetScript("OnUpdate", function(self, elapsed)
-        self.smooth = self.smooth + (targetValue - self.smooth) * elapsed * 4  -- multiplier adjusts speed
-        self:SetValue(self.smooth)
-        if math.abs(targetValue - self.smooth) < 0.1 then
-            self:SetValue(targetValue)
-            self.smooth = targetValue
-            self:SetScript("OnUpdate", nil)
-        end
-    end)
-end
-
+-- Update target frame layout and elements
 local function TargetFrameUpdate()
     TargetFrame:ClearAllPoints()
     TargetFrame:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "BOTTOMLEFT", 0, 0)
@@ -111,28 +94,26 @@ TargetFrameEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetFrameEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetFrameEvents:SetScript("OnEvent", TargetFrameUpdate)
 
+-- Target health update section
 local TargetHealthText = TargetFrameHealthBar:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 TargetHealthText:SetPoint("CENTER", TargetFrameHealthBar, "CENTER", 0, 0)
 TargetHealthText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
 TargetHealthText:SetTextColor(1, 1, 1, 1)
 TargetHealthText:SetShadowOffset(0, 0)
 
-local function TargetHealthUpdate()
+local function TargetHealthUpdate(self, event, ...)
     if UnitExists("target") then
-        -- Update the health text
         local targetHealth = UnitHealth("target")
         local targetMaxHealth = UnitHealthMax("target")
         TargetHealthText:SetText(targetHealth .. " / " .. targetMaxHealth)
         
-        -- Smoothly update the health bar
         TargetFrameHealthBar:SetMinMaxValues(0, targetMaxHealth)
-        SmoothStatusBar(TargetFrameHealthBar, targetHealth)
+        TargetFrameHealthBar:SetValue(targetHealth)
         
-        -- Smoothly update the mana bar as well
         local targetMana = UnitPower("target", Enum.PowerType.Mana)
         local targetMaxMana = UnitPowerMax("target", Enum.PowerType.Mana)
         TargetFrameManaBar:SetMinMaxValues(0, targetMaxMana)
-        SmoothStatusBar(TargetFrameManaBar, targetMana)
+        TargetFrameManaBar:SetValue(targetMana)
     else
         TargetHealthText:SetText("")
     end
@@ -147,17 +128,7 @@ TargetHealthEvents:RegisterEvent("UNIT_POWER_UPDATE")
 TargetHealthEvents:RegisterEvent("UNIT_DISPLAYPOWER")
 TargetHealthEvents:SetScript("OnEvent", TargetHealthUpdate)
 
-
-
-
-
-
-
-
-
-
-
-
+-- Target portrait update section
 local function TargetPortraitUpdate()
 	TargetFramePortrait:ClearAllPoints()
 	TargetFramePortrait:SetPoint("CENTER", TargetPortraitBackdrop, "CENTER", 0, 0)
@@ -172,6 +143,7 @@ TargetPortraitEvents:SetScript("OnEvent", TargetPortraitUpdate)
 hooksecurefunc("TargetFrame_Update", TargetPortraitUpdate)
 hooksecurefunc("UnitFramePortrait_Update", TargetPortraitUpdate)
 
+-- Portrait texture update
 local function PortraitTextureUpdate(TargetPortrait)
 	if TargetPortrait.unit == "target" and TargetPortrait.portrait then
 		if UnitIsPlayer(TargetPortrait.unit) then
@@ -194,6 +166,7 @@ end
 
 hooksecurefunc("UnitFramePortrait_Update", PortraitTextureUpdate)
 
+-- Update target group icons
 local function TargetGroupUpdate()
 	TargetFrameTextureFrameLeaderIcon:ClearAllPoints()
 	TargetFrameTextureFrameLeaderIcon:SetPoint("BOTTOM", TargetPortraitBackdrop, "TOP", 0, 0)
@@ -206,7 +179,8 @@ TargetGroupEvents:SetScript("OnEvent", TargetGroupUpdate)
 
 hooksecurefunc("TargetFrame_Update", TargetGroupUpdate)
 
-local function TragetLevelUpdate()
+-- Corrected: Rename to TargetLevelUpdate for readability
+local function TargetLevelUpdate()
 	TargetFrameTextureFrameLevelText:ClearAllPoints()
 	TargetFrameTextureFrameLevelText:SetPoint("TOP", TargetPortraitBackdrop, "BOTTOM", 0, -4)
 	TargetFrameTextureFrameLevelText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
@@ -223,10 +197,10 @@ end
 local TargetLevelEvents = CreateFrame("Frame")
 TargetLevelEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetLevelEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
-TargetLevelEvents:SetScript("OnEvent", TragetLevelUpdate)
+TargetLevelEvents:SetScript("OnEvent", TargetLevelUpdate)
+hooksecurefunc("TargetFrame_Update", TargetLevelUpdate)
 
-hooksecurefunc("TargetFrame_Update", TragetLevelUpdate)
-
+-- ToT frame update section
 local ToTFrameBackdrop = CreateFrame("Button", nil, TargetFrameToT, "SecureUnitButtonTemplate, BackdropTemplate")
 ToTFrameBackdrop:SetPoint("BOTTOMLEFT", TargetPortraitBackdrop, "BOTTOMRIGHT", 0, 0)
 ToTFrameBackdrop:SetSize(64, 24)
@@ -284,6 +258,7 @@ ToTFrameEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 ToTFrameEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
 ToTFrameEvents:SetScript("OnEvent", ToTFrameUpdate)
 
+-- Target aura update
 local function TargetAurasUpdate()
 	local InitialBuff = _G["TargetFrameBuff1"]
 	if InitialBuff then
@@ -310,6 +285,7 @@ TargetAurasEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetAurasEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetAurasEvents:SetScript("OnEvent", TargetAurasUpdate)
 
+-- Target spell bar update section
 local TargetSpellBarBackdrop = CreateFrame("Frame", nil, TargetFrameSpellBar, "BackdropTemplate")
 TargetSpellBarBackdrop:SetPoint("TOP", TargetFrameBackdrop, "BOTTOM", 0, 0)
 TargetSpellBarBackdrop:SetSize(TargetFrameBackdrop:GetWidth(), 24)
@@ -341,6 +317,7 @@ local TargetSpellBarEvents = CreateFrame("Frame")
 TargetSpellBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetSpellBarEvents:SetScript("OnEvent", TargetSpellBarUpdate)
 
+-- Target classification update
 local TargetClassificationText = TargetFrame:CreateFontString(nil, "OVERLAY")
 TargetClassificationText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
 TargetClassificationText:SetPoint("BOTTOM", TargetPortraitBackdrop, "TOP", 0, 4)
@@ -376,6 +353,7 @@ TargetClassificationEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetClassificationEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetClassificationEvents:SetScript("OnEvent", TargetClassificationUpdate)
 
+-- Target threat update
 local TargetThreatText = TargetThreatText or TargetFrame:CreateFontString(nil, "OVERLAY")
 TargetThreatText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
 TargetThreatText:SetPoint("BOTTOM", TargetClassificationText, "TOP", 0, 4)
@@ -408,6 +386,7 @@ TargetFrame:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE")
 TargetFrame:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
 TargetFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 
+-- Target config update
 local function TargetConfigUpdate()
 	SetCVar("showTargetCastbar", 1)
 	TARGET_FRAME_BUFFS_ON_TOP = true
