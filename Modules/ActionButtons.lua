@@ -112,13 +112,13 @@ local function UpdateActionButtonAppearance()
         if button then
             local macroName = _G[button:GetName() .. "Name"]
             if macroName then
-                macroName:SetFont(macroName:GetFont(), 10, "OUTLINE")
-                macroName:SetTextColor(1, 1, 1, 0.5)
+                macroName:SetFont(macroName:GetFont(), 10)
+                macroName:SetTextColor(1, 1, 1, 0.75)
             end
             local hotkey = _G[button:GetName() .. "HotKey"]
             if hotkey then
                 hotkey:SetFont(hotkey:GetFont(), 12, "OUTLINE")
-                hotkey:SetTextColor(1, 1, 1, 0.5)
+                hotkey:SetTextColor(1, 1, 1, 1)
             end
             local cooldown = _G[button:GetName() .. "Cooldown"]
             if cooldown then
