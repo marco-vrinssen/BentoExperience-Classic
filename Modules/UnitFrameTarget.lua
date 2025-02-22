@@ -32,59 +32,78 @@ local CLASS_COLORS = {
 	["PALADIN"] = { 0.96, 0.55, 0.73 },
 }
 
+
+
+
+
+
+
+local function SmoothStatusBar(statusBar, targetValue)
+    statusBar.smooth = statusBar.smooth or statusBar:GetValue()
+    statusBar:SetScript("OnUpdate", function(self, elapsed)
+        self.smooth = self.smooth + (targetValue - self.smooth) * elapsed * 4  -- multiplier adjusts speed
+        self:SetValue(self.smooth)
+        if math.abs(targetValue - self.smooth) < 0.1 then
+            self:SetValue(targetValue)
+            self.smooth = targetValue
+            self:SetScript("OnUpdate", nil)
+        end
+    end)
+end
+
 local function TargetFrameUpdate()
-	TargetFrame:ClearAllPoints()
-	TargetFrame:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "BOTTOMLEFT", 0, 0)
-	TargetFrame:SetPoint("TOPRIGHT", TargetPortraitBackdrop, "TOPRIGHT", 0, 0)
-	TargetFrame:SetAttribute("unit", "target")
-	TargetFrame:RegisterForClicks("AnyUp")
-	TargetFrame:SetAttribute("type1", "target")
-	TargetFrame:SetAttribute("type2", "togglemenu")
-	
-	TargetFrameBackground:ClearAllPoints()
-	TargetFrameBackground:SetPoint("TOPLEFT", TargetFrameBackdrop, "TOPLEFT", 3, -3)
-	TargetFrameBackground:SetPoint("BOTTOMRIGHT", TargetFrameBackdrop, "BOTTOMRIGHT", -3, 3)
-	
-	TargetFrameNameBackground:Hide()
-	TargetFrameTextureFrameTexture:Hide()
-	TargetFrameTextureFramePVPIcon:SetAlpha(0)
-	TargetFrameTextureFrameRaidTargetIcon:SetPoint("TOP", TargetPortraitBackdrop, "TOP", 0, -4)
-	TargetFrameTextureFrameRaidTargetIcon:SetSize(16, 16)
-	TargetFrameTextureFrameDeadText:Hide()
-	
-	TargetFrameTextureFrameName:ClearAllPoints()
-	TargetFrameTextureFrameName:SetPoint("TOP", TargetFrameBackdrop, "TOP", 0, -6)
-	TargetFrameTextureFrameName:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
-	
-	if UnitExists("target") then
-		if UnitIsPlayer("target") then
-			local _, class = UnitClass("target")
-			local color = CLASS_COLORS[class]
-			if color then
-				TargetFrameTextureFrameName:SetTextColor(unpack(color))
-			else
-				TargetFrameTextureFrameName:SetTextColor(1, 1, 1)
-			end
-		else
-			if UnitIsEnemy("player", "target") and UnitCanAttack("player", "target") then
-				TargetFrameTextureFrameName:SetTextColor(1, 0.25, 0)
-			elseif UnitReaction("player", "target") == 4 and UnitCanAttack("player", "target") then
-				TargetFrameTextureFrameName:SetTextColor(1, 0.8, 0)
-			elseif UnitReaction("player", "target") >= 4 and not UnitCanAttack("player", "target") then
-				TargetFrameTextureFrameName:SetTextColor(1, 1, 1)
-			end
-		end
-	end
-	
-	TargetFrameHealthBar:ClearAllPoints()
-	TargetFrameHealthBar:SetSize(TargetFrameBackground:GetWidth(), 16)
-	TargetFrameHealthBar:SetPoint("BOTTOM", TargetFrameManaBar, "TOP", 0, 0)
-	TargetFrameHealthBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
-	
-	TargetFrameManaBar:ClearAllPoints()
-	TargetFrameManaBar:SetSize(TargetFrameBackground:GetWidth(), 8)
-	TargetFrameManaBar:SetPoint("BOTTOM", TargetFrameBackdrop, "BOTTOM", 0, 4)
-	TargetFrameManaBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
+    TargetFrame:ClearAllPoints()
+    TargetFrame:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "BOTTOMLEFT", 0, 0)
+    TargetFrame:SetPoint("TOPRIGHT", TargetPortraitBackdrop, "TOPRIGHT", 0, 0)
+    TargetFrame:SetAttribute("unit", "target")
+    TargetFrame:RegisterForClicks("AnyUp")
+    TargetFrame:SetAttribute("type1", "target")
+    TargetFrame:SetAttribute("type2", "togglemenu")
+    
+    TargetFrameBackground:ClearAllPoints()
+    TargetFrameBackground:SetPoint("TOPLEFT", TargetFrameBackdrop, "TOPLEFT", 3, -3)
+    TargetFrameBackground:SetPoint("BOTTOMRIGHT", TargetFrameBackdrop, "BOTTOMRIGHT", -3, 3)
+    
+    TargetFrameNameBackground:Hide()
+    TargetFrameTextureFrameTexture:Hide()
+    TargetFrameTextureFramePVPIcon:SetAlpha(0)
+    TargetFrameTextureFrameRaidTargetIcon:SetPoint("TOP", TargetPortraitBackdrop, "TOP", 0, -4)
+    TargetFrameTextureFrameRaidTargetIcon:SetSize(16, 16)
+    TargetFrameTextureFrameDeadText:Hide()
+    
+    TargetFrameTextureFrameName:ClearAllPoints()
+    TargetFrameTextureFrameName:SetPoint("TOP", TargetFrameBackdrop, "TOP", 0, -6)
+    TargetFrameTextureFrameName:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
+    
+    if UnitExists("target") then
+        if UnitIsPlayer("target") then
+            local _, class = UnitClass("target")
+            local color = CLASS_COLORS[class]
+            if color then
+                TargetFrameTextureFrameName:SetTextColor(unpack(color))
+            else
+                TargetFrameTextureFrameName:SetTextColor(1, 1, 1)
+            end
+        else
+            if UnitIsEnemy("player", "target") and UnitCanAttack("player", "target") then
+                TargetFrameTextureFrameName:SetTextColor(1, 0.25, 0)
+            elseif UnitReaction("player", "target") == 4 and UnitCanAttack("player", "target") then
+                TargetFrameTextureFrameName:SetTextColor(1, 0.8, 0)
+            elseif UnitReaction("player", "target") >= 4 and not UnitCanAttack("player", "target") then
+                TargetFrameTextureFrameName:SetTextColor(1, 1, 1)
+            end
+        end
+    end
+    
+    TargetFrameHealthBar:ClearAllPoints()
+    TargetFrameHealthBar:SetSize(TargetFrameBackground:GetWidth(), 16)
+    TargetFrameHealthBar:SetPoint("BOTTOM", TargetFrameManaBar, "TOP", 0, 0)
+    TargetFrameHealthBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
+    
+    TargetFrameManaBar:ClearAllPoints()
+    TargetFrameManaBar:SetSize(TargetFrameBackground:GetWidth(), 8)
+    TargetFrameManaBar:SetPoint("BOTTOM", TargetFrameBackdrop, "BOTTOM", 0, 4)
+    TargetFrameManaBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 end
 
 local TargetFrameEvents = CreateFrame("Frame")
@@ -99,13 +118,24 @@ TargetHealthText:SetTextColor(1, 1, 1, 1)
 TargetHealthText:SetShadowOffset(0, 0)
 
 local function TargetHealthUpdate()
-	if UnitExists("target") then
-		local TargetHealth = UnitHealth("target")
-		local TargetMaxHealth = UnitHealthMax("target")
-		TargetHealthText:SetText(TargetHealth .. " / " .. TargetMaxHealth)
-	else
-		TargetHealthText:SetText("")
-	end
+    if UnitExists("target") then
+        -- Update the health text
+        local targetHealth = UnitHealth("target")
+        local targetMaxHealth = UnitHealthMax("target")
+        TargetHealthText:SetText(targetHealth .. " / " .. targetMaxHealth)
+        
+        -- Smoothly update the health bar
+        TargetFrameHealthBar:SetMinMaxValues(0, targetMaxHealth)
+        SmoothStatusBar(TargetFrameHealthBar, targetHealth)
+        
+        -- Smoothly update the mana bar as well
+        local targetMana = UnitPower("target", Enum.PowerType.Mana)
+        local targetMaxMana = UnitPowerMax("target", Enum.PowerType.Mana)
+        TargetFrameManaBar:SetMinMaxValues(0, targetMaxMana)
+        SmoothStatusBar(TargetFrameManaBar, targetMana)
+    else
+        TargetHealthText:SetText("")
+    end
 end
 
 local TargetHealthEvents = CreateFrame("Frame")
@@ -113,7 +143,20 @@ TargetHealthEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetHealthEvents:RegisterEvent("UNIT_HEALTH")
 TargetHealthEvents:RegisterEvent("UNIT_HEALTH_FREQUENT")
 TargetHealthEvents:RegisterEvent("UNIT_MAXHEALTH")
+TargetHealthEvents:RegisterEvent("UNIT_POWER_UPDATE")
+TargetHealthEvents:RegisterEvent("UNIT_DISPLAYPOWER")
 TargetHealthEvents:SetScript("OnEvent", TargetHealthUpdate)
+
+
+
+
+
+
+
+
+
+
+
 
 local function TargetPortraitUpdate()
 	TargetFramePortrait:ClearAllPoints()

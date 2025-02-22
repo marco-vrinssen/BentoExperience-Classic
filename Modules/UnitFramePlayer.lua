@@ -28,6 +28,20 @@ PlayerPortraitBackdrop:SetAttribute("type2", "togglemenu")
 
 
 
+-- New: SmoothStatusBar function to animate status bar changes
+local function SmoothStatusBar(statusBar, targetValue)
+    statusBar.smooth = statusBar.smooth or statusBar:GetValue()
+    statusBar:SetScript("OnUpdate", function(self, elapsed)
+        self.smooth = self.smooth + (targetValue - self.smooth) * elapsed * 4  -- multiplier adjusts speed
+        self:SetValue(self.smooth)
+        if math.abs(targetValue - self.smooth) < 0.1 then
+            self:SetValue(targetValue)
+            self.smooth = targetValue
+            self:SetScript("OnUpdate", nil)
+        end
+    end)
+end
+
 local function PlayerFrameUpdate()
     PlayerFrame:ClearAllPoints()
     PlayerFrame:SetPoint("TOPLEFT", PlayerPortraitBackdrop, "TOPLEFT", 0, 0)
@@ -80,6 +94,16 @@ local function PlayerFrameUpdate()
     PlayerFrameManaBarTextLeft:SetFont(STANDARD_TEXT_FONT, 8, "OUTLINE")
     PlayerFrameManaBarTextRight:SetPoint("RIGHT", PlayerFrameManaBar, "RIGHT", -4, 0)
     PlayerFrameManaBarTextRight:SetFont(STANDARD_TEXT_FONT, 8, "OUTLINE")
+    
+    local newHealth = UnitHealth("player")
+    local maxHealth = UnitHealthMax("player")
+    PlayerFrameHealthBar:SetMinMaxValues(0, maxHealth)
+    SmoothStatusBar(PlayerFrameHealthBar, newHealth)
+    
+    local newMana = UnitPower("player", Enum.PowerType.Mana)
+    local maxMana = UnitPowerMax("player", Enum.PowerType.Mana)
+    PlayerFrameManaBar:SetMinMaxValues(0, maxMana)
+    SmoothStatusBar(PlayerFrameManaBar, newMana)
 end
 
 local PlayerFrameEvents = CreateFrame("Frame")
@@ -99,7 +123,6 @@ PlayerFrameEvents:SetScript("OnEvent", function(self, event, ...)
         PlayerFrameUpdate()
     end
 end)
-
 
 
 
