@@ -22,11 +22,7 @@ local function PetFrameUpdate()
     PetPortrait:Hide()
 	PetAttackModeTexture:SetTexture(nil)
 
-    PetName:ClearAllPoints()
-	PetName:SetPoint("BOTTOMRIGHT", PetFrameBackdrop, "TOPRIGHT", 0, 2)
-    PetName:SetParent(PetFrame)
-    PetName:SetTextColor(1, 1, 1, 1)
-	PetName:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
+    PetName:Hide()
 	
 	PetFrameHealthBar:ClearAllPoints()
 	PetFrameHealthBar:SetPoint("BOTTOM", PetFrameManaBar, "TOP", 0, 0)
