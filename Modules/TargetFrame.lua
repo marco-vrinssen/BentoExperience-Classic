@@ -1,4 +1,3 @@
--- Create frame backdrops
 TargetFrameBackdrop = CreateFrame("Button", nil, TargetFrame, "SecureUnitButtonTemplate, BackdropTemplate")
 TargetFrameBackdrop:SetPoint("BOTTOM", UIParent, "BOTTOM", 190, 224)
 TargetFrameBackdrop:SetSize(124, 48)
@@ -33,7 +32,7 @@ local CLASS_COLORS = {
 	PALADIN = { 0.96, 0.55, 0.73 },
 }
 
--- Update target frame layout and elements
+
 local function TargetFrameUpdate()
 	TargetFrame:ClearAllPoints()
 	TargetFrame:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "BOTTOMLEFT", 0, 0)
@@ -42,22 +41,18 @@ local function TargetFrameUpdate()
 	TargetFrame:RegisterForClicks("AnyUp")
 	TargetFrame:SetAttribute("type1", "target")
 	TargetFrame:SetAttribute("type2", "togglemenu")
-	
 	TargetFrameBackground:ClearAllPoints()
 	TargetFrameBackground:SetPoint("TOPLEFT", TargetFrameBackdrop, "TOPLEFT", 3, -3)
 	TargetFrameBackground:SetPoint("BOTTOMRIGHT", TargetFrameBackdrop, "BOTTOMRIGHT", -3, 3)
-	
 	TargetFrameNameBackground:Hide()
 	TargetFrameTextureFrameTexture:Hide()
 	TargetFrameTextureFramePVPIcon:SetAlpha(0)
 	TargetFrameTextureFrameRaidTargetIcon:SetPoint("TOP", TargetPortraitBackdrop, "TOP", 0, -4)
 	TargetFrameTextureFrameRaidTargetIcon:SetSize(16, 16)
 	TargetFrameTextureFrameDeadText:Hide()
-	
 	TargetFrameTextureFrameName:ClearAllPoints()
 	TargetFrameTextureFrameName:SetPoint("TOP", TargetFrameBackdrop, "TOP", 0, -6)
 	TargetFrameTextureFrameName:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
-	
 	if UnitExists("target") then
 		if UnitIsPlayer("target") then
 			local _, class = UnitClass("target")
@@ -77,17 +72,16 @@ local function TargetFrameUpdate()
 			end
 		end
 	end
-	
 	TargetFrameHealthBar:ClearAllPoints()
 	TargetFrameHealthBar:SetSize(TargetFrameBackground:GetWidth(), 16)
 	TargetFrameHealthBar:SetPoint("BOTTOM", TargetFrameManaBar, "TOP", 0, 0)
 	TargetFrameHealthBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
-	
 	TargetFrameManaBar:ClearAllPoints()
 	TargetFrameManaBar:SetSize(TargetFrameBackground:GetWidth(), 8)
 	TargetFrameManaBar:SetPoint("BOTTOM", TargetFrameBackdrop, "BOTTOM", 0, 4)
 	TargetFrameManaBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 end
+
 
 local TargetFrameEvents = CreateFrame("Frame")
 TargetFrameEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -95,38 +89,28 @@ TargetFrameEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetFrameEvents:SetScript("OnEvent", TargetFrameUpdate)
 
 
+local function TargetHealthUpdate(self, event, ...)
+	if UnitExists("target") then
+		local targetHealth = UnitHealth("target")
+		local targetMaxHealth = UnitHealthMax("target")
+		TargetHealthText:SetText(targetHealth .. " / " .. targetMaxHealth)
+		TargetFrameHealthBar:SetMinMaxValues(0, targetMaxHealth)
+		TargetFrameHealthBar:SetValue(targetHealth)
+		local targetMana = UnitPower("target", Enum.PowerType.Mana)
+		local targetMaxMana = UnitPowerMax("target", Enum.PowerType.Mana)
+		TargetFrameManaBar:SetMinMaxValues(0, targetMaxMana)
+		TargetFrameManaBar:SetValue(targetMana)
+	else
+		TargetHealthText:SetText("")
+	end
+end
 
 
-
-
-
-
-
-
--- Target health update section
-local TargetHealthText = TargetFrameHealthBar:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+TargetHealthText = TargetFrameHealthBar:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 TargetHealthText:SetPoint("CENTER", TargetFrameHealthBar, "CENTER", 0, 0)
 TargetHealthText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
 TargetHealthText:SetTextColor(1, 1, 1, 1)
 TargetHealthText:SetShadowOffset(0, 0)
-
-local function TargetHealthUpdate(self, event, ...)
-    if UnitExists("target") then
-        local targetHealth = UnitHealth("target")
-        local targetMaxHealth = UnitHealthMax("target")
-        TargetHealthText:SetText(targetHealth .. " / " .. targetMaxHealth)
-        
-        TargetFrameHealthBar:SetMinMaxValues(0, targetMaxHealth)
-        TargetFrameHealthBar:SetValue(targetHealth)
-        
-        local targetMana = UnitPower("target", Enum.PowerType.Mana)
-        local targetMaxMana = UnitPowerMax("target", Enum.PowerType.Mana)
-        TargetFrameManaBar:SetMinMaxValues(0, targetMaxMana)
-        TargetFrameManaBar:SetValue(targetMana)
-    else
-        TargetHealthText:SetText("")
-    end
-end
 
 local TargetHealthEvents = CreateFrame("Frame")
 TargetHealthEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
@@ -137,12 +121,13 @@ TargetHealthEvents:RegisterEvent("UNIT_POWER_UPDATE")
 TargetHealthEvents:RegisterEvent("UNIT_DISPLAYPOWER")
 TargetHealthEvents:SetScript("OnEvent", TargetHealthUpdate)
 
--- Target portrait update section
+
 local function TargetPortraitUpdate()
 	TargetFramePortrait:ClearAllPoints()
 	TargetFramePortrait:SetPoint("CENTER", TargetPortraitBackdrop, "CENTER", 0, 0)
 	TargetFramePortrait:SetSize(TargetPortraitBackdrop:GetHeight() - 6, TargetPortraitBackdrop:GetHeight() - 6)
 end
+
 
 local TargetPortraitEvents = CreateFrame("Frame")
 TargetPortraitEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -152,7 +137,7 @@ TargetPortraitEvents:SetScript("OnEvent", TargetPortraitUpdate)
 hooksecurefunc("TargetFrame_Update", TargetPortraitUpdate)
 hooksecurefunc("UnitFramePortrait_Update", TargetPortraitUpdate)
 
--- Portrait texture update
+
 local function PortraitTextureUpdate(TargetPortrait)
 	if TargetPortrait.unit == "target" and TargetPortrait.portrait then
 		if UnitIsPlayer(TargetPortrait.unit) then
@@ -175,11 +160,12 @@ end
 
 hooksecurefunc("UnitFramePortrait_Update", PortraitTextureUpdate)
 
--- Update target group icons
+
 local function TargetGroupUpdate()
 	TargetFrameTextureFrameLeaderIcon:ClearAllPoints()
 	TargetFrameTextureFrameLeaderIcon:SetPoint("BOTTOM", TargetPortraitBackdrop, "TOP", 0, 0)
 end
+
 
 local TargetGroupEvents = CreateFrame("Frame")
 TargetGroupEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -188,20 +174,17 @@ TargetGroupEvents:SetScript("OnEvent", TargetGroupUpdate)
 
 hooksecurefunc("TargetFrame_Update", TargetGroupUpdate)
 
--- Corrected: Rename to TargetLevelUpdate for readability
+
 local function TargetLevelUpdate()
 	TargetFrameTextureFrameLevelText:ClearAllPoints()
 	TargetFrameTextureFrameLevelText:SetPoint("TOP", TargetPortraitBackdrop, "BOTTOM", 0, -4)
 	TargetFrameTextureFrameLevelText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
-
 	if not UnitCanAttack("player", "target") or not UnitCanAttack("target", "player") then
 		TargetFrameTextureFrameLevelText:SetTextColor(1, 1, 1)
 	end
-
-	TargetFrameTextureFrameHighLevelTexture:ClearAllPoints()
-	TargetFrameTextureFrameHighLevelTexture:SetPoint("TOP", TargetPortraitBackdrop, "BOTTOM", 0, -6)
-	TargetFrameTextureFrameHighLevelTexture:SetTexture("Interface/TargetingFrame/UI-RaidTargetingIcon_8")
+	TargetFrameTextureFrameHighLevelTexture:Hide()
 end
+
 
 local TargetLevelEvents = CreateFrame("Frame")
 TargetLevelEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -210,20 +193,12 @@ TargetLevelEvents:SetScript("OnEvent", TargetLevelUpdate)
 hooksecurefunc("TargetFrame_Update", TargetLevelUpdate)
 
 
-
-
-
-
-
-
--- Target aura update
 local function TargetAurasUpdate()
 	local InitialBuff = _G["TargetFrameBuff1"]
 	if InitialBuff then
 		InitialBuff:ClearAllPoints()
 		InitialBuff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 2, 2)
 	end
-
 	local InitialDebuff = _G["TargetFrameDebuff1"]
 	if InitialDebuff then
 		InitialDebuff:ClearAllPoints()
@@ -243,7 +218,7 @@ TargetAurasEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetAurasEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetAurasEvents:SetScript("OnEvent", TargetAurasUpdate)
 
--- Target spell bar update section
+
 local TargetSpellBarBackdrop = CreateFrame("Frame", nil, TargetFrameSpellBar, "BackdropTemplate")
 TargetSpellBarBackdrop:SetPoint("TOP", TargetFrameBackdrop, "BOTTOM", 0, 0)
 TargetSpellBarBackdrop:SetSize(TargetFrameBackdrop:GetWidth(), 24)
@@ -256,13 +231,10 @@ local function TargetSpellBarUpdate()
 	TargetFrameSpellBar:SetPoint("TOPLEFT", TargetSpellBarBackdrop, "TOPLEFT", 3, -2)
 	TargetFrameSpellBar:SetPoint("BOTTOMRIGHT", TargetSpellBarBackdrop, "BOTTOMRIGHT", -3, 2)
 	TargetFrameSpellBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
-
 	TargetFrameSpellBar.Border:SetTexture(nil)
 	TargetFrameSpellBar.Flash:SetTexture(nil)
 	TargetFrameSpellBar.Spark:SetTexture(nil)
-
 	TargetFrameSpellBar.Icon:SetSize(TargetSpellBarBackdrop:GetHeight() - 4, TargetSpellBarBackdrop:GetHeight() - 4)
-
 	TargetFrameSpellBar.Text:ClearAllPoints()
 	TargetFrameSpellBar.Text:SetPoint("CENTER", TargetSpellBarBackdrop, "CENTER", 0, 0)
 	TargetFrameSpellBar.Text:SetFont(STANDARD_TEXT_FONT, 10)
@@ -275,7 +247,7 @@ local TargetSpellBarEvents = CreateFrame("Frame")
 TargetSpellBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetSpellBarEvents:SetScript("OnEvent", TargetSpellBarUpdate)
 
--- Target classification update
+
 local TargetClassificationText = TargetFrame:CreateFontString(nil, "OVERLAY")
 TargetClassificationText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
 TargetClassificationText:SetPoint("BOTTOM", TargetPortraitBackdrop, "TOP", 0, 4)
@@ -311,7 +283,7 @@ TargetClassificationEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetClassificationEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetClassificationEvents:SetScript("OnEvent", TargetClassificationUpdate)
 
--- Target threat update
+
 local TargetThreatText = TargetThreatText or TargetFrame:CreateFontString(nil, "OVERLAY")
 TargetThreatText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
 TargetThreatText:SetPoint("BOTTOM", TargetClassificationText, "TOP", 0, 4)
@@ -321,7 +293,6 @@ local function TargetThreatUpdate()
 		TargetThreatText:Hide()
 		return
 	end
-
 	local ThreatTanking, ThreatStatus, ThreatPercentage = UnitDetailedThreatSituation("player", "target")
 	if ThreatPercentage then
 		TargetThreatText:SetText(string.format("%.0f%%", ThreatPercentage))
@@ -344,11 +315,12 @@ TargetFrame:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE")
 TargetFrame:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
 TargetFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 
--- Target config update
+
 local function TargetConfigUpdate()
 	SetCVar("showTargetCastbar", 1)
 	TARGET_FRAME_BUFFS_ON_TOP = true
 end
+
 
 local TargetConfigEvents = CreateFrame("Frame")
 TargetConfigEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
