@@ -57,9 +57,6 @@ local ActionBarEvents = CreateFrame("Frame")
 ActionBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 ActionBarEvents:SetScript("OnEvent", ActionBarUpdate)
 
-
-
-
 -- ACTION BUTTONS
 
 local function UpdateActionButtonAppearance()
@@ -140,9 +137,6 @@ local ButtonAppearanceEvents = CreateFrame("Frame")
 ButtonAppearanceEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 ButtonAppearanceEvents:SetScript("OnEvent", UpdateActionButtonAppearance)
 
-
-
-
 -- PET BAR
 
 local function HidePetButtonTextures(button)
@@ -186,9 +180,6 @@ PetBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 PetBarEvents:RegisterEvent("UNIT_PET")
 PetBarEvents:RegisterEvent("PET_BAR_UPDATE")
 PetBarEvents:SetScript("OnEvent", PetBarUpdate)
-
-
-
 
 -- STANCE BAR
 
@@ -234,16 +225,7 @@ ClassBarEvents:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
 ClassBarEvents:RegisterEvent("UPDATE_SHAPESHIFT_USABLE")
 ClassBarEvents:RegisterEvent("UPDATE_SHAPESHIFT_COOLDOWN")
 ClassBarEvents:RegisterEvent("PLAYER_REGEN_ENABLED")
-ClassBarEvents:SetScript("OnEvent", function(self, event, ...)
-    if event == "PLAYER_REGEN_ENABLED" then
-        ClassBarUpdate()
-    else
-        ClassBarUpdate()
-    end
-end)
-
-
-
+ClassBarEvents:SetScript("OnEvent", ClassBarUpdate)
 
 -- VEHICLE LEAVE BUTTON
 
