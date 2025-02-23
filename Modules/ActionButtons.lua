@@ -1,5 +1,4 @@
--- ACTION BARS
-
+-- Update the main action bar and multi-bars
 local function ActionBarUpdate()
     MainMenuBar:SetWidth(512)
     MainMenuBar:ClearAllPoints()
@@ -57,8 +56,8 @@ local ActionBarEvents = CreateFrame("Frame")
 ActionBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 ActionBarEvents:SetScript("OnEvent", ActionBarUpdate)
 
--- ACTION BUTTONS
 
+-- Update the appearance of action buttons
 local function UpdateActionButtonAppearance()
     local function hideNormalTexture(button)
         if button then
@@ -136,103 +135,3 @@ end
 local ButtonAppearanceEvents = CreateFrame("Frame")
 ButtonAppearanceEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 ButtonAppearanceEvents:SetScript("OnEvent", UpdateActionButtonAppearance)
-
--- PET BAR
-
-local function HidePetButtonTextures(button)
-    local normalTexture = _G[button:GetName() .. "NormalTexture"]
-    if normalTexture then
-        normalTexture:SetAlpha(0)
-        normalTexture:SetTexture(nil)
-    end
-    local normalTexture2 = _G[button:GetName() .. "NormalTexture2"]
-    if normalTexture2 then
-        normalTexture2:SetAlpha(0)
-        normalTexture2:SetTexture(nil)
-    end
-end
-
-local function PetBarUpdate()
-    local PreviousPetButton
-
-    for numStances = 1, 10 do
-        local PetButton = _G["PetActionButton" .. numStances]
-        PetButton:ClearAllPoints()
-
-        if not PreviousPetButton then
-            PetButton:SetPoint("BOTTOMLEFT", MultiBarBottomLeft, "TOPLEFT", -2, 8)
-        else
-            PetButton:SetPoint("LEFT", PreviousPetButton, "RIGHT", 4, 0)
-        end
-
-        PetButton:SetScale(0.8)
-        PetButton:SetAlpha(0.5)
-        PetButton:Show()
-
-        HidePetButtonTextures(PetButton)
-
-        PreviousPetButton = PetButton
-    end
-end
-
-local PetBarEvents = CreateFrame("Frame")
-PetBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
-PetBarEvents:RegisterEvent("UNIT_PET")
-PetBarEvents:RegisterEvent("PET_BAR_UPDATE")
-PetBarEvents:SetScript("OnEvent", PetBarUpdate)
-
--- STANCE BAR
-
-local function ClassBarUpdate()
-    if InCombatLockdown() then return end
-    local PreviousClassButton
-    local anchorButton = MultiBarBottomLeftButton1:IsShown() and MultiBarBottomLeftButton1 or ActionButton1
-
-    for numStances = 1, NUM_STANCE_SLOTS do
-        local ClassButton = _G["StanceButton" .. numStances]
-        
-        ClassButton:ClearAllPoints()
-
-        if not PreviousClassButton then
-            ClassButton:SetPoint("BOTTOMLEFT", anchorButton, "TOPLEFT", 0, 8)
-        else
-            ClassButton:SetPoint("LEFT", PreviousClassButton, "RIGHT", 4, 0)
-        end
-
-        for numTextures = 1, 3 do
-            local NormalTexture = _G["StanceButton" .. numStances .. "NormalTexture" .. numTextures]
-            if NormalTexture then
-                NormalTexture:SetAlpha(0)
-                NormalTexture:SetTexture(nil)
-            end
-        end
-
-        PreviousClassButton = ClassButton
-    end
-
-    StanceBarLeft:SetAlpha(0)
-    StanceBarLeft:SetTexture(nil)
-    StanceBarMiddle:SetAlpha(0)
-    StanceBarMiddle:SetTexture(nil)
-    StanceBarRight:SetAlpha(0)
-    StanceBarRight:SetTexture(nil)
-end
-
-local ClassBarEvents = CreateFrame("Frame")
-ClassBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
-ClassBarEvents:RegisterEvent("UPDATE_STEALTH")
-ClassBarEvents:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
-ClassBarEvents:RegisterEvent("UPDATE_SHAPESHIFT_USABLE")
-ClassBarEvents:RegisterEvent("UPDATE_SHAPESHIFT_COOLDOWN")
-ClassBarEvents:RegisterEvent("PLAYER_REGEN_ENABLED")
-ClassBarEvents:SetScript("OnEvent", ClassBarUpdate)
-
--- VEHICLE LEAVE BUTTON
-
-local function VehicleButtonUpdate()
-    MainMenuBarVehicleLeaveButton:SetSize(36, 36)
-    MainMenuBarVehicleLeaveButton:ClearAllPoints()
-    MainMenuBarVehicleLeaveButton:SetPoint("CENTER", UIParent, "CENTER", 0, -160)
-end
-
-MainMenuBarVehicleLeaveButton:HookScript("OnShow", VehicleButtonUpdate)
