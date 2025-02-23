@@ -11,12 +11,14 @@ Modules/Auras.lua
 Modules/Bags.lua
 Modules/CastBar.lua
 Modules/Chat.lua
+Modules/ClassButtons.lua
 Modules/ClassElements.lua
 Modules/ExhaustionBars.lua
 Modules/FrameRateDisplay.lua
 Modules/MicroMenu.lua
 Modules/MiniMap.lua
 Modules/NamePlates.lua
+Modules/PetButtons.lua
 Modules/PlayerFrame.lua
 Modules/PlayerFramePet.lua
 Modules/RaidFrames.lua
@@ -25,4 +27,5 @@ Modules/TargetFrame.lua
 Modules/TargetFrameTarget.lua
 Modules/Tooltips.lua
 Modules/TrackingBars.lua
+Modules/UtilityButtons.lua
 Modules/WorldMap.lua
