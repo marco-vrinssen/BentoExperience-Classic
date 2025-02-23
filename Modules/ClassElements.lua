@@ -50,9 +50,6 @@ end
 
 
 
-
-
-
 -- Combo Points Frame Setup (for ROGUE/DRUID only)
 local _, ClassIdentifier = UnitClass("player")
 if ClassIdentifier ~= "ROGUE" and ClassIdentifier ~= "DRUID" then
