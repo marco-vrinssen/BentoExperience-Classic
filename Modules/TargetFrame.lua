@@ -53,6 +53,7 @@ local function TargetFrameUpdate()
 	TargetFrameTextureFrameName:ClearAllPoints()
 	TargetFrameTextureFrameName:SetPoint("TOP", TargetFrameBackdrop, "TOP", 0, -6)
 	TargetFrameTextureFrameName:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
+	
 	if UnitExists("target") then
 		if UnitIsPlayer("target") then
 			local _, class = UnitClass("target")
@@ -72,10 +73,12 @@ local function TargetFrameUpdate()
 			end
 		end
 	end
+	
 	TargetFrameHealthBar:ClearAllPoints()
 	TargetFrameHealthBar:SetSize(TargetFrameBackground:GetWidth(), 16)
 	TargetFrameHealthBar:SetPoint("BOTTOM", TargetFrameManaBar, "TOP", 0, 0)
 	TargetFrameHealthBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
+
 	TargetFrameManaBar:ClearAllPoints()
 	TargetFrameManaBar:SetSize(TargetFrameBackground:GetWidth(), 8)
 	TargetFrameManaBar:SetPoint("BOTTOM", TargetFrameBackdrop, "BOTTOM", 0, 4)
