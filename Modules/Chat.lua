@@ -109,7 +109,7 @@ end)
 -- Recolor incoming whisper messages
 local function RecolorWhisperMessages(self, event, message, sender, ...)
     if event == "CHAT_MSG_WHISPER" then
-        return false, "|cFF80FFD4" .. message .. "|r", sender, ...
+        return false, "|cFFFFCCFE" .. message .. "|r", sender, ...
     end
 end
 

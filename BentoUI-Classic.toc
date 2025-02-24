@@ -19,13 +19,13 @@ Modules/MicroMenu.lua
 Modules/MiniMap.lua
 Modules/NamePlates.lua
 Modules/PetButtons.lua
-Modules/PetFrame.lua
 Modules/PlayerFrame.lua
+Modules/PlayerFramePet.lua
 Modules/RaidFrames.lua
 Modules/RunesFrame.lua
 Modules/TargetFrame.lua
+Modules/TargetFrameToT.lua
 Modules/Tooltips.lua
-Modules/ToTFrame.lua
 Modules/TrackingBars.lua
 Modules/UtilityButtons.lua
 Modules/WorldMap.lua

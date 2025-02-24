@@ -1,5 +1,5 @@
 -- Setup backdrop for the pet frame
-PetFrameBackdrop = CreateFrame("Button", nil, PetFrame, "SecureUnitButtonTemplate, BackdropTemplate")
+local PetFrameBackdrop = CreateFrame("Button", nil, PetFrame, "SecureUnitButtonTemplate, BackdropTemplate")
 PetFrameBackdrop:SetPoint("BOTTOMRIGHT", PlayerPortraitBackdrop, "BOTTOMLEFT", 0, 0)
 PetFrameBackdrop:SetSize(64, 24)
 PetFrameBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", tile = true, edgeSize = 12})
@@ -12,7 +12,7 @@ PetFrameBackdrop:SetAttribute("type2", "togglemenu")
 
 
 -- Update pet frame properties
-local function PetFrameUpdate()
+local function UpdatePetFrame()
 	PetFrame:ClearAllPoints()
 	PetFrame:SetPoint("CENTER", PetFrameBackdrop, "CENTER", 0, 0)
 	PetFrame:SetSize(PetFrameBackdrop:GetWidth(), PetFrameBackdrop:GetHeight())
@@ -64,12 +64,7 @@ local function PetFrameUpdate()
 	end
 end
 
-
-hooksecurefunc("PetFrame_Update", PetFrameUpdate)
-
-
 -- Setup pet frame event listener
 local PetFrameEvents = CreateFrame("Frame")
 PetFrameEvents:RegisterEvent("UNIT_PET")
-PetFrameEvents:RegisterEvent("PET_UI_UPDATE")
-PetFrameEvents:SetScript("OnEvent", PetFrameUpdate)
+PetFrameEvents:SetScript("OnEvent", UpdatePetFrame)
