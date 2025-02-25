@@ -21,3 +21,14 @@ LUA = {
     GREY = "|cFF808080",              -- #808080
     WHITE = "|cFFFFFFFF",             -- #FFFFFF
 }
+
+
+
+
+-- TEXTURES
+
+
+BLANK = "Interface/Buttons/WHITE8x8",
+EDGE_SIZE = 12,
+BAR = "Interface/RaidFrame/Raid-Bar-HP-Fill.blp",
+EDGE = "Interface/Tooltips/UI-Tooltip-Border",

@@ -3,7 +3,7 @@
 local CastingBarBackdrop = CreateFrame("Frame", nil, CastingBarFrame, "BackdropTemplate")
 CastingBarBackdrop:SetPoint("TOPLEFT", CastingBarFrame, "TOPLEFT", -3, 3)
 CastingBarBackdrop:SetPoint("BOTTOMRIGHT", CastingBarFrame, "BOTTOMRIGHT", 3, -3)
-CastingBarBackdrop:SetBackdrop({ edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 12 })
+CastingBarBackdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = 12 })
 CastingBarBackdrop:SetBackdropBorderColor(unpack(RGB.GREY))
 CastingBarBackdrop:SetFrameStrata("HIGH")
 

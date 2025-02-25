@@ -4,7 +4,7 @@
 ## Version: 1.0
 ## Author: MIYANKO
 
-Modules/Styles.lua
+Modules/Variables.lua
 
 Modules/ActionBars.lua
 Modules/Auras.lua
