@@ -1,3 +1,18 @@
+-- Define global addon colors
+AddonColors = {
+    B = "|cFF2871D9", -- 2871D9
+    Y = "|cFFFBD134", -- FBD134
+    YL = "|cFFFDFE9E", -- FDFE9E
+    G = "|cFF24FE31", -- 24FE31
+    P = "|cFFA43BEA", -- A43BEA
+    PL = "|cFFFB18B2", -- FB18B2
+    W = "|cFFFFFFFF", -- FFFFFF
+    RESET = "|r" -- Resets Custom Coloring
+}
+
+
+
+
 local function UpdateCVars()
     SetCVar("ffxGlow", 0)
     SetCVar("ffxDeath", 0)
@@ -8,15 +23,13 @@ local function UpdateCVars()
 end
 
 local GraphicsEvents = CreateFrame("Frame")
-GraphicsEvents:RegisterEvent("PLAYER_LOGIN")
+GraphicsEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 GraphicsEvents:SetScript("OnEvent", UpdateCVars)
 
 
 
 
-
-
--- Define muted sounds
+-- Define muted sound
 local MutedSounds = {
     555124,
     548067,
@@ -29,9 +42,6 @@ local MutedSounds = {
     567721,
 }
 
-
-
-
 -- Apply sound configuration
 local function ApplySoundConfiguration()
     for _, SoundID in ipairs(MutedSounds) do
@@ -42,9 +52,6 @@ end
 local SoundEvents = CreateFrame("Frame")
 SoundEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 SoundEvents:SetScript("OnEvent", ApplySoundConfiguration)
-
-
-
 
 -- Handle CVar changes
 local function OnCVarChanged(event, cvar, value)
@@ -57,18 +64,3 @@ end
 local CVarEvents = CreateFrame("Frame")
 CVarEvents:RegisterEvent("CVAR_UPDATE")
 CVarEvents:SetScript("OnEvent", OnCVarChanged)
-
-
-
-
-
-
-local function FramerateUpdate()
-    FramerateLabel:SetAlpha(0)
-    FramerateText:ClearAllPoints()
-    FramerateText:SetPoint("TOP", UIParent, "TOP", 0, -16)
-end
-
-local FramerateEvents = CreateFrame("Frame")
-FramerateEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
-FramerateEvents:SetScript("OnEvent", FramerateUpdate)

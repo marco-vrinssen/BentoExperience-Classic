@@ -23,7 +23,7 @@ end
 
 
 local StateColors = {
-    UNIT_SPELLCAST_START = {1, 0.5, 0}
+    UNIT_SPELLCAST_START = {0.5, 0.5, 1}
 }
 
 

@@ -1,3 +1,46 @@
+-- Load the color configuration
+local C = AddonColors
+
+local function CommandsIntro()
+    print(C.Y .. "/bentocmd" .. C.RESET .. " for available commands.")
+end
+
+local function PrintCommands()
+    print(C.Y .. "/f KEYWORD" .. C.RESET .. ": " .. C.RESET .. "Filters all active channels for KEYWORD and reposts matching messages." .. C.RESET)
+    print(C.Y .. "/f KEYWORD1+KEYWORD2" .. C.RESET .. ": " .. C.RESET .. "Filters all active channels for the combination of KEYWORD1 and KEYWORD2 and reposts matching messages." .. C.RESET)
+    print(C.Y .. "/f" .. C.RESET .. ": " .. C.RESET .. "Clears and stops the filtering." .. C.RESET)
+
+    print(C.Y .. "/bc MESSAGE" .. C.RESET .. ": " .. C.RESET .. "Broadcasts the MESSAGE across all joined channels." .. C.RESET)
+    print(C.Y .. "/bc N1-N2 MESSAGE" .. C.RESET .. ": " .. C.RESET .. "Broadcasts the MESSAGE across all specified channels, where N1 and N2 are indicating the inclusive range of channels to be targeted." .. C.RESET)
+
+    print(C.Y .. "/ww MESSAGE" .. C.RESET .. ": " .. C.RESET .. "Sends the MESSAGE to all players in a currently open /who instance." .. C.RESET)
+    print(C.Y .. "/ww N MESSAGE" .. C.RESET .. ": " .. C.RESET .. "Sends the MESSAGE to the first N count of players in a currently open /who instance." .. C.RESET)
+    print(C.Y .. "/ww -CLASS MESSAGE" .. C.RESET .. ": " .. C.RESET .. "Sends the MESSAGE to all players who are not of the specified CLASS in a currently open /who instance." .. C.RESET)
+    print(C.Y .. "/ww N -CLASS MESSAGE" .. C.RESET .. ": " .. C.RESET .. "Sends the MESSAGE to the first N count of players who are not of the specified CLASS in a currently open /who instance." .. C.RESET)
+    print(C.Y .. "/wl N MESSAGE" .. C.RESET .. ": " .. C.RESET .. "Sends the MESSAGE to the last N players who whispered you." .. C.RESET)
+
+    print(C.Y .. "/rc" .. C.RESET .. ": " .. C.RESET .. "Perform a ready check." .. C.RESET)
+    print(C.Y .. "/q" .. C.RESET .. ": " .. C.RESET .. "Leaves the current party or raid." .. C.RESET)
+    print(C.Y .. "/ui" .. C.RESET .. ": " .. C.RESET .. "Reloads the user interface." .. C.RESET)
+    print(C.Y .. "/gx" .. C.RESET .. ": " .. C.RESET .. "Restarts the graphics engine." .. C.RESET)
+    print(C.Y .. "/lua" .. C.RESET .. ": " .. C.RESET .. "Toggles the display of LUA errors." .. C.RESET)
+end
+
+local IntroEvents = CreateFrame("Frame")
+IntroEvents:RegisterEvent("PLAYER_LOGIN")
+IntroEvents:SetScript("OnEvent", CommandsIntro)
+
+SLASH_BENTOCMD1 = "/bentocmd"
+SlashCmdList["BENTOCMD"] = function(msg, editBox)
+    if msg == "" then
+        PrintCommands()
+    end
+end
+
+
+
+
+
 local KeywordTable = {}
 local playerName = UnitName("player")
 
@@ -92,6 +135,12 @@ SlashCmdList["FILTER"] = function(msg)
 end
 
 
+
+
+
+
+
+
 SLASH_WHISPERWHO1 = "/ww"
 SlashCmdList["WHISPERWHO"] = function(msg)
     local limit, classExclusion, message
@@ -180,8 +229,28 @@ WhisperLastEvents:RegisterEvent("CHAT_MSG_WHISPER")
 WhisperLastEvents:SetScript("OnEvent", TrackWhispers)
 
 
-SLASH_CLOSETABS1 = "/c"
-SlashCmdList["CLOSETABS"] = function()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- Close Tabs
+local function CloseTabs()
     for _, chatFrameName in pairs(CHAT_FRAMES) do
         local chatFrame = _G[chatFrameName]
         if chatFrame and chatFrame.isTemporary then
@@ -190,17 +259,32 @@ SlashCmdList["CLOSETABS"] = function()
     end
 end
 
+SLASH_CLOSETABS1 = "/c"
+SlashCmdList["CLOSETABS"] = CloseTabs
+
+
+-- Ready Check
+local function ReadyCheck()
+    DoReadyCheck()
+end
 
 SLASH_READYCHECK1 = "/rc"
-SlashCmdList["READYCHECK"] = function() DoReadyCheck() end
+SlashCmdList["READYCHECK"] = ReadyCheck
 
+
+-- Quit Party
+local function QuitParty() 
+    if IsInGroup() then 
+        LeaveParty() 
+    end 
+end
 
 SLASH_QUITPARTY1 = "/q"
-SlashCmdList["QUITPARTY"] = function() if IsInGroup() then LeaveParty() end end
+SlashCmdList["QUITPARTY"] = QuitParty
 
 
-SLASH_TOGGLELUA1 = "/lua"
-SlashCmdList["TOGGLELUA"] = function()
+-- Toggle Lua
+local function ToggleLua()
     local currentSetting = GetCVar("scriptErrors")
     if currentSetting == "1" then
         SetCVar("scriptErrors", 0)
@@ -211,17 +295,16 @@ SlashCmdList["TOGGLELUA"] = function()
     end
 end
 
+SLASH_TOGGLELUA1 = "/lua"
+SlashCmdList["TOGGLELUA"] = ToggleLua
+
 
 SLASH_RELOADUI1 = "/ui"
-SlashCmdList["RELOADUI"] = function() ReloadUI() end
-
+SlashCmdList["RELOADUI"] = function()
+    ReloadUI()
+end
 
 SLASH_GXRESTART1 = "/gx"
-SlashCmdList["GXRESTART"] = function() ConsoleExec("gxRestart") end
-
-
-SLASH_RELOADANDRESTART1 = "/rl"
-SlashCmdList["RELOADANDRESTART"] = function()
+SlashCmdList["GXRESTART"] = function()
     ConsoleExec("gxRestart")
-    ReloadUI()
 end

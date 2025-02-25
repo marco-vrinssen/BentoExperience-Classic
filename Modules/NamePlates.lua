@@ -2,7 +2,7 @@ local function NameplateUpdate(Nameplate, unitID)
     local UnitNameplate = Nameplate and Nameplate.UnitFrame
     if not UnitNameplate then return end
 
-    local NameplateHealthbar = UnitNameplate.healthBar
+    NameplateHealthbar = UnitNameplate.healthBar
     if not NameplateHealthbar then return end
 
     local HealthBarTexture = NameplateHealthbar:GetStatusBarTexture()

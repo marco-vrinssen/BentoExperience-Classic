@@ -29,13 +29,14 @@ local function UpdateQuestieIcons()
         if QuestieNameplate then
             QuestieNameplate:SetScale(1.2)
             QuestieNameplate:ClearAllPoints()
-            QuestieNameplate:SetPoint("LEFT", TargetFramePortrait, "RIGHT", -24, 0)
+            QuestieNameplate:SetPoint("LEFT", NameplateHealthbar, "RIGHT", -16, 0)
         end
 
         if QuestieTargetFrame then
             QuestieTargetFrame:SetScale(1.5)
             QuestieTargetFrame:ClearAllPoints()
-            QuestieTargetFrame:SetPoint("TOP", TargetFramePortrait, "BOTTOM", 0, 24)
+            QuestieTargetFrame:SetPoint("CENTER", TargetPortraitBackdrop, "BOTTOMRIGHT", 0, 0)
+            QuestieTargetFrame:SetFrameLevel(TargetPortraitBackdrop:GetFrameLevel() + 1)
         end
     end
 
