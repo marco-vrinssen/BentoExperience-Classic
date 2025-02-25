@@ -15,10 +15,9 @@ Modules/ClassButtons.lua
 Modules/ClassElements.lua
 Modules/Commands.lua
 Modules/Config.lua
-Modules/ExhaustionBars.lua
+Modules/ExhaustionTimers.lua
 Modules/Intro.lua
 Modules/Items.lua
-Modules/ItemsHighlight.lua
 Modules/MicroMenu.lua
 Modules/MiniMap.lua
 Modules/NamePlates.lua
