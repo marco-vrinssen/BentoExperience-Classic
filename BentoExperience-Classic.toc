@@ -26,7 +26,6 @@ Modules/PetButtons.lua
 Modules/PlayerFrame.lua
 Modules/PlayerFramePet.lua
 Modules/RaidFrames.lua
-Modules/RunesFrame.lua
 Modules/TargetFrame.lua
 Modules/TargetFrameToT.lua
 Modules/Tooltips.lua
