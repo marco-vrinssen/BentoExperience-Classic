@@ -1,6 +1,6 @@
-# Bento UI Classic
+# Bento Experience Classic
 
-## Addon for World of Warcraft Classic with simple and resource-efficient user interface enhancements.
+## Addon for World of Warcraft Classic with simple and resource-efficient user experience and interface enhancements.
 
 ### Features
 - **Action Bars**: Redesigned and repositioned for optimal layout.

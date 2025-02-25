@@ -114,3 +114,26 @@ local function RecolorWhisperMessages(self, event, message, sender, ...)
 end
 
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", RecolorWhisperMessages)
+
+
+
+
+
+
+
+
+SetCVar("chatClassColorOverride", "0")
+
+local chatTypes = {
+    "SAY", "EMOTE", "YELL", "GUILD", "OFFICER", "WHISPER",
+    "PARTY", "PARTY_LEADER", "RAID", "RAID_LEADER", "RAID_WARNING",
+    "INSTANCE_CHAT", "INSTANCE_CHAT_LEADER", "VOICE_TEXT"
+}
+
+for _, v in ipairs(chatTypes) do
+    SetChatColorNameByClass(v, true)
+end
+
+for i = 1, 50 do
+    SetChatColorNameByClass("CHANNEL" .. i, true)
+end
