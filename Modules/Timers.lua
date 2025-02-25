@@ -3,13 +3,13 @@
 local function ExhaustionTimerBackdrop(ExhaustionTimer)
     if not _G[ExhaustionTimer.."CustomBackdrop"] then
         local ExhaustionTimerBackdrop = CreateFrame("Frame", ExhaustionTimer.."CustomBackdrop", _G[ExhaustionTimer.."StatusBar"], "BackdropTemplate")
-        ExhaustionTimerBackdrop:SetPoint("TOPLEFT", _G[ExhaustionTimer.."StatusBar"], "TOPLEFT", -3, 2)
-        ExhaustionTimerBackdrop:SetPoint("BOTTOMRIGHT", _G[ExhaustionTimer.."StatusBar"], "BOTTOMRIGHT", 3, -2)
+        ExhaustionTimerBackdrop:SetPoint("TOPLEFT", _G[ExhaustionTimer.."StatusBar"], "TOPLEFT", -3, 3)
+        ExhaustionTimerBackdrop:SetPoint("BOTTOMRIGHT", _G[ExhaustionTimer.."StatusBar"], "BOTTOMRIGHT", 3, -3)
         ExhaustionTimerBackdrop:SetBackdrop({
             edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
             edgeSize = 12
         })
-        ExhaustionTimerBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
+        ExhaustionTimerBackdrop:SetBackdropBorderColor(unpack(RGB.N))
         ExhaustionTimerBackdrop:SetFrameStrata("HIGH")
     end
 end

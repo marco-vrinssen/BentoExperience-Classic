@@ -4,7 +4,7 @@ local CastingBarBackdrop = CreateFrame("Frame", nil, CastingBarFrame, "BackdropT
 CastingBarBackdrop:SetPoint("TOPLEFT", CastingBarFrame, "TOPLEFT", -3, 3)
 CastingBarBackdrop:SetPoint("BOTTOMRIGHT", CastingBarFrame, "BOTTOMRIGHT", 3, -3)
 CastingBarBackdrop:SetBackdrop({ edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 12 })
-CastingBarBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5)
+CastingBarBackdrop:SetBackdropBorderColor(unpack(RGB.GREY))
 CastingBarBackdrop:SetFrameStrata("HIGH")
 
 
@@ -32,14 +32,9 @@ end
 
 -- RECOLOR CAST BAR ON START
 
-local StateColors = {
-    UNIT_SPELLCAST_START = {0.984, 0.820, 0.204}
-}
-
 local function RecolorCastBar(event)
-    local CastStateColor = StateColors[event]
-    if CastStateColor then
-        CastingBarFrame:SetStatusBarColor(unpack(CastStateColor))
+    if event == "UNIT_SPELLCAST_START" then
+        CastingBarFrame:SetStatusBarColor(unpack(RGB.YELLOW))
     end
 end  
 

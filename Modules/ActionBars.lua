@@ -85,7 +85,7 @@ local function UpdateActionButtonAppearance()
                 backdrop:SetPoint("TOPLEFT", button, "TOPLEFT", -3, 3)
                 backdrop:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 3, -3)
                 backdrop:SetBackdrop({ edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 12 })
-                backdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
+                backdrop:SetBackdropBorderColor(unpack(RGB.N))
                 backdrop:SetFrameStrata("HIGH")
                 button.customBorder = backdrop
             end
@@ -108,14 +108,6 @@ local function UpdateActionButtonAppearance()
             if hotkey then
                 hotkey:SetFont(hotkey:GetFont(), 12, "OUTLINE")
                 hotkey:SetTextColor(1, 1, 1, 1)
-            end
-            local cooldown = _G[button:GetName() .. "Cooldown"]
-            if cooldown then
-                local cooldownText = cooldown:GetRegions()
-                if cooldownText and cooldownText:GetObjectType() == "FontString" then
-                    cooldownText:SetFont(cooldownText:GetFont(), 20, "OUTLINE")
-                    cooldownText:SetTextColor(1, 1, 1, 1)
-                end
             end
         end
     end
