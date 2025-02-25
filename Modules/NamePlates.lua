@@ -28,7 +28,27 @@ local function NameplateUpdate(Nameplate, unitID)
 
     UnitNameplate.name:ClearAllPoints()
     UnitNameplate.name:SetPoint("BOTTOM", NameplateHealthbar, "TOP", 0, 8)
-    UnitNameplate.name:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
+    UnitNameplate.name:SetFont(STANDARD_TEXT_FONT, 14, "OUTLINE")
+
+    if UnitExists(unitID) then
+        if UnitIsPlayer(unitID) then
+            if UnitIsEnemy("player", unitID) and UnitCanAttack("player", unitID) then
+                UnitNameplate.name:SetTextColor(0.918, 0.125, 0.161) -- Red for enemy players that can be attacked
+            elseif UnitReaction("player", unitID) == 4 then
+                UnitNameplate.name:SetTextColor(0.984, 0.820, 0.204) -- Yellow for neutral players
+            else
+                UnitNameplate.name:SetTextColor(1, 1, 1) -- White for friendly players
+            end
+        else
+            if UnitIsEnemy("player", unitID) and UnitCanAttack("player", unitID) then
+                UnitNameplate.name:SetTextColor(0.918, 0.125, 0.161) -- Red for aggressive NPCs
+            elseif UnitReaction("player", unitID) == 4 and UnitCanAttack("player", unitID) then
+                UnitNameplate.name:SetTextColor(0.984, 0.820, 0.204) -- Yellow for neutral but attackable NPCs
+            elseif UnitReaction("player", unitID) >= 4 then
+                UnitNameplate.name:SetTextColor(1, 1, 1) -- White for friendly NPCs
+            end
+        end
+    end
 
     UnitNameplate.RaidTargetFrame:ClearAllPoints()
     UnitNameplate.RaidTargetFrame:SetScale(0.8)
@@ -68,6 +88,13 @@ local function NameplateUpdate(Nameplate, unitID)
     end
 end
 
+local function NameplateOnShow(Nameplate)
+    local unitID = Nameplate.unit
+    if unitID then
+        NameplateUpdate(Nameplate, unitID)
+    end
+end
+
 local NameplateEvents = CreateFrame("Frame")
 NameplateEvents:RegisterEvent("NAME_PLATE_UNIT_ADDED")
 NameplateEvents:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE")
@@ -76,6 +103,18 @@ NameplateEvents:SetScript("OnEvent", function(self, event, unitID)
     local Nameplate = C_NamePlate.GetNamePlateForUnit(unitID)
     if Nameplate then
         NameplateUpdate(Nameplate, unitID)
+    end
+end)
+
+hooksecurefunc("CompactUnitFrame_UpdateName", function(frame)
+    if frame.unit then
+        NameplateUpdate(frame:GetParent(), frame.unit)
+    end
+end)
+
+hooksecurefunc("CompactUnitFrame_UpdateAll", function(frame)
+    if frame.unit then
+        NameplateUpdate(frame:GetParent(), frame.unit)
     end
 end)
 

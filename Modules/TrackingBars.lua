@@ -1,4 +1,4 @@
--- GENERATE EXPERIENCE BAR BACKDROP
+-- UPDATE EXPERIENCE BAR
 
 local XPBarBackdrop = CreateFrame("Frame", nil, MainMenuExpBar, "BackdropTemplate")
 XPBarBackdrop:SetPoint("TOPLEFT", MainMenuExpBar, "TOPLEFT", -3, 3)
@@ -7,15 +7,9 @@ XPBarBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", ed
 XPBarBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5)
 XPBarBackdrop:SetFrameStrata("HIGH")
 
-
-
-
--- UPDATE EXPERIENCE BAR
-
 local function UpdateExperienceBar()
     if UnitLevel("player") == MAX_PLAYER_LEVEL then
         MainMenuExpBar:Hide()
-        return
     end
 
     MainMenuXPBarTexture0:Hide()
@@ -75,7 +69,8 @@ MainMenuExpBar:HookScript("OnLeave", function() GameTooltip:Hide() end)
 
 
 
--- GENERATE REPUTATION BAR BACKDROP
+-- UPDATE REPUTATION BAR
+
 local RepBarBackdrop = CreateFrame("Frame", nil, ReputationWatchBar.StatusBar, "BackdropTemplate")
 RepBarBackdrop:SetPoint("TOPLEFT", ReputationWatchBar.StatusBar, "TOPLEFT", -3, 3)
 RepBarBackdrop:SetPoint("BOTTOMRIGHT", ReputationWatchBar.StatusBar, "BOTTOMRIGHT", 3, -3)
@@ -83,21 +78,15 @@ RepBarBackdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", e
 RepBarBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5)
 RepBarBackdrop:SetFrameStrata("HIGH")
 
-
-
-
--- UPDATE REPUTATION BAR
-
 local function UpdateReputationBar()
     if not GetWatchedFactionInfo() then
         ReputationWatchBar.StatusBar:Hide()
-        return
     end
     
-    ReputationWatchBar.StatusBar.WatchBarTexture0:Hide() 
-    ReputationWatchBar.StatusBar.WatchBarTexture1:Hide() 
-    ReputationWatchBar.StatusBar.WatchBarTexture2:Hide() 
-    ReputationWatchBar.StatusBar.WatchBarTexture3:Hide() 
+    ReputationWatchBar.StatusBar.XPBarTexture0:Hide() 
+    ReputationWatchBar.StatusBar.XPBarTexture1:Hide() 
+    ReputationWatchBar.StatusBar.XPBarTexture2:Hide() 
+    ReputationWatchBar.StatusBar.XPBarTexture3:Hide() 
 
     ReputationWatchBar.StatusBar:SetWidth(120)
     ReputationWatchBar.StatusBar:SetHeight(12)

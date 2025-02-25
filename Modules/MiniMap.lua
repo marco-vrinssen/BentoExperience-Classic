@@ -42,12 +42,12 @@ local MinimapTimeBackdrop = CreateFrame("Frame", nil, Minimap, "BackdropTemplate
 MinimapTimeBackdrop:SetSize(48, 24)
 MinimapTimeBackdrop:SetPoint("CENTER", Minimap, "BOTTOM", 0, -2)
 MinimapTimeBackdrop:SetBackdrop({
-    bgFile = "Interface/ChatFrame/ChatFrameBackground", -- Commented out to prevent black screen
+    bgFile = "Interface/Tooltips/UI-Tooltip-Background", -- Updated background
     edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
     tile = true, tileSize = 24, edgeSize = 12,
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
-MinimapTimeBackdrop:SetBackdropColor(0, 0, 0, 1)
+MinimapTimeBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
 MinimapTimeBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 MinimapTimeBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 1)
 
@@ -78,12 +78,12 @@ local MinimapMailBackdrop = CreateFrame("Frame", nil, MiniMapMailFrame, "Backdro
 MinimapMailBackdrop:SetPoint("TOPLEFT", MiniMapMailFrame, "TOPLEFT", -4, 4)
 MinimapMailBackdrop:SetPoint("BOTTOMRIGHT", MiniMapMailFrame, "BOTTOMRIGHT", 4, -4)
 MinimapMailBackdrop:SetBackdrop({
-    bgFile = "Interface/ChatFrame/ChatFrameBackground",
+    bgFile = "Interface/Tooltips/UI-Tooltip-Background", -- Updated background
     edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
     tile = false, tileSize = 16, edgeSize = 12,
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
-MinimapMailBackdrop:SetBackdropColor(0, 0, 0, 1)
+MinimapMailBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
 MinimapMailBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 MinimapMailBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 1)
 
@@ -111,12 +111,12 @@ local MinimapBFBackdrop = CreateFrame("Frame", nil, MiniMapBattlefieldFrame, "Ba
 MinimapBFBackdrop:SetPoint("TOPLEFT", MiniMapBattlefieldFrame, "TOPLEFT", -4, 4)
 MinimapBFBackdrop:SetPoint("BOTTOMRIGHT", MiniMapBattlefieldFrame, "BOTTOMRIGHT", 4, -4)
 MinimapBFBackdrop:SetBackdrop({
-    bgFile = "Interface/ChatFrame/ChatFrameBackground",
+    bgFile = "Interface/Tooltips/UI-Tooltip-Background", -- Updated background
     edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
     tile = true, tileSize = 16, edgeSize = 12,
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
-MinimapBFBackdrop:SetBackdropColor(0, 0, 0, 1)
+MinimapBFBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
 MinimapBFBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 MinimapBFBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 1)
 
@@ -147,12 +147,12 @@ local MinimapTrackingBackdrop = CreateFrame("Frame", nil, MiniMapTracking, "Back
 MinimapTrackingBackdrop:SetPoint("TOPLEFT", MiniMapTracking, "TOPLEFT", -4, 4)
 MinimapTrackingBackdrop:SetPoint("BOTTOMRIGHT", MiniMapTracking, "BOTTOMRIGHT", 4, -4)
 MinimapTrackingBackdrop:SetBackdrop({
-    bgFile = "Interface/ChatFrame/ChatFrameBackground",
+    bgFile = "Interface/Tooltips/UI-Tooltip-Background", -- Updated background
     edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
     tile = true, tileSize = 16, edgeSize = 12,
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
-MinimapTrackingBackdrop:SetBackdropColor(0, 0, 0, 1)
+MinimapTrackingBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
 MinimapTrackingBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 MinimapTrackingBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 1)
 
@@ -211,12 +211,12 @@ local function AddonButtonUpdate()
                 AddonButton.background:SetPoint("TOPLEFT", AddonButton, "TOPLEFT", -4, 4)
                 AddonButton.background:SetPoint("BOTTOMRIGHT", AddonButton, "BOTTOMRIGHT", 4, -4)
                 AddonButton.background:SetBackdrop({
-                    bgFile = "Interface/ChatFrame/ChatFrameBackground",
+                    bgFile = "Interface/Tooltips/UI-Tooltip-Background", -- Updated background
                     edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
                     tile = false, tileSize = 16, edgeSize = 12,
                     insets = {left = 2, right = 2, top = 2, bottom = 2}
                 })
-                AddonButton.background:SetBackdropColor(0, 0, 0, 1)
+                AddonButton.background:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
                 AddonButton.background:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
                 AddonButton.background:SetFrameLevel(AddonButton:GetFrameLevel() - 1)
             end

@@ -25,23 +25,6 @@ TargetPortraitBackdrop:SetAttribute("type2", "togglemenu")
 
 
 
--- DEFINE CLASS COLORS FOR TARGET NAMES
-
-local CLASS_COLORS = {
-	WARRIOR = { 1, 0.78, 0.55 },
-	MAGE    = { 0.41, 0.8, 0.94 },
-	ROGUE   = { 1, 0.96, 0.41 },
-	DRUID   = { 1, 0.49, 0.04 },
-	HUNTER  = { 0.67, 0.83, 0.45 },
-	SHAMAN  = { 0, 0.44, 0.87 },
-	PRIEST  = { 1, 1, 1 },
-	WARLOCK = { 0.58, 0.51, 0.79 },
-	PALADIN = { 0.96, 0.55, 0.73 },
-}
-
-
-
-
 -- UPDATE TARGET FRAME
 
 local function TargetFrameUpdate()
@@ -52,35 +35,37 @@ local function TargetFrameUpdate()
 	TargetFrame:RegisterForClicks("AnyUp")
 	TargetFrame:SetAttribute("type1", "target")
 	TargetFrame:SetAttribute("type2", "togglemenu")
+
 	TargetFrameBackground:ClearAllPoints()
 	TargetFrameBackground:SetPoint("TOPLEFT", TargetFrameBackdrop, "TOPLEFT", 3, -3)
 	TargetFrameBackground:SetPoint("BOTTOMRIGHT", TargetFrameBackdrop, "BOTTOMRIGHT", -3, 3)
-	TargetFrameNameBackground:Hide()
+
 	TargetFrameTextureFrameTexture:Hide()
 	TargetFrameTextureFramePVPIcon:SetAlpha(0)
-	TargetFrameTextureFrameRaidTargetIcon:SetPoint("TOP", TargetPortraitBackdrop, "TOP", 0, -4)
-	TargetFrameTextureFrameRaidTargetIcon:SetSize(16, 16)
+
 	TargetFrameTextureFrameDeadText:Hide()
+
+	TargetFrameNameBackground:Hide()
 	TargetFrameTextureFrameName:ClearAllPoints()
 	TargetFrameTextureFrameName:SetPoint("TOP", TargetFrameBackdrop, "TOP", 0, -6)
 	TargetFrameTextureFrameName:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
 	
 	if UnitExists("target") then
 		if UnitIsPlayer("target") then
-			local _, class = UnitClass("target")
-			local color = CLASS_COLORS[class]
-			if color then
-				TargetFrameTextureFrameName:SetTextColor(unpack(color))
+			if UnitIsEnemy("player", "target") and UnitCanAttack("player", "target") then
+				TargetFrameTextureFrameName:SetTextColor(0.918, 0.125, 0.161) -- Red for enemy players that can be attacked
+			elseif UnitReaction("player", "target") == 4 then
+				TargetFrameTextureFrameName:SetTextColor(0.984, 0.820, 0.204) -- Yellow for neutral players
 			else
-				TargetFrameTextureFrameName:SetTextColor(1, 1, 1)
+				TargetFrameTextureFrameName:SetTextColor(1, 1, 1) -- White for friendly players
 			end
 		else
 			if UnitIsEnemy("player", "target") and UnitCanAttack("player", "target") then
-				TargetFrameTextureFrameName:SetTextColor(1, 0.25, 0)
+				TargetFrameTextureFrameName:SetTextColor(0.918, 0.125, 0.161) -- Red for aggressive NPCs
 			elseif UnitReaction("player", "target") == 4 and UnitCanAttack("player", "target") then
-				TargetFrameTextureFrameName:SetTextColor(1, 0.8, 0)
-			elseif UnitReaction("player", "target") >= 4 and not UnitCanAttack("player", "target") then
-				TargetFrameTextureFrameName:SetTextColor(1, 1, 1)
+				TargetFrameTextureFrameName:SetTextColor(0.984, 0.820, 0.204) -- Yellow for neutral but attackable NPCs
+			elseif UnitReaction("player", "target") >= 4 then
+				TargetFrameTextureFrameName:SetTextColor(1, 1, 1) -- White for friendly NPCs
 			end
 		end
 	end
@@ -177,6 +162,41 @@ local function PortraitTextureUpdate(TargetPortrait)
 end
 
 hooksecurefunc("UnitFramePortrait_Update", PortraitTextureUpdate)
+
+
+
+
+-- UPDATE RAID TARGET ICON
+
+local RaidTargetBackdrop = CreateFrame("Frame", nil, TargetFrame, "BackdropTemplate")
+RaidTargetBackdrop:SetPoint("BOTTOMLEFT", TargetPortraitBackdrop, "TOPRIGHT", -2, -2)
+RaidTargetBackdrop:SetSize(28, 28)
+RaidTargetBackdrop:SetBackdrop({
+    bgFile = "Interface/Tooltips/UI-Tooltip-Background",
+    edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+    tile = true, tileSize = 28, edgeSize = 12,
+    insets = {left = 3, right = 3, top = 3, bottom = 3}
+})
+RaidTargetBackdrop:SetBackdropColor(0, 0, 0, 1)
+RaidTargetBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
+RaidTargetBackdrop:Hide()
+
+local function UpdateRaidTargetIcon()
+    if GetRaidTargetIndex("target") then
+        RaidTargetBackdrop:Show()
+        TargetFrameTextureFrameRaidTargetIcon:ClearAllPoints()
+        TargetFrameTextureFrameRaidTargetIcon:SetPoint("CENTER", RaidTargetBackdrop, "CENTER", 0, 0)
+        TargetFrameTextureFrameRaidTargetIcon:SetSize(12, 12)
+		TargetFrameTextureFrameRaidTargetIcon:SetFrameLevel(RaidTargetBackdrop:GetFrameLevel() + 1)
+    else
+        RaidTargetBackdrop:Hide()
+    end
+end
+
+local RaidTargetEvents = CreateFrame("Frame")
+RaidTargetEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
+RaidTargetEvents:RegisterEvent("RAID_TARGET_UPDATE")
+RaidTargetEvents:SetScript("OnEvent", UpdateRaidTargetIcon)
 
 
 

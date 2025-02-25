@@ -1,25 +1,25 @@
 -- INTRO CHAT COMMAND
 
 local function CommandsIntro()
-    print("|cFFFBD134" .. "/bentocmd" .. "|r" .. " for available commands.")
+    print(LUA.YELLOW .. "/bentocmd" .. "|r" .. " for available commands.")
 end
 
 local function PrintCommands()
-    print("|cFFFBD134" .. "/f KEYWORD" .. "|r" .. ": " .. "|r" .. "Filters all active channels for KEYWORD and reposts matching messages." .. "|r")
-    print("|cFFFBD134" .. "/f KEYWORD1+KEYWORD2" .. "|r" .. ": " .. "|r" .. "Filters all active channels for the combination of KEYWORD1 and KEYWORD2 and reposts matching messages." .. "|r")
-    print("|cFFFBD134" .. "/f" .. "|r" .. ": " .. "|r" .. "Clears and stops the filtering." .. "|r")
+    print(LUA.YELLOW .. "/f KEYWORD" .. "|r" .. ": " .. "|r" .. "Filters all active channels for KEYWORD and reposts matching messages." .. "|r")
+    print(LUA.YELLOW .. "/f KEYWORD1+KEYWORD2" .. "|r" .. ": " .. "|r" .. "Filters all active channels for the combination of KEYWORD1 and KEYWORD2 and reposts matching messages." .. "|r")
+    print(LUA.YELLOW .. "/f" .. "|r" .. ": " .. "|r" .. "Clears and stops the filtering." .. "|r")
 
-    print("|cFFFBD134" .. "/ww MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to all players in a currently open /who instance." .. "|r")
-    print("|cFFFBD134" .. "/ww N MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to the first N count of players in a currently open /who instance." .. "|r")
-    print("|cFFFBD134" .. "/ww -CLASS MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to all players who are not of the specified CLASS in a currently open /who instance." .. "|r")
-    print("|cFFFBD134" .. "/ww N -CLASS MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to the first N count of players who are not of the specified CLASS in a currently open /who instance." .. "|r")
-    print("|cFFFBD134" .. "/wl N MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to the last N players who whispered you." .. "|r")
+    print(LUA.YELLOW .. "/ww MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to all players in a currently open /who instance." .. "|r")
+    print(LUA.YELLOW .. "/ww N MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to the first N count of players in a currently open /who instance." .. "|r")
+    print(LUA.YELLOW .. "/ww -CLASS MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to all players who are not of the specified CLASS in a currently open /who instance." .. "|r")
+    print(LUA.YELLOW .. "/ww N -CLASS MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to the first N count of players who are not of the specified CLASS in a currently open /who instance." .. "|r")
+    print(LUA.YELLOW .. "/wl N MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to the last N players who whispered you." .. "|r")
 
-    print("|cFFFBD134" .. "/rc" .. "|r" .. ": " .. "|r" .. "Perform a ready check." .. "|r")
-    print("|cFFFBD134" .. "/q" .. "|r" .. ": " .. "|r" .. "Leaves the current party or raid." .. "|r")
-    print("|cFFFBD134" .. "/ui" .. "|r" .. ": " .. "|r" .. "Reloads the user interface." .. "|r")
-    print("|cFFFBD134" .. "/gx" .. "|r" .. ": " .. "|r" .. "Restarts the graphics engine." .. "|r")
-    print("|cFFFBD134" .. "/lua" .. "|r" .. ": " .. "|r" .. "Toggles the display of LUA errors." .. "|r")
+    print(LUA.YELLOW .. "/rc" .. "|r" .. ": " .. "|r" .. "Perform a ready check." .. "|r")
+    print(LUA.YELLOW .. "/q" .. "|r" .. ": " .. "|r" .. "Leaves the current party or raid." .. "|r")
+    print(LUA.YELLOW .. "/ui" .. "|r" .. ": " .. "|r" .. "Reloads the user interface." .. "|r")
+    print(LUA.YELLOW .. "/gx" .. "|r" .. ": " .. "|r" .. "Restarts the graphics engine." .. "|r")
+    print(LUA.YELLOW .. "/lua" .. "|r" .. ": " .. "|r" .. "Toggles the display of LUA errors." .. "|r")
 end
 
 local IntroEvents = CreateFrame("Frame")

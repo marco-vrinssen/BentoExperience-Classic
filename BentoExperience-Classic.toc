@@ -4,12 +4,13 @@
 ## Version: 1.0
 ## Author: MIYANKO
 
+Modules/Variables.lua
+
 Modules/ActionBars.lua
 Modules/Auras.lua
 Modules/Bags.lua
 Modules/CastBar.lua
 Modules/Chat.lua
-Modules/Colors.lua
 Modules/Commands.lua
 Modules/Compatibility.lua
 Modules/GraphicsSound.lua
@@ -22,6 +23,5 @@ Modules/Raid.lua
 Modules/Target.lua
 Modules/Timers.lua
 Modules/Tooltips.lua
-Modules/TrackingBars copy.lua
 Modules/TrackingBars.lua
 Modules/WorldMap.lua
