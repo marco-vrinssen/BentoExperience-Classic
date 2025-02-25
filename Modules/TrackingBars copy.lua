@@ -17,9 +17,9 @@ end
 
 local function CreateBackdrop(frame)
     local backdrop = CreateFrame("Frame", nil, frame, "BackdropTemplate")
-    backdrop:SetPoint("TOPLEFT", frame, "TOPLEFT", -2, 2)
-    backdrop:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 2, -2)
-    backdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 8})
+    backdrop:SetPoint("TOPLEFT", frame, "TOPLEFT", -3, 3)
+    backdrop:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 3, -3)
+    backdrop:SetBackdrop({edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 12})
     backdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
     backdrop:SetFrameStrata("HIGH")
     return backdrop
@@ -32,7 +32,7 @@ local function UpdateExperienceBar()
         MainMenuExpBar:ClearAllPoints()
         MainMenuExpBar:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 16, -16)
         MainMenuExpBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
-        MainMenuExpBar:SetStatusBarColor(0.23, 0.19, 0.31)
+        MainMenuExpBar:SetStatusBarColor(0.643, 0.231, 0.918)
         if not MainMenuExpBar.backdrop then
             MainMenuExpBar.backdrop = CreateBackdrop(MainMenuExpBar)
         end
@@ -57,9 +57,9 @@ local function UpdateReputationBar()
         ReputationWatchBar.StatusBar:SetWidth(120)
         ReputationWatchBar.StatusBar:SetHeight(12)
         ReputationWatchBar.StatusBar:ClearAllPoints()
-        ReputationWatchBar.StatusBar:SetPoint("TOPLEFT", MainMenuExpBar, "BOTTOMLEFT", 0, -8)
+        ReputationWatchBar.StatusBar:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", 16, -32)
         ReputationWatchBar.StatusBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
-        ReputationWatchBar.StatusBar:SetStatusBarColor(0.19, 0.31, 0.23)
+        ReputationWatchBar.StatusBar:SetStatusBarColor(0.157, 0.443, 0.851)
         if not ReputationWatchBar.StatusBar.backdrop then
             ReputationWatchBar.StatusBar.backdrop = CreateBackdrop(ReputationWatchBar.StatusBar)
         end
@@ -116,12 +116,12 @@ local function PlayerLevelTooltip()
     local RestedExperience = GetXPExhaustion() or 0
 
     local ExperienceText = string.format(
-        "|cFFFFFFFFExperience|r\n\n" ..
-        "|cFFFFCC00Progress:|r |cFFFFFFFF%d%%|r\n" ..
-        "|cFFFFCC00Rested:|r |cFFFFFFFF%d%%|r\n" ..
-        "|cFFFFCC00Current:|r |cFFFFFFFF%d|r\n" ..
-        "|cFFFFCC00Missing:|r |cFFFFFFFF%d|r\n" ..
-        "|cFFFFCC00Total:|r |cFFFFFFFF%d|r",
+        "|cFFA43BEAExperience|r\n" ..
+        "|cFFFBD134Progress:|r %d%%\n" ..
+        "|cFFFBD134Rested:|r %d%%\n" ..
+        "|cFFFBD134Current:|r %d\n" ..
+        "|cFFFBD134Missing:|r %d\n" ..
+        "|cFFFBD134Total:|r %d",
         math.floor((CurrentExperience / MaxExperience) * 100),
         math.floor((RestedExperience / MaxExperience) * 100),
         CurrentExperience,
@@ -142,12 +142,12 @@ local function ReputationTooltip()
         local progressPercent = math.floor((progress / total) * 100)
 
         local ReputationText = string.format(
-            "|cFFFFFFFFReputation|r\n\n" ..
-            "|cFFFFCC00Faction:|r |cFFFFFFFF%s|r\n" ..
-            "|cFFFFCC00Standing:|r |cFFFFFFFF%s|r\n" ..
-            "|cFFFFCC00Progress:|r |cFFFFFFFF%d%%|r\n" ..
-            "|cFFFFCC00Current:|r |cFFFFFFFF%d|r\n" ..
-            "|cFFFFCC00Total:|r |cFFFFFFFF%d|r",
+            "|cFF2871D9Reputation|r\n" ..
+            "|cFFFBD134Faction:|r %s\n" ..
+            "|cFFFBD134Standing:|r %s\n" ..
+            "|cFFFBD134Progress:|r %d%%\n" ..
+            "|cFFFBD134Current:|r %d\n" ..
+            "|cFFFBD134Total:|r %d",
             name,
             _G["FACTION_STANDING_LABEL"..standing],
             progressPercent,

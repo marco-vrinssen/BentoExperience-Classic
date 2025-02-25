@@ -1,4 +1,5 @@
--- Create and configure the backdrop for the tooltip status bar
+-- GENERATE TOOLTIP STATUS BAR BACKDROP
+
 local function CreateTooltipStatusBarBackdrop()
     local backdrop = CreateFrame("Frame", nil, GameTooltipStatusBar, "BackdropTemplate")
     backdrop:SetBackdrop({
@@ -10,7 +11,11 @@ local function CreateTooltipStatusBarBackdrop()
     return backdrop
 end
 
--- Function to update the tooltip position and appearance
+
+
+
+-- UPDATE TOOLTIP
+
 local function UpdateTooltip(self)
     if self:GetAnchorType() ~= "ANCHOR_CURSOR" then
         GameTooltip:ClearAllPoints()
@@ -23,16 +28,16 @@ local function UpdateTooltip(self)
         GameTooltipStatusBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
         GameTooltipStatusBar:SetFrameLevel(GameTooltip:GetFrameLevel() + 1)
         
-        -- Apply the backdrop to the tooltip status bar
         if not GameTooltipStatusBar.Backdrop then
             GameTooltipStatusBar.Backdrop = CreateTooltipStatusBarBackdrop()
         end
+
         local TooltipStatusBarBackdrop = GameTooltipStatusBar.Backdrop
+
         TooltipStatusBarBackdrop:ClearAllPoints()
         TooltipStatusBarBackdrop:SetPoint("TOPLEFT", GameTooltipStatusBar, "TOPLEFT", -3, 3)
         TooltipStatusBarBackdrop:SetPoint("BOTTOMRIGHT", GameTooltipStatusBar, "BOTTOMRIGHT", 3, -3)
     end
 end
 
--- Hook the UpdateTooltip function to the GameTooltip_SetDefaultAnchor function
 hooksecurefunc("GameTooltip_SetDefaultAnchor", UpdateTooltip)

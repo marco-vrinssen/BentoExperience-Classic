@@ -1,3 +1,5 @@
+-- UPDATE PLAYER AURAS
+
 local function UpdateCustomTimerText(buff)
     local duration = _G[buff:GetName().."Duration"]
     if duration then

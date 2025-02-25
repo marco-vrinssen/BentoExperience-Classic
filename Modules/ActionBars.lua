@@ -1,4 +1,5 @@
--- Update the main action bar and multi-bars
+-- UPDATE ACTION BARS
+
 local function ActionBarUpdate()
     MainMenuBar:SetWidth(512)
     MainMenuBar:ClearAllPoints()
@@ -57,7 +58,10 @@ ActionBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 ActionBarEvents:SetScript("OnEvent", ActionBarUpdate)
 
 
--- Update the appearance of action buttons
+
+
+-- UPDATE ACTION BUTTONS
+
 local function UpdateActionButtonAppearance()
     local function hideNormalTexture(button)
         if button then
@@ -139,8 +143,8 @@ ButtonAppearanceEvents:SetScript("OnEvent", UpdateActionButtonAppearance)
 
 
 
+-- UPDATE CLASS ACTION BAR
 
--- Update the stance/class bar
 local function ClassBarUpdate()
     if InCombatLockdown() then return end
     local PreviousClassButton
@@ -188,8 +192,8 @@ ClassBarEvents:SetScript("OnEvent", ClassBarUpdate)
 
 
 
+-- UPDATE PET ACTION BAR
 
--- Hide textures of pet action buttons
 local function HidePetButtonTextures(button)
     local normalTexture = _G[button:GetName() .. "NormalTexture"]
     if normalTexture then
@@ -203,7 +207,6 @@ local function HidePetButtonTextures(button)
     end
 end
 
--- Update the pet action bar
 local function PetBarUpdate()
     local PreviousPetButton
 
@@ -234,11 +237,14 @@ PetBarEvents:RegisterEvent("PET_BAR_UPDATE")
 PetBarEvents:SetScript("OnEvent", PetBarUpdate)
 
 
--- Update the vehicle leave button
+
+
+-- UPDATE VEHICLE LEAVE BUTTON
+
 local function VehicleButtonUpdate()
     MainMenuBarVehicleLeaveButton:SetSize(36, 36)
     MainMenuBarVehicleLeaveButton:ClearAllPoints()
-    MainMenuBarVehicleLeaveButton:SetPoint("CENTER", UIParent, "CENTER", 0, -160)
+    MainMenuBarVehicleLeaveButton:SetPoint("BOTTOMRIGHT", PlayerPortrait, "TOPLEFT", -4, 4)
 end
 
 MainMenuBarVehicleLeaveButton:HookScript("OnShow", VehicleButtonUpdate)

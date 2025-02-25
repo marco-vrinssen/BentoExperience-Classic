@@ -1,33 +1,29 @@
--- Load the color configuration
-local C = AddonColors
+-- INTRO CHAT COMMAND
 
 local function CommandsIntro()
-    print(C.Y .. "/bentocmd" .. C.RESET .. " for available commands.")
+    print("|cFFFBD134" .. "/bentocmd" .. "|r" .. " for available commands.")
 end
 
 local function PrintCommands()
-    print(C.Y .. "/f KEYWORD" .. C.RESET .. ": " .. C.RESET .. "Filters all active channels for KEYWORD and reposts matching messages." .. C.RESET)
-    print(C.Y .. "/f KEYWORD1+KEYWORD2" .. C.RESET .. ": " .. C.RESET .. "Filters all active channels for the combination of KEYWORD1 and KEYWORD2 and reposts matching messages." .. C.RESET)
-    print(C.Y .. "/f" .. C.RESET .. ": " .. C.RESET .. "Clears and stops the filtering." .. C.RESET)
+    print("|cFFFBD134" .. "/f KEYWORD" .. "|r" .. ": " .. "|r" .. "Filters all active channels for KEYWORD and reposts matching messages." .. "|r")
+    print("|cFFFBD134" .. "/f KEYWORD1+KEYWORD2" .. "|r" .. ": " .. "|r" .. "Filters all active channels for the combination of KEYWORD1 and KEYWORD2 and reposts matching messages." .. "|r")
+    print("|cFFFBD134" .. "/f" .. "|r" .. ": " .. "|r" .. "Clears and stops the filtering." .. "|r")
 
-    print(C.Y .. "/bc MESSAGE" .. C.RESET .. ": " .. C.RESET .. "Broadcasts the MESSAGE across all joined channels." .. C.RESET)
-    print(C.Y .. "/bc N1-N2 MESSAGE" .. C.RESET .. ": " .. C.RESET .. "Broadcasts the MESSAGE across all specified channels, where N1 and N2 are indicating the inclusive range of channels to be targeted." .. C.RESET)
+    print("|cFFFBD134" .. "/ww MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to all players in a currently open /who instance." .. "|r")
+    print("|cFFFBD134" .. "/ww N MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to the first N count of players in a currently open /who instance." .. "|r")
+    print("|cFFFBD134" .. "/ww -CLASS MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to all players who are not of the specified CLASS in a currently open /who instance." .. "|r")
+    print("|cFFFBD134" .. "/ww N -CLASS MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to the first N count of players who are not of the specified CLASS in a currently open /who instance." .. "|r")
+    print("|cFFFBD134" .. "/wl N MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to the last N players who whispered you." .. "|r")
 
-    print(C.Y .. "/ww MESSAGE" .. C.RESET .. ": " .. C.RESET .. "Sends the MESSAGE to all players in a currently open /who instance." .. C.RESET)
-    print(C.Y .. "/ww N MESSAGE" .. C.RESET .. ": " .. C.RESET .. "Sends the MESSAGE to the first N count of players in a currently open /who instance." .. C.RESET)
-    print(C.Y .. "/ww -CLASS MESSAGE" .. C.RESET .. ": " .. C.RESET .. "Sends the MESSAGE to all players who are not of the specified CLASS in a currently open /who instance." .. C.RESET)
-    print(C.Y .. "/ww N -CLASS MESSAGE" .. C.RESET .. ": " .. C.RESET .. "Sends the MESSAGE to the first N count of players who are not of the specified CLASS in a currently open /who instance." .. C.RESET)
-    print(C.Y .. "/wl N MESSAGE" .. C.RESET .. ": " .. C.RESET .. "Sends the MESSAGE to the last N players who whispered you." .. C.RESET)
-
-    print(C.Y .. "/rc" .. C.RESET .. ": " .. C.RESET .. "Perform a ready check." .. C.RESET)
-    print(C.Y .. "/q" .. C.RESET .. ": " .. C.RESET .. "Leaves the current party or raid." .. C.RESET)
-    print(C.Y .. "/ui" .. C.RESET .. ": " .. C.RESET .. "Reloads the user interface." .. C.RESET)
-    print(C.Y .. "/gx" .. C.RESET .. ": " .. C.RESET .. "Restarts the graphics engine." .. C.RESET)
-    print(C.Y .. "/lua" .. C.RESET .. ": " .. C.RESET .. "Toggles the display of LUA errors." .. C.RESET)
+    print("|cFFFBD134" .. "/rc" .. "|r" .. ": " .. "|r" .. "Perform a ready check." .. "|r")
+    print("|cFFFBD134" .. "/q" .. "|r" .. ": " .. "|r" .. "Leaves the current party or raid." .. "|r")
+    print("|cFFFBD134" .. "/ui" .. "|r" .. ": " .. "|r" .. "Reloads the user interface." .. "|r")
+    print("|cFFFBD134" .. "/gx" .. "|r" .. ": " .. "|r" .. "Restarts the graphics engine." .. "|r")
+    print("|cFFFBD134" .. "/lua" .. "|r" .. ": " .. "|r" .. "Toggles the display of LUA errors." .. "|r")
 end
 
 local IntroEvents = CreateFrame("Frame")
-IntroEvents:RegisterEvent("PLAYER_LOGIN")
+IntroEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 IntroEvents:SetScript("OnEvent", CommandsIntro)
 
 SLASH_BENTOCMD1 = "/bentocmd"
@@ -40,16 +36,16 @@ end
 
 
 
+-- KEYWORD FILTERING COMMAND
 
 local KeywordTable = {}
 local playerName = UnitName("player")
 
 local function KeywordMatch(msg, senderName)
-    local playerLink = "|Hplayer:" .. senderName .. "|h|cFFFFD500[" .. senderName .. "]: |r|h"
+    local playerLink = "|Hplayer:" .. senderName .. "|h" .. "|cFFFBD134" .. "[" .. senderName .. "]: " .. "|r" .. "|h"
     print(playerLink .. msg)
     PlaySound(3175, "Master", true)
 end
-
 
 local function KeywordFilter(msg)
     for _, keywordSet in ipairs(KeywordTable) do
@@ -75,7 +71,6 @@ local function KeywordFilter(msg)
     return false
 end
 
-
 local function KeywordValidation(self, event, msg, senderName, languageName, channelName, ...)
     if next(KeywordTable) and strmatch(channelName, "%d+") then
         local channelNumber = tonumber(strmatch(channelName, "%d+"))
@@ -85,16 +80,14 @@ local function KeywordValidation(self, event, msg, senderName, languageName, cha
     end
 end
 
-
 local FilterEvents = CreateFrame("Frame")
 FilterEvents:SetScript("OnEvent", KeywordValidation)
-
 
 SLASH_FILTER1 = "/f"
 SlashCmdList["FILTER"] = function(msg)
     if msg == "" then
         wipe(KeywordTable)
-        print("|cFFFFD500Filter:|r Cleared.")
+        print("|cFFFBD134" .. "Filter:" .. "|r" .. " Cleared.")
         FilterEvents:UnregisterEvent("CHAT_MSG_CHANNEL")
     else
         if not FilterEvents:IsEventRegistered("CHAT_MSG_CHANNEL") then
@@ -130,16 +123,14 @@ SlashCmdList["FILTER"] = function(msg)
                 newKeywordsStr = newKeywordsStr .. ", "
             end
         end
-        print("|cFFFFD500Filtering:|r " .. newKeywordsStr:gsub('"', '') .. ".")
+        print("|cFFFBD134" .. "Filtering:" .. "|r" .. " " .. newKeywordsStr:gsub('"', '') .. ".")
     end
 end
 
 
 
 
-
-
-
+-- WHISPER PLAYERS IN /WHO COMMAND
 
 SLASH_WHISPERWHO1 = "/ww"
 SlashCmdList["WHISPERWHO"] = function(msg)
@@ -189,8 +180,11 @@ SlashCmdList["WHISPERWHO"] = function(msg)
 end
 
 
-local recentWhispers = {}
 
+
+-- COMMAND TO WHISPER RECENT PLAYERS
+
+local recentWhispers = {}
 
 SLASH_WHISPERLASTN1 = "/wl"
 SlashCmdList["WHISPERLASTN"] = function(msg)
@@ -231,25 +225,8 @@ WhisperLastEvents:SetScript("OnEvent", TrackWhispers)
 
 
 
+-- COMMAND TO CLOSE ALL CHAT TEMPORARY CHAT TABS
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- Close Tabs
 local function CloseTabs()
     for _, chatFrameName in pairs(CHAT_FRAMES) do
         local chatFrame = _G[chatFrameName]
@@ -263,7 +240,10 @@ SLASH_CLOSETABS1 = "/c"
 SlashCmdList["CLOSETABS"] = CloseTabs
 
 
--- Ready Check
+
+
+-- COMMAND FOR READY CHECK
+
 local function ReadyCheck()
     DoReadyCheck()
 end
@@ -272,7 +252,10 @@ SLASH_READYCHECK1 = "/rc"
 SlashCmdList["READYCHECK"] = ReadyCheck
 
 
--- Quit Party
+
+
+-- COMMAND TO QUIT PARTY / RAID
+
 local function QuitParty() 
     if IsInGroup() then 
         LeaveParty() 
@@ -283,7 +266,10 @@ SLASH_QUITPARTY1 = "/q"
 SlashCmdList["QUITPARTY"] = QuitParty
 
 
--- Toggle Lua
+
+
+-- COMMAND TO TOGGLE THE DISPLAY LUA ERRORS
+
 local function ToggleLua()
     local currentSetting = GetCVar("scriptErrors")
     if currentSetting == "1" then
@@ -299,12 +285,35 @@ SLASH_TOGGLELUA1 = "/lua"
 SlashCmdList["TOGGLELUA"] = ToggleLua
 
 
+
+
+-- COMMAND TO RELOAD THE UI
+
 SLASH_RELOADUI1 = "/ui"
 SlashCmdList["RELOADUI"] = function()
     ReloadUI()
 end
 
+
+
+
+-- COMMAND TO RESTART THE GRAPHICS ENGINE
+
 SLASH_GXRESTART1 = "/gx"
 SlashCmdList["GXRESTART"] = function()
     ConsoleExec("gxRestart")
 end
+
+
+
+
+-- COMMAND TO RELOAD THE UI AND RESTART THE GRAPHICS ENGINE AND CLEAR CACHE
+
+local function FullReload()
+    ReloadUI()
+    ConsoleExec("gxRestart")
+    ConsoleExec("clearCache")
+end
+
+SLASH_FULLRELOAD1 = "/rl"
+SlashCmdList["FULLRELOAD"] = FullReload

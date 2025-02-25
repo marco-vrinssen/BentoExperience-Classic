@@ -1,4 +1,5 @@
--- Function to update the minimap container
+-- UPDATE MINIMAP
+
 local function MinimapContainerUpdate()
     Minimap:SetClampedToScreen(false)
     Minimap:SetParent(UIParent)
@@ -9,13 +10,16 @@ local function MinimapContainerUpdate()
     MinimapCluster:Hide()
 end
 
--- Register events to update the minimap container
 local MinimapContainerEvents = CreateFrame("Frame")
 MinimapContainerEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 MinimapContainerEvents:RegisterEvent("ZONE_CHANGED")
 MinimapContainerEvents:SetScript("OnEvent", MinimapContainerUpdate)
 
--- Function to enable mouse wheel zoom on the minimap
+
+
+
+-- ENABLE MOUSE WHEEL ZOOM ON MINIMAP
+
 local function MinimapScrollEnable(self, delta)
     if delta > 0 then
         Minimap_ZoomIn()
@@ -24,13 +28,16 @@ local function MinimapScrollEnable(self, delta)
     end
 end
 
--- Enable mouse wheel zoom on the minimap
 local MinimapZoomEvents = CreateFrame("Frame", nil, Minimap)
 MinimapZoomEvents:SetAllPoints(Minimap)
 MinimapZoomEvents:EnableMouseWheel(true)
 MinimapZoomEvents:SetScript("OnMouseWheel", MinimapScrollEnable)
 
--- Create a backdrop for the minimap time display
+
+
+
+-- UPDATE MINIMAP TIME DISPLAY
+
 local MinimapTimeBackdrop = CreateFrame("Frame", nil, Minimap, "BackdropTemplate")
 MinimapTimeBackdrop:SetSize(48, 24)
 MinimapTimeBackdrop:SetPoint("CENTER", Minimap, "BOTTOM", 0, -2)
@@ -44,7 +51,6 @@ MinimapTimeBackdrop:SetBackdropColor(0, 0, 0, 1)
 MinimapTimeBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 MinimapTimeBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 1)
 
--- Function to update the minimap time display
 local function MinimapTimeUpdate()
     for _, ButtonRegion in pairs({TimeManagerClockButton:GetRegions()}) do
         if ButtonRegion:IsObjectType("Texture") then
@@ -59,12 +65,15 @@ local function MinimapTimeUpdate()
     TimeManagerFrame:SetPoint("TOPRIGHT", MinimapTimeBackdrop, "BOTTOMRIGHT", 0, -4)
 end
 
--- Register event to update the minimap time display
 local MinimapTimeEvents = CreateFrame("Frame")
 MinimapTimeEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 MinimapTimeEvents:SetScript("OnEvent", MinimapTimeUpdate)
 
--- Create a backdrop for the minimap mail icon
+
+
+
+-- UPDATE MINIMAP MAIL ICON
+
 local MinimapMailBackdrop = CreateFrame("Frame", nil, MiniMapMailFrame, "BackdropTemplate")
 MinimapMailBackdrop:SetPoint("TOPLEFT", MiniMapMailFrame, "TOPLEFT", -4, 4)
 MinimapMailBackdrop:SetPoint("BOTTOMRIGHT", MiniMapMailFrame, "BOTTOMRIGHT", 4, -4)
@@ -78,7 +87,6 @@ MinimapMailBackdrop:SetBackdropColor(0, 0, 0, 1)
 MinimapMailBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 MinimapMailBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 1)
 
--- Function to update the minimap mail icon
 local function MinimapMailUpdate()
     MiniMapMailBorder:Hide()
     MiniMapMailFrame:SetParent(Minimap)
@@ -90,12 +98,15 @@ local function MinimapMailUpdate()
     MiniMapMailIcon:SetPoint("CENTER", MiniMapMailFrame, "CENTER", 0, 0)
 end
 
--- Register event to update the minimap mail icon
 local MinimapMailEvents = CreateFrame("Frame")
 MinimapMailEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 MinimapMailEvents:SetScript("OnEvent", MinimapMailUpdate)
 
--- Create a backdrop for the minimap battlefield icon
+
+
+
+-- UPDATE MINIMAP BATTLEFIELD ICON
+
 local MinimapBFBackdrop = CreateFrame("Frame", nil, MiniMapBattlefieldFrame, "BackdropTemplate")
 MinimapBFBackdrop:SetPoint("TOPLEFT", MiniMapBattlefieldFrame, "TOPLEFT", -4, 4)
 MinimapBFBackdrop:SetPoint("BOTTOMRIGHT", MiniMapBattlefieldFrame, "BOTTOMRIGHT", 4, -4)
@@ -109,7 +120,6 @@ MinimapBFBackdrop:SetBackdropColor(0, 0, 0, 1)
 MinimapBFBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 MinimapBFBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 1)
 
--- Function to update the minimap battlefield icon
 local function MinimapBFUpdate()
     MiniMapBattlefieldBorder:Hide()
     BattlegroundShine:Hide()
@@ -122,14 +132,17 @@ local function MinimapBFUpdate()
     MiniMapBattlefieldIcon:SetPoint("CENTER", MiniMapBattlefieldFrame, "CENTER", 0, 0)
 end
 
--- Register events to update the minimap battlefield icon
 local MinimapBFEvents = CreateFrame("Frame")
 MinimapBFEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 MinimapBFEvents:RegisterEvent("UPDATE_BATTLEFIELD_STATUS")
 MinimapBFEvents:RegisterEvent("UPDATE_ACTIVE_BATTLEFIELD")
 MinimapBFEvents:SetScript("OnEvent", MinimapBFUpdate)
 
--- Create a backdrop for the minimap tracking icon
+
+
+
+-- UPDATE MINIMAP TRACKING ICON
+
 local MinimapTrackingBackdrop = CreateFrame("Frame", nil, MiniMapTracking, "BackdropTemplate")
 MinimapTrackingBackdrop:SetPoint("TOPLEFT", MiniMapTracking, "TOPLEFT", -4, 4)
 MinimapTrackingBackdrop:SetPoint("BOTTOMRIGHT", MiniMapTracking, "BOTTOMRIGHT", 4, -4)
@@ -143,7 +156,6 @@ MinimapTrackingBackdrop:SetBackdropColor(0, 0, 0, 1)
 MinimapTrackingBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
 MinimapTrackingBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 1)
 
--- Function to update the minimap tracking icon
 local function MinimapTrackingUpdate()
     MiniMapTrackingBorder:Hide()
     MiniMapTracking:SetParent(Minimap)
@@ -155,7 +167,6 @@ local function MinimapTrackingUpdate()
     MiniMapTrackingIcon:SetPoint("CENTER", MiniMapTracking, "CENTER", 0, 0)
 end
 
--- Register event to update the minimap tracking icon
 local MinimapTrackingEvents = CreateFrame("Frame")
 MinimapTrackingEvents:RegisterEvent("MINIMAP_UPDATE_TRACKING")
 MinimapTrackingEvents:SetScript("OnEvent", function()
@@ -165,10 +176,8 @@ end)
 
 
 
+-- UPDATE ADDON BUTTONS ON MINIMAP
 
-
-
--- Function to update addon buttons
 local function AddonButtonUpdate()
     local LibDBIcon = _G.LibStub and _G.LibStub("LibDBIcon-1.0", true)
     if not LibDBIcon then return end
@@ -215,7 +224,6 @@ local function AddonButtonUpdate()
     end
 end
 
--- Register events to update addon buttons when the player enters the world or an addon is loaded
 local AddonButtonEvents = CreateFrame("Frame")
 AddonButtonEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 AddonButtonEvents:RegisterEvent("ADDON_LOADED")

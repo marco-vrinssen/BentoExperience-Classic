@@ -1,4 +1,5 @@
--- Function to update the world map frame
+-- UPDATE WORLD MAP
+
 local function UpdateWorldMapFrame()
     WorldMapFrame:ClearAllPoints()
     WorldMapFrame:SetScale(0.75)
@@ -12,14 +13,17 @@ local function UpdateWorldMapFrame()
     end
 end
 
--- Hook the world map frame update function
 WorldMapFrame:HookScript("OnUpdate", UpdateWorldMapFrame)
 WorldMapFrame:HookScript("OnShow", function()
     UIFrameFadeIn(WorldMapFrame, 0.1, 0, 1)
     UpdateWorldMapFrame()
 end)
 
--- Function to fade out the world map frame when the player starts moving
+
+
+
+-- ENABLE WORLD MAP FADE WHEN MOVING
+
 local function FadeOutMap()
     if WorldMapFrame:IsShown() then
         local targetAlpha = IsPlayerMoving() and 0.25 or 1
@@ -27,7 +31,6 @@ local function FadeOutMap()
     end
 end
 
--- Register events to fade out the world map frame when the player starts or stops moving
 local fadeOutEvents = CreateFrame("Frame")
 fadeOutEvents:RegisterEvent("PLAYER_STARTED_MOVING")
 fadeOutEvents:RegisterEvent("PLAYER_STOPPED_MOVING")

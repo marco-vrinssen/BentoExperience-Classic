@@ -1,3 +1,5 @@
+-- UPDATE CHAT FRAME
+
 local function HideUIElement(element)
     if element then
         element:Hide()
@@ -106,7 +108,10 @@ hooksecurefunc("FCF_OpenTemporaryWindow", function()
 end)
 
 
--- Recolor incoming whisper messages
+
+
+-- RECOLOR INCOMING WHISPER MESSAGES
+
 local function RecolorWhisperMessages(self, event, message, sender, ...)
     if event == "CHAT_MSG_WHISPER" then
         return false, "|cFFFFCCFE" .. message .. "|r", sender, ...
@@ -118,9 +123,7 @@ ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", RecolorWhisperMessages)
 
 
 
-
-
-
+-- UPDATE CLASS COLORS IN CHAT
 
 SetCVar("chatClassColorOverride", "0")
 

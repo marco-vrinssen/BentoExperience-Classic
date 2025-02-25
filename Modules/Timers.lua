@@ -1,3 +1,5 @@
+-- UPDATE EXHAUSTION TIMERS
+
 local function ExhaustionTimerBackdrop(ExhaustionTimer)
     if not _G[ExhaustionTimer.."CustomBackdrop"] then
         local ExhaustionTimerBackdrop = CreateFrame("Frame", ExhaustionTimer.."CustomBackdrop", _G[ExhaustionTimer.."StatusBar"], "BackdropTemplate")

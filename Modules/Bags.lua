@@ -1,3 +1,5 @@
+-- UPDATE BAG SLOTS AND CONTAINERS
+
 local function BagSlotUpdate()
     MainMenuBarBackpackButton:ClearAllPoints()
     MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", HelpMicroButton, "TOPRIGHT", -2, -12)

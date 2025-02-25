@@ -1,10 +1,16 @@
+-- GENERATE CASTBAR BACKDROP
+
 local CastingBarBackdrop = CreateFrame("Frame", nil, CastingBarFrame, "BackdropTemplate")
 CastingBarBackdrop:SetPoint("TOPLEFT", CastingBarFrame, "TOPLEFT", -3, 3)
 CastingBarBackdrop:SetPoint("BOTTOMRIGHT", CastingBarFrame, "BOTTOMRIGHT", 3, -3)
 CastingBarBackdrop:SetBackdrop({ edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 12 })
-CastingBarBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5, 1)
+CastingBarBackdrop:SetBackdropBorderColor(0.5, 0.5, 0.5)
 CastingBarBackdrop:SetFrameStrata("HIGH")
 
+
+
+
+-- UPDATE CAST BAR
 
 local function UpdateCastBar()
     CastingBarFrame:ClearAllPoints()
@@ -22,10 +28,13 @@ local function UpdateCastBar()
 end  
 
 
-local StateColors = {
-    UNIT_SPELLCAST_START = {0.5, 0.5, 1}
-}
 
+
+-- RECOLOR CAST BAR ON START
+
+local StateColors = {
+    UNIT_SPELLCAST_START = {0.984, 0.820, 0.204}
+}
 
 local function RecolorCastBar(event)
     local CastStateColor = StateColors[event]
@@ -34,6 +43,10 @@ local function RecolorCastBar(event)
     end
 end  
 
+
+
+
+-- DEFINE CASTBAR EVENTS
 
 local CastBarEvents = CreateFrame("Frame")
 CastBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")

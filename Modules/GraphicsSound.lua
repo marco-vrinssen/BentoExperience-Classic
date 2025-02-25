@@ -1,17 +1,4 @@
--- Define global addon colors
-AddonColors = {
-    B = "|cFF2871D9", -- 2871D9
-    Y = "|cFFFBD134", -- FBD134
-    YL = "|cFFFDFE9E", -- FDFE9E
-    G = "|cFF24FE31", -- 24FE31
-    P = "|cFFA43BEA", -- A43BEA
-    PL = "|cFFFB18B2", -- FB18B2
-    W = "|cFFFFFFFF", -- FFFFFF
-    RESET = "|r" -- Resets Custom Coloring
-}
-
-
-
+-- UPDATE GRAPHIC CONFIG VALUES
 
 local function UpdateCVars()
     SetCVar("ffxGlow", 0)
@@ -29,7 +16,8 @@ GraphicsEvents:SetScript("OnEvent", UpdateCVars)
 
 
 
--- Define muted sound
+-- MUTE SOUNDS
+
 local MutedSounds = {
     555124,
     548067,
@@ -42,7 +30,6 @@ local MutedSounds = {
     567721,
 }
 
--- Apply sound configuration
 local function ApplySoundConfiguration()
     for _, SoundID in ipairs(MutedSounds) do
         MuteSoundFile(SoundID)
@@ -53,7 +40,11 @@ local SoundEvents = CreateFrame("Frame")
 SoundEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 SoundEvents:SetScript("OnEvent", ApplySoundConfiguration)
 
--- Handle CVar changes
+
+
+
+-- ENSURE DEFAULT SOUNDOUT
+
 local function OnCVarChanged(event, cvar, value)
     if cvar == "Sound_OutputDriverIndex" and value ~= "0" then
         SetCVar("Sound_OutputDriverIndex", "0")
@@ -64,3 +55,18 @@ end
 local CVarEvents = CreateFrame("Frame")
 CVarEvents:RegisterEvent("CVAR_UPDATE")
 CVarEvents:SetScript("OnEvent", OnCVarChanged)
+
+
+
+
+-- UPDATE FRAMERATE DISPLAY
+
+local function FramerateUpdate()
+    FramerateLabel:SetAlpha(0)
+    FramerateText:ClearAllPoints()
+    FramerateText:SetPoint("TOP", UIParent, "TOP", 0, -16)
+end
+
+local FramerateEvents = CreateFrame("Frame")
+FramerateEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+FramerateEvents:SetScript("OnEvent", FramerateUpdate)

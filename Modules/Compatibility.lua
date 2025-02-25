@@ -1,4 +1,4 @@
--- Auctionator Scan Button Repositioning
+-- UPDATE AUCTIONATOR SCAN BUTTON POSITION
 
 local function UpdateAuctionator()
     if not IsAddOnLoaded("Auctionator") then
@@ -18,7 +18,7 @@ AuctionatorEvents:SetScript("OnEvent", UpdateAuctionator)
 
 
 
--- Questie Tracking Repositioning
+-- UPDATE QUESTIE TRACKING ICONS
 
 local function UpdateQuestieIcons()
     if not IsAddOnLoaded("Questie") then

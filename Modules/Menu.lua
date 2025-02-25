@@ -1,4 +1,5 @@
--- Function to update the micro menu buttons
+-- UPDATE MICRO MENU BUTTON POSITION
+
 local function UpdateMicroMenuButtons()
     local microButtons = {
         "HelpMicroButton", "MainMenuMicroButton", "WorldMapMicroButton", "GuildMicroButton",
@@ -12,7 +13,7 @@ local function UpdateMicroMenuButtons()
         if button then
             button:ClearAllPoints()
             button:SetScale(0.8)
-            button:SetAlpha(0.75)
+            button:SetAlpha(0.8)
             button:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", xOffset, 24)
             button:Show()
             xOffset = xOffset - button:GetWidth()
@@ -20,15 +21,17 @@ local function UpdateMicroMenuButtons()
     end
 end
 
--- Register event to update micro menu buttons when the player enters the world
 local microMenuEventFrame = CreateFrame("Frame")
 microMenuEventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 microMenuEventFrame:SetScript("OnEvent", UpdateMicroMenuButtons)
 
--- Hook the micro menu update function
 hooksecurefunc("UpdateMicroButtons", UpdateMicroMenuButtons)
 
--- Function to update the minimap LFG button
+
+
+
+-- UPDATE LFG BUTTON
+
 local function MinimapLFGUpdate()
     if LFGMinimapFrameBorder then
         LFGMinimapFrameBorder:Hide()
@@ -45,7 +48,6 @@ local function MinimapLFGUpdate()
     end
 end
 
--- Register event to update the minimap LFG button when the player enters the world
 local MinimapLFGEvents = CreateFrame("Frame")
 MinimapLFGEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 MinimapLFGEvents:SetScript("OnEvent", MinimapLFGUpdate)

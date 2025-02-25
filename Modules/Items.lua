@@ -1,9 +1,10 @@
+-- AUTO SELL AND REPAIR ITEMS
+
 local function RepairItems()
     if CanMerchantRepair() then
         RepairAllItems()
     end
 end
-
 
 local function SellGreyItems()
     for NumBags = 0, 4 do
@@ -19,13 +20,11 @@ local function SellGreyItems()
     end
 end
 
-
 local function AutoSellRepair()
     RepairItems()
     SellGreyItems()
     C_Timer.After(0, SellGreyItems)
 end
-
 
 local MerchantEvents = CreateFrame("Frame")
 MerchantEvents:RegisterEvent("MERCHANT_SHOW")
@@ -34,12 +33,9 @@ MerchantEvents:SetScript("OnEvent", AutoSellRepair)
 
 
 
+-- SPEED UP AUTO LOOTING ITEMSs
 
-
-
-
-
-local function FasterLoot()
+local function LootItems()
   if GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") then
     local lootMethod, masterLooter = GetLootMethod()
     if lootMethod == "master" and masterLooter == UnitName("player") then
@@ -57,7 +53,6 @@ local function FasterLoot()
   end
 end
 
-
 local LootEvents = CreateFrame("Frame")
 LootEvents:RegisterEvent("LOOT_READY")
-LootEvents:SetScript("OnEvent", FasterLoot)
+LootEvents:SetScript("OnEvent", LootItems)

@@ -1,4 +1,6 @@
-TargetFrameBackdrop = CreateFrame("Button", nil, TargetFrame, "SecureUnitButtonTemplate, BackdropTemplate")
+-- GENERATE TARGET BACKDROPS
+
+local TargetFrameBackdrop = CreateFrame("Button", nil, TargetFrame, "SecureUnitButtonTemplate, BackdropTemplate")
 TargetFrameBackdrop:SetPoint("BOTTOM", UIParent, "BOTTOM", 190, 224)
 TargetFrameBackdrop:SetSize(124, 48)
 TargetFrameBackdrop:SetBackdrop({ edgeFile = "Interface/Tooltips/UI-Tooltip-Border", edgeSize = 12 })
@@ -20,6 +22,11 @@ TargetPortraitBackdrop:RegisterForClicks("AnyUp")
 TargetPortraitBackdrop:SetAttribute("type1", "target")
 TargetPortraitBackdrop:SetAttribute("type2", "togglemenu")
 
+
+
+
+-- DEFINE CLASS COLORS FOR TARGET NAMES
+
 local CLASS_COLORS = {
 	WARRIOR = { 1, 0.78, 0.55 },
 	MAGE    = { 0.41, 0.8, 0.94 },
@@ -32,6 +39,10 @@ local CLASS_COLORS = {
 	PALADIN = { 0.96, 0.55, 0.73 },
 }
 
+
+
+
+-- UPDATE TARGET FRAME
 
 local function TargetFrameUpdate()
 	TargetFrame:ClearAllPoints()
@@ -85,12 +96,15 @@ local function TargetFrameUpdate()
 	TargetFrameManaBar:SetStatusBarTexture("Interface/RaidFrame/Raid-Bar-HP-Fill.blp")
 end
 
-
 local TargetFrameEvents = CreateFrame("Frame")
 TargetFrameEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetFrameEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetFrameEvents:SetScript("OnEvent", TargetFrameUpdate)
 
+
+
+
+-- UPDATE TARGET RESOURCES
 
 local function TargetHealthUpdate(self, event, ...)
 	if UnitExists("target") then
@@ -108,7 +122,6 @@ local function TargetHealthUpdate(self, event, ...)
 	end
 end
 
-
 TargetHealthText = TargetFrameHealthBar:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 TargetHealthText:SetPoint("CENTER", TargetFrameHealthBar, "CENTER", 0, 0)
 TargetHealthText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
@@ -125,12 +138,15 @@ TargetHealthEvents:RegisterEvent("UNIT_DISPLAYPOWER")
 TargetHealthEvents:SetScript("OnEvent", TargetHealthUpdate)
 
 
+
+
+-- UPDATE TARGET PORTRAIT
+
 local function TargetPortraitUpdate()
 	TargetFramePortrait:ClearAllPoints()
 	TargetFramePortrait:SetPoint("CENTER", TargetPortraitBackdrop, "CENTER", 0, 0)
 	TargetFramePortrait:SetSize(TargetPortraitBackdrop:GetHeight() - 6, TargetPortraitBackdrop:GetHeight() - 6)
 end
-
 
 local TargetPortraitEvents = CreateFrame("Frame")
 TargetPortraitEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -139,7 +155,6 @@ TargetPortraitEvents:SetScript("OnEvent", TargetPortraitUpdate)
 
 hooksecurefunc("TargetFrame_Update", TargetPortraitUpdate)
 hooksecurefunc("UnitFramePortrait_Update", TargetPortraitUpdate)
-
 
 local function PortraitTextureUpdate(TargetPortrait)
 	if TargetPortrait.unit == "target" and TargetPortrait.portrait then
@@ -164,11 +179,14 @@ end
 hooksecurefunc("UnitFramePortrait_Update", PortraitTextureUpdate)
 
 
+
+
+-- UPDATE TARGET GROUP ELEMENTS
+
 local function TargetGroupUpdate()
 	TargetFrameTextureFrameLeaderIcon:ClearAllPoints()
 	TargetFrameTextureFrameLeaderIcon:SetPoint("BOTTOM", TargetPortraitBackdrop, "TOP", 0, 0)
 end
-
 
 local TargetGroupEvents = CreateFrame("Frame")
 TargetGroupEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -177,6 +195,10 @@ TargetGroupEvents:SetScript("OnEvent", TargetGroupUpdate)
 
 hooksecurefunc("TargetFrame_Update", TargetGroupUpdate)
 
+
+
+
+-- UPDATE TARGET LEVEL
 
 local function TargetLevelUpdate()
 	TargetFrameTextureFrameLevelText:ClearAllPoints()
@@ -188,13 +210,16 @@ local function TargetLevelUpdate()
 	TargetFrameTextureFrameHighLevelTexture:Hide()
 end
 
-
 local TargetLevelEvents = CreateFrame("Frame")
 TargetLevelEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetLevelEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetLevelEvents:SetScript("OnEvent", TargetLevelUpdate)
 hooksecurefunc("TargetFrame_Update", TargetLevelUpdate)
 
+
+
+
+-- UPDATE TARGET AURAS
 
 local function TargetAurasUpdate()
 	local InitialBuff = _G["TargetFrameBuff1"]
@@ -221,6 +246,10 @@ TargetAurasEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetAurasEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetAurasEvents:SetScript("OnEvent", TargetAurasUpdate)
 
+
+
+
+-- UPDATE TARGET CASTBAR
 
 local TargetSpellBarBackdrop = CreateFrame("Frame", nil, TargetFrameSpellBar, "BackdropTemplate")
 TargetSpellBarBackdrop:SetPoint("TOP", TargetFrameBackdrop, "BOTTOM", 0, 0)
@@ -250,6 +279,11 @@ local TargetSpellBarEvents = CreateFrame("Frame")
 TargetSpellBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 TargetSpellBarEvents:SetScript("OnEvent", TargetSpellBarUpdate)
 
+
+
+
+
+-- GENERATE TARGET CLASSIFICATION TEXT
 
 local TargetClassificationText = TargetFrame:CreateFontString(nil, "OVERLAY")
 TargetClassificationText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
@@ -287,6 +321,10 @@ TargetClassificationEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetClassificationEvents:SetScript("OnEvent", TargetClassificationUpdate)
 
 
+
+
+-- GENERATE TARGET THREAT TEXT AND UPDATE TARGET TRHEAT
+
 local TargetThreatText = TargetThreatText or TargetFrame:CreateFontString(nil, "OVERLAY")
 TargetThreatText:SetFont(STANDARD_TEXT_FONT, 12, "OUTLINE")
 TargetThreatText:SetPoint("BOTTOM", TargetClassificationText, "TOP", 0, 4)
@@ -319,11 +357,14 @@ TargetFrame:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
 TargetFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 
 
+
+
+-- UPDATE TARGET CONFIGURATION
+
 local function TargetConfigUpdate()
 	SetCVar("showTargetCastbar", 1)
 	TARGET_FRAME_BUFFS_ON_TOP = true
 end
-
 
 local TargetConfigEvents = CreateFrame("Frame")
 TargetConfigEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -332,10 +373,8 @@ TargetConfigEvents:SetScript("OnEvent", TargetConfigUpdate)
 
 
 
+-- GENERATE TARGET OF TARGET BACKDROP
 
-
-
--- ToT frame update section
 local ToTFrameBackdrop = CreateFrame("Button", nil, TargetFrameToT, "SecureUnitButtonTemplate, BackdropTemplate")
 ToTFrameBackdrop:SetPoint("BOTTOMLEFT", TargetPortraitBackdrop, "BOTTOMRIGHT", 0, 0)
 ToTFrameBackdrop:SetSize(64, 24)
@@ -347,8 +386,12 @@ ToTFrameBackdrop:RegisterForClicks("AnyUp")
 ToTFrameBackdrop:SetAttribute("type1", "target")
 ToTFrameBackdrop:SetAttribute("type2", "togglemenu")
 
+
+
+
+-- UPDATE TARGET OF TARGET FRAME
+
 local function ToTFrameUpdate()
-	-- Check if the target-of-target cvar is active
 	if GetCVar("ShowTargetOfTarget") ~= "1" then return end
 
 	TargetFrameToT:ClearAllPoints()
