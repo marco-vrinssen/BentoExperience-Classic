@@ -26,9 +26,9 @@ local function AutoSellRepair()
     C_Timer.After(0, SellGreyItems)
 end
 
-local MerchantEvents = CreateFrame("Frame")
-MerchantEvents:RegisterEvent("MERCHANT_SHOW")
-MerchantEvents:SetScript("OnEvent", AutoSellRepair)
+local MerchantFrame = CreateFrame("Frame")
+MerchantFrame:RegisterEvent("MERCHANT_SHOW")
+MerchantFrame:SetScript("OnEvent", AutoSellRepair)
 
 
 
@@ -53,6 +53,6 @@ local function LootItems()
   end
 end
 
-local LootEvents = CreateFrame("Frame")
-LootEvents:RegisterEvent("LOOT_READY")
-LootEvents:SetScript("OnEvent", LootItems)
+local LootFrame = CreateFrame("Frame")
+LootFrame:RegisterEvent("LOOT_READY")
+LootFrame:SetScript("OnEvent", LootItems)
