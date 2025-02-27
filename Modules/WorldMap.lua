@@ -1,4 +1,4 @@
--- UPDATE WORLD MAP
+-- UPDATE WORLD MAP APPEARANCE
 
 local function UpdateWorldMapFrame()
     WorldMapFrame:ClearAllPoints()
@@ -8,8 +8,8 @@ local function UpdateWorldMapFrame()
         WorldMapFrame.BlackoutFrame:Hide()
     end
     WorldMapFrame.ScrollContainer.GetCursorPosition = function()
-        local width, height = MapCanvasScrollControllerMixin.GetCursorPosition()
-        return width / 0.75, height / 0.75
+        local MapWidth, MapHeight = MapCanvasScrollControllerMixin.GetCursorPosition()
+        return MapWidth / 0.75, MapHeight / 0.75
     end
 end
 
@@ -20,18 +20,16 @@ WorldMapFrame:HookScript("OnShow", function()
 end)
 
 
-
-
 -- ENABLE WORLD MAP FADE WHEN MOVING
 
 local function FadeOutMap()
     if WorldMapFrame:IsShown() then
-        local targetAlpha = IsPlayerMoving() and 0.25 or 1
-        UIFrameFadeOut(WorldMapFrame, 0.1, WorldMapFrame:GetAlpha(), targetAlpha)
+        local TargetAlpha = IsPlayerMoving() and 0.25 or 1
+        UIFrameFadeOut(WorldMapFrame, 0.1, WorldMapFrame:GetAlpha(), TargetAlpha)
     end
 end
 
-local fadeOutEvents = CreateFrame("Frame")
-fadeOutEvents:RegisterEvent("PLAYER_STARTED_MOVING")
-fadeOutEvents:RegisterEvent("PLAYER_STOPPED_MOVING")
-fadeOutEvents:SetScript("OnEvent", FadeOutMap)
+local MapFadeFrame = CreateFrame("Frame")
+MapFadeFrame:RegisterEvent("PLAYER_STARTED_MOVING")
+MapFadeFrame:RegisterEvent("PLAYER_STOPPED_MOVING")
+MapFadeFrame:SetScript("OnEvent", FadeOutMap)
