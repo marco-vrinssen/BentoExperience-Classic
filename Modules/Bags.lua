@@ -1,4 +1,4 @@
--- UPDATE BAG SLOTS AND CONTAINERS
+-- UPDATE BAG SLOTS
 
 local function BagSlotUpdate()
     MainMenuBarBackpackButton:ClearAllPoints()
@@ -31,10 +31,13 @@ local function BagSlotUpdate()
     KeyRingButton:SetParent(ContainerFrame1)
 end
 
-local BagSlotEvents = CreateFrame("Frame")
-BagSlotEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
-BagSlotEvents:RegisterEvent("BAG_UPDATE")
-BagSlotEvents:SetScript("OnEvent", BagSlotUpdate)
+local BagSlotFrame = CreateFrame("Frame")
+BagSlotFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+BagSlotFrame:RegisterEvent("BAG_UPDATE")
+BagSlotFrame:SetScript("OnEvent", BagSlotUpdate)
+
+
+-- UPDATE BAG CONTAINERS
 
 local function BagContainerUpdate()
     local OpenPlayerContainers = {}
@@ -99,14 +102,18 @@ local function BagContainerUpdate()
 end
 
 hooksecurefunc("UpdateContainerFrameAnchors", BagContainerUpdate)
-local BagContainerEvents = CreateFrame("Frame")
-BagContainerEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
-BagContainerEvents:RegisterEvent("BAG_UPDATE")
-BagContainerEvents:RegisterEvent("BANKFRAME_OPENED")
-BagContainerEvents:RegisterEvent("BANKFRAME_CLOSED")
-BagContainerEvents:RegisterEvent("MERCHANT_SHOW")
-BagContainerEvents:RegisterEvent("MERCHANT_CLOSED")
-BagContainerEvents:SetScript("OnEvent", BagContainerUpdate)
+
+local BagContainerFrame = CreateFrame("Frame")
+BagContainerFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+BagContainerFrame:RegisterEvent("BAG_UPDATE")
+BagContainerFrame:RegisterEvent("BANKFRAME_OPENED")
+BagContainerFrame:RegisterEvent("BANKFRAME_CLOSED")
+BagContainerFrame:RegisterEvent("MERCHANT_SHOW")
+BagContainerFrame:RegisterEvent("MERCHANT_CLOSED")
+BagContainerFrame:SetScript("OnEvent", BagContainerUpdate)
+
+
+-- ENABLE AUTOMATIC BAG TOGGLE
 
 local function TogglePlayerBags()
     if IsBagOpen(0) then
@@ -117,6 +124,9 @@ local function TogglePlayerBags()
 end
 
 MainMenuBarBackpackButton:SetScript("OnClick", TogglePlayerBags)
+
+
+-- ENABLE AUTOMATIC BANK BAG TOGGLE
 
 local function OpenBankBags()
     for bagID = NUM_BAG_SLOTS + 1, NUM_BAG_SLOTS + NUM_BANKBAGSLOTS do
@@ -130,10 +140,10 @@ local function CloseBankBags()
     end
 end
 
-local BagToggleEvents = CreateFrame("Frame")
-BagToggleEvents:RegisterEvent("BANKFRAME_OPENED")
-BagToggleEvents:RegisterEvent("BANKFRAME_CLOSED")
-BagToggleEvents:SetScript("OnEvent", function(self, event)
+local BagToggleFrame = CreateFrame("Frame")
+BagToggleFrame:RegisterEvent("BANKFRAME_OPENED")
+BagToggleFrame:RegisterEvent("BANKFRAME_CLOSED")
+BagToggleFrame:SetScript("OnEvent", function(self, event)
     if event == "BANKFRAME_OPENED" then
         OpenBankBags()
     elseif event == "BANKFRAME_CLOSED" then
