@@ -260,10 +260,10 @@ local function ToggleLua()
     local currentSetting = GetCVar("scriptErrors")
     if currentSetting == "1" then
         SetCVar("scriptErrors", 0)
-        print("LUA Errors Off")
+        print(Y.LUA .. "LUA Errors: " .. "|r" .. W.LUA .. "Disabled" .. "|r")
     else
         SetCVar("scriptErrors", 1)
-        print("LUA Errors On")
+        print(Y.LUA .. "LUA Errors: " .. "|r" .. W.LUA .. "Enabled" .. "|r")
     end
 end
 
