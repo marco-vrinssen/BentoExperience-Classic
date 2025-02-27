@@ -3,11 +3,10 @@
 local function UpdateCustomTimerText(buff)
     local duration = _G[buff:GetName().."Duration"]
     if duration then
-        duration:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE")
+        duration:SetFont(F.TYPE, 10, "OUTLINE")
         duration:SetTextColor(1, 1, 1)
         duration:ClearAllPoints()
-        duration:SetPoint("BOTTOM", buff, "BOTTOM", 0, -12)
-        duration:SetAlpha(0.75)
+        duration:SetPoint("BOTTOM", buff, "BOTTOM", 1, -12)
     end
 end
 
