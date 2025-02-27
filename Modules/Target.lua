@@ -45,7 +45,7 @@ local function UpdateTargetFrame()
 
 	TargetFrameNameBackground:Hide()
 	TargetFrameTextureFrameName:ClearAllPoints()
-	TargetFrameTextureFrameName:SetPoint("TOP", TargetFrameBackdrop, "TOP", 0, -6)
+	TargetFrameTextureFrameName:SetPoint("TOP", TargetFrameBackdrop, "TOP", 0, -7)
 	TargetFrameTextureFrameName:SetFont(F.TYPE, F.SIZE, "OUTLINE")
 	
 	TargetFrameTextureFrameLevelText:ClearAllPoints()
@@ -91,7 +91,7 @@ local function UpdateTargetResources()
 
 	TargetFrameManaBar:ClearAllPoints()
 	TargetFrameManaBar:SetSize(TargetFrameBackground:GetWidth(), 8)
-	TargetFrameManaBar:SetPoint("BOTTOM", TargetFrameBackdrop, "BOTTOM", 0, 4)
+	TargetFrameManaBar:SetPoint("BOTTOM", TargetFrameBackdrop, "BOTTOM", 0, 3)
 	TargetFrameManaBar:SetStatusBarTexture(T.BAR)
 	
 	local powerType = UnitPowerType("target")
