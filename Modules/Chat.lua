@@ -28,7 +28,7 @@ local function CustomizeChatTab(chatFrame)
     
     HideFrameTextures(chatTab)
     if chatTabText then
-        chatTabText:SetFont(STANDARD_TEXT_FONT, 14)
+        chatTabText:SetFont(F.TYPE, 14)
         chatTabText:ClearAllPoints()
         chatTabText:SetPoint("LEFT", chatTab, "LEFT", 4, 0)
     end
@@ -91,12 +91,12 @@ local function OnChatEvent()
     UpdateChatScrollBehavior()
 end
 
-local chatEvents = CreateFrame("Frame")
-chatEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
-chatEvents:RegisterEvent("UPDATE_FLOATING_CHAT_WINDOWS")
-chatEvents:RegisterEvent("CHAT_MSG_WHISPER")
-chatEvents:RegisterEvent("UI_SCALE_CHANGED")
-chatEvents:SetScript("OnEvent", OnChatEvent)
+local chatFrame = CreateFrame("Frame")
+chatFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+chatFrame:RegisterEvent("UPDATE_FLOATING_CHAT_WINDOWS")
+chatFrame:RegisterEvent("CHAT_MSG_WHISPER")
+chatFrame:RegisterEvent("UI_SCALE_CHANGED")
+chatFrame:SetScript("OnEvent", OnChatEvent)
 
 hooksecurefunc("FCF_OpenTemporaryWindow", function()
     local currentChatFrame = FCF_GetCurrentChatFrame()
@@ -109,18 +109,15 @@ end)
 
 
 
-
 -- RECOLOR INCOMING WHISPER MESSAGES
 
 local function RecolorWhisperMessages(self, event, message, sender, ...)
     if event == "CHAT_MSG_WHISPER" then
-        return false, "|cFFFFCCFE" .. message .. "|r", sender, ...
+        return false, PL.LUA .. message .. "|r", sender, ...
     end
 end
 
 ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", RecolorWhisperMessages)
-
-
 
 
 -- UPDATE CLASS COLORS IN CHAT
