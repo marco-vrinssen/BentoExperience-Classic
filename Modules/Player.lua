@@ -22,6 +22,7 @@ PlayerPortraitBackdrop:RegisterForClicks("AnyUp")
 PlayerPortraitBackdrop:SetAttribute("type1", "target")
 PlayerPortraitBackdrop:SetAttribute("type2", "togglemenu")
 
+
 -- UPDATE PLAYER FRAME
 
 local function UpdatePlayerFrame()
@@ -49,7 +50,7 @@ local function UpdatePlayerFrame()
     PlayerPVPIcon:SetAlpha(0)
 
     PlayerName:ClearAllPoints()
-    PlayerName:SetPoint("TOP", PlayerFrameBackdrop, "TOP", 0, -5)
+    PlayerName:SetPoint("TOP", PlayerFrameBackdrop, "TOP", 0, -6)
     PlayerName:SetFont(F.TYPE, F.SIZE, "OUTLINE")
     PlayerName:SetTextColor(unpack(W.RGB))
 
@@ -84,14 +85,9 @@ PlayerFrameFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 PlayerFrameFrame:SetScript("OnEvent", UpdatePlayerFrame)
 
 
-
-
-
-
-
+-- UPDATE PLAYER RESOURCES
 
 local function UpdatePlayerResources()
-
     PlayerFrameHealthBar:ClearAllPoints()
     PlayerFrameHealthBar:SetSize(PlayerFrameBackground:GetWidth(), 16)
     PlayerFrameHealthBar:SetPoint("BOTTOM", PlayerFrameManaBar, "TOP", 0, 0)
@@ -99,7 +95,7 @@ local function UpdatePlayerResources()
     PlayerFrameHealthBar:SetStatusBarColor(unpack(G.RGB))
 
     PlayerFrameManaBar:ClearAllPoints()
-    PlayerFrameManaBar:SetPoint("BOTTOM", PlayerFrameBackdrop, "BOTTOM", 0, 4)
+    PlayerFrameManaBar:SetPoint("BOTTOM", PlayerFrameBackdrop, "BOTTOM", 0, 3)
     PlayerFrameManaBar:SetSize(PlayerFrameBackground:GetWidth(), 8)
     PlayerFrameManaBar:SetStatusBarTexture(T.BAR)
     
