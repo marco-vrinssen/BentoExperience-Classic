@@ -5,8 +5,8 @@ local function NameplateCastbarSetup(Nameplate)
     local HealthbarReference = Nameplate.UnitFrame.healthBar
 
     local NameplateCastbar = CreateFrame("StatusBar", nil, Nameplate)
-    NameplateCastbar:SetStatusBarTexture(T.BAR)
-    NameplateCastbar:SetStatusBarColor(unpack(Y.RGB))
+    NameplateCastbar:SetStatusBarTexture(BAR)
+    NameplateCastbar:SetStatusBarColor(unpack(YELLOW))
     NameplateCastbar:SetSize(HealthbarReference:GetWidth(), 10)
     NameplateCastbar:SetPoint("TOP", HealthbarReference, "BOTTOM", 0, -5)
     NameplateCastbar:SetMinMaxValues(0, 1)
@@ -15,12 +15,12 @@ local function NameplateCastbarSetup(Nameplate)
     local CastbarBackdrop = CreateFrame("Frame", nil, NameplateCastbar, "BackdropTemplate")
     CastbarBackdrop:SetPoint("TOPLEFT", NameplateCastbar, -2, 2)
     CastbarBackdrop:SetPoint("BOTTOMRIGHT", NameplateCastbar, 2, -2)
-    CastbarBackdrop:SetBackdrop({edgeFile = T.EDGE, edgeSize = 10})
-    CastbarBackdrop:SetBackdropBorderColor(unpack(N.RGB))
+    CastbarBackdrop:SetBackdrop({edgeFile = EDGE, edgeSize = 10})
+    CastbarBackdrop:SetBackdropBorderColor(unpack(GREY))
     CastbarBackdrop:SetFrameLevel(NameplateCastbar:GetFrameLevel() + 1)
 
     local CastbarText = NameplateCastbar:CreateFontString(nil, "OVERLAY")
-    CastbarText:SetFont(F.TYPE, 8, "OUTLINE")
+    CastbarText:SetFont(FONT, 8, "OUTLINE")
     CastbarText:SetPoint("CENTER", NameplateCastbar)
 
     NameplateCastbar.CastbarBackdrop = CastbarBackdrop
@@ -44,9 +44,9 @@ local function NameplateCastbarUpdate(NameplateCastbar, Unit)
         NameplateCastbar:SetValue(CurrentTimer)
 
         if SpellInterruptible then
-            NameplateCastbar:SetStatusBarColor(unpack(N.RGB))
+            NameplateCastbar:SetStatusBarColor(unpack(GREY))
         else
-            NameplateCastbar:SetStatusBarColor(unpack(Y.RGB))
+            NameplateCastbar:SetStatusBarColor(unpack(YELLOW))
         end
 
         NameplateCastbar.casting = name ~= nil
