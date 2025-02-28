@@ -14,11 +14,10 @@ ToTFrameBackdrop:SetAttribute("type2", "togglemenu")
 
 -- UPDATE TARGET TARGET FRAME
 
-local function ToTFrameUpdate()
-	if GetCVar("ShowTargetOfTarget") ~= "1" then return end
+local function UpdateToT()
 
 	TargetFrameToT:ClearAllPoints()
-	TargetFrameToT:SetPoint("CENTER", TargetFrameBackdrop, "CENTER", 0, 0)
+	TargetFrameToT:SetPoint("CENTER", ToTFrameBackdrop, "CENTER", 0, 0)
 
 	TargetFrameToTTextureFrame:Hide()
 	TargetFrameToTTextureFrameName:SetParent(TargetFrameToT)
@@ -58,7 +57,18 @@ local function ToTFrameUpdate()
 	end
 end
 
-local ToTFrameFrame = CreateFrame("Frame")
-ToTFrameFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-ToTFrameFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-ToTFrameFrame:SetScript("OnEvent", ToTFrameUpdate)
+local ToTEvents = CreateFrame("Frame")
+ToTEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+ToTEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
+ToTEvents:SetScript("OnEvent", UpdateToT)
+
+
+-- UPDATE TARGET OF TARGET CONFIGURATIOn
+
+local function UpdateToTConfig()
+	SetCVar("ShowTargetOfTarget", 1)
+end
+
+local ToTConfigEvents = CreateFrame("Frame")
+ToTConfigEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+ToTConfigEvents:SetScript("OnEvent", UpdateToTConfig)
