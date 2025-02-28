@@ -80,9 +80,9 @@ local function UpdateActionButtonAppearance()
                 local backdrop = CreateFrame("Frame", nil, button, "BackdropTemplate")
                 backdrop:SetPoint("TOPLEFT", button, "TOPLEFT", -3, 3)
                 backdrop:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 3, -3)
-                backdrop:SetBackdrop({ edgeFile = T.EDGE, edgeSize = T.EDGE_SIZE })
-                backdrop:SetBackdropBorderColor(unpack(N.RGB))
-                backdrop:SetFrameStrata("HIGH")
+                backdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = MEDIUM })
+                backdrop:SetBackdropBorderColor(unpack(GREY))
+                backdrop:SetFrameLevel(button:GetFrameLevel() + 1)
                 button.customBorder = backdrop
             end
 
@@ -97,14 +97,14 @@ local function UpdateActionButtonAppearance()
         if button then
             local macroName = _G[button:GetName() .. "Name"]
             if macroName then
-                macroName:SetFont(F.TYPE, F.SIZE_SMALL, "OUTLINE")
-                macroName:SetTextColor(unpack(W.RGB))
+                macroName:SetFont(FONT, SMALL, "OUTLINE")
+                macroName:SetTextColor(unpack(WHITE))
                 macroName:SetAlpha(0.5)
             end
             local hotkey = _G[button:GetName() .. "HotKey"]
             if hotkey then
-                hotkey:SetFont(F.TYPE, F.SIZE, "OUTLINE")
-                hotkey:SetTextColor(unpack(W.RGB))
+                hotkey:SetFont(FONT, MEDIUM, "OUTLINE")
+                hotkey:SetTextColor(unpack(WHITE))
                 hotkey:SetAlpha(0.75)
                 hotkey.SetVertexColor = function() end
             end
