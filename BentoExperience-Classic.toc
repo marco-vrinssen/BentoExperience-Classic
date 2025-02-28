@@ -12,9 +12,9 @@ Modules/Chat.lua
 Modules/Commands.lua
 Modules/Compatibility.lua
 Modules/Config.lua
+Modules/GameMetrics.lua
 Modules/Items.lua
 Modules/Menu.lua
-Modules/MetricsDisplay.lua
 Modules/MiniMap.lua
 Modules/NamePlates.lua
 Modules/Player.lua
