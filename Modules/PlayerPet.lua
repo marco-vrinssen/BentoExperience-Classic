@@ -97,7 +97,7 @@ PetHappinessBackdrop:SetBackdrop({
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
 PetHappinessBackdrop:SetBackdropBorderColor(unpack(GREY))
-PetHappinessBackdrop:SetFrameLevel(PetFrame:GetFrameLevel() + 1)
+PetHappinessBackdrop:SetFrameLevel(PetFrame:GetFrameLevel() + 2)
 
 
 -- UPDATE PET HAPPINESS

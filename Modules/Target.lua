@@ -16,7 +16,7 @@ TargetPortraitBackdrop:SetPoint("LEFT", TargetFrameBackdrop, "RIGHT", 0, 0)
 TargetPortraitBackdrop:SetSize(48, 48)
 TargetPortraitBackdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = MEDIUM })
 TargetPortraitBackdrop:SetBackdropBorderColor(unpack(GREY))
-TargetPortraitBackdrop:SetFrameLevel(TargetFrame:GetFrameLevel() + 1)
+TargetPortraitBackdrop:SetFrameLevel(TargetFrame:GetFrameLevel() + 2)
 TargetPortraitBackdrop:SetAttribute("unit", "target")
 TargetPortraitBackdrop:RegisterForClicks("AnyUp")
 TargetPortraitBackdrop:SetAttribute("type1", "target")
@@ -160,3 +160,158 @@ local function PortraitTextureUpdate(TargetPortrait)
 end
 
 hooksecurefunc("UnitFramePortrait_Update", PortraitTextureUpdate)
+
+
+-- UPDATE TARGET AURAS
+
+local function TargetAurasUpdate()
+	local InitialBuff = _G["TargetFrameBuff1"]
+	if InitialBuff then
+		InitialBuff:ClearAllPoints()
+		InitialBuff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 2, 2)
+	end
+	local InitialDebuff = _G["TargetFrameDebuff1"]
+	if InitialDebuff then
+		InitialDebuff:ClearAllPoints()
+		if InitialBuff then
+			InitialDebuff:SetPoint("BOTTOMLEFT", InitialBuff, "TOPLEFT", 0, 2)
+		else
+			InitialDebuff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 2, 2)
+		end
+	end
+end
+
+hooksecurefunc("TargetFrame_Update", TargetAurasUpdate)
+hooksecurefunc("TargetFrame_UpdateAuras", TargetAurasUpdate)
+
+local TargetAurasFrame = CreateFrame("Frame")
+TargetAurasFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+TargetAurasFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+TargetAurasFrame:SetScript("OnEvent", TargetAurasUpdate)
+
+
+-- GENERATE AND UPDATE TARGET CLASSIFICATION TEXT
+
+local TargetClassificationText = TargetFrame:CreateFontString(nil, "OVERLAY")
+TargetClassificationText:SetFont(FONT, MEDIUM, "OUTLINE")
+TargetClassificationText:SetPoint("BOTTOM", TargetPortraitBackdrop, "TOP", 0, 4)
+
+local function TargetClassificationUpdate()
+	local TargetClassification = UnitClassification("target")
+	if TargetClassification == "worldboss" then
+		TargetClassificationText:SetText("Boss")
+		TargetClassificationText:SetTextColor(unpack(RED))
+		TargetFrameBackdrop:SetBackdropBorderColor(unpack(RED))
+		TargetPortraitBackdrop:SetBackdropBorderColor(unpack(RED))
+	elseif TargetClassification == "elite" then
+		TargetClassificationText:SetText("Elite")
+		TargetClassificationText:SetTextColor(unpack(YELLOW))
+		TargetFrameBackdrop:SetBackdropBorderColor(unpack(YELLOW))
+		TargetPortraitBackdrop:SetBackdropBorderColor(unpack(YELLOW))
+	elseif TargetClassification == "rare" then
+		TargetClassificationText:SetText("Rare")
+		TargetClassificationText:SetTextColor(unpack(WHITE))
+		TargetFrameBackdrop:SetBackdropBorderColor(unpack(WHITE))
+		TargetPortraitBackdrop:SetBackdropBorderColor(unpack(WHITE))
+	else
+		TargetClassificationText:SetText("")
+		TargetFrameBackdrop:SetBackdropBorderColor(unpack(GREY))
+		TargetPortraitBackdrop:SetBackdropBorderColor(unpack(GREY))
+	end
+end
+
+local TargetClassificationFrame = CreateFrame("Frame")
+TargetClassificationFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+TargetClassificationFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+TargetClassificationFrame:SetScript("OnEvent", TargetClassificationUpdate)
+
+
+-- UPDATE TARGET RAID ICON
+
+local RaidTargetBackdrop = CreateFrame("Frame", nil, TargetFrame, "BackdropTemplate")
+RaidTargetBackdrop:SetPoint("BOTTOMLEFT", TargetPortraitBackdrop, "TOPRIGHT", -2, -2)
+RaidTargetBackdrop:SetSize(28, 28)
+RaidTargetBackdrop:SetBackdrop({
+    bgFile = BG,
+    edgeFile = EDGE, edgeSize = MEDIUM,
+    insets = {left = 3, right = 3, top = 3, bottom = 3}
+})
+RaidTargetBackdrop:SetBackdropColor(0, 0, 0, 1)
+RaidTargetBackdrop:SetBackdropBorderColor(unpack(GREY))
+RaidTargetBackdrop:Hide()
+
+local function UpdateRaidTargetIcon()
+    if GetRaidTargetIndex("target") then
+        RaidTargetBackdrop:Show()
+        TargetFrameTextureFrameRaidTargetIcon:ClearAllPoints()
+        TargetFrameTextureFrameRaidTargetIcon:SetPoint("CENTER", RaidTargetBackdrop, "CENTER", 0, 0)
+        TargetFrameTextureFrameRaidTargetIcon:SetSize(12, 12)
+		TargetFrameTextureFrameRaidTargetIcon:SetFrameLevel(RaidTargetBackdrop:GetFrameLevel() + 2)
+    else
+        RaidTargetBackdrop:Hide()
+    end
+end
+
+local RaidTargetFrame = CreateFrame("Frame")
+RaidTargetFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+RaidTargetFrame:RegisterEvent("RAID_TARGET_UPDATE")
+RaidTargetFrame:SetScript("OnEvent", UpdateRaidTargetIcon)
+
+
+-- UPDATE TARGET GROUP INDICATORS
+
+local function TargetGroupUpdate()
+	TargetFrameTextureFrameLeaderIcon:ClearAllPoints()
+	TargetFrameTextureFrameLeaderIcon:SetPoint("BOTTOM", TargetPortraitBackdrop, "TOP", 0, 0)
+end
+
+local TargetGroupFrame = CreateFrame("Frame")
+TargetGroupFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+TargetGroupFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+TargetGroupFrame:SetScript("OnEvent", TargetGroupUpdate)
+
+hooksecurefunc("TargetFrame_Update", TargetGroupUpdate)
+
+
+-- UPDATE TARGET CASTBAR
+
+local TargetSpellBarBackdrop = CreateFrame("Frame", nil, TargetFrameSpellBar, "BackdropTemplate")
+TargetSpellBarBackdrop:SetPoint("TOP", TargetFrameBackdrop, "BOTTOM", 0, 0)
+TargetSpellBarBackdrop:SetSize(TargetFrameBackdrop:GetWidth(), 24)
+TargetSpellBarBackdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = MEDIUM })
+TargetSpellBarBackdrop:SetBackdropBorderColor(unpack(GREY))
+TargetSpellBarBackdrop:SetFrameLevel(TargetFrameSpellBar:GetFrameLevel() + 2)
+
+local function TargetSpellBarUpdate()
+	TargetFrameSpellBar:ClearAllPoints()
+	TargetFrameSpellBar:SetPoint("TOPLEFT", TargetSpellBarBackdrop, "TOPLEFT", 3, -2)
+	TargetFrameSpellBar:SetPoint("BOTTOMRIGHT", TargetSpellBarBackdrop, "BOTTOMRIGHT", -3, 2)
+	TargetFrameSpellBar:SetStatusBarTexture(BAR)
+	TargetFrameSpellBar:SetStatusBarColor(unpack(YELLOW))
+	TargetFrameSpellBar.Border:SetTexture(nil)
+	TargetFrameSpellBar.Flash:SetTexture(nil)
+	TargetFrameSpellBar.Spark:SetTexture(nil)
+	TargetFrameSpellBar.Icon:SetSize(TargetSpellBarBackdrop:GetHeight() - 4, TargetSpellBarBackdrop:GetHeight() - 4)
+	TargetFrameSpellBar.Text:ClearAllPoints()
+	TargetFrameSpellBar.Text:SetPoint("CENTER", TargetSpellBarBackdrop, "CENTER", 0, 0)
+	TargetFrameSpellBar.Text:SetFont(FONT, 10, "OUTLINE")
+end
+
+TargetFrameSpellBar:HookScript("OnShow", TargetSpellBarUpdate)
+TargetFrameSpellBar:HookScript("OnUpdate", TargetSpellBarUpdate)
+
+local TargetSpellBarFrame = CreateFrame("Frame")
+TargetSpellBarFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+TargetSpellBarFrame:SetScript("OnEvent", TargetSpellBarUpdate)
+
+
+-- UPDATE TARGET CONFIGURATION
+
+local function TargetConfigUpdate()
+	SetCVar("showTargetCastbar", 1)
+	TARGET_FRAME_BUFFS_ON_TOP = true
+end
+
+local TargetConfigFrame = CreateFrame("Frame")
+TargetConfigFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+TargetConfigFrame:SetScript("OnEvent", TargetConfigUpdate)

@@ -5,7 +5,7 @@ XPBarBackdrop:SetPoint("TOPLEFT", MainMenuExpBar, "TOPLEFT", -3, 3)
 XPBarBackdrop:SetPoint("BOTTOMRIGHT", MainMenuExpBar, "BOTTOMRIGHT", 3, -3)
 XPBarBackdrop:SetBackdrop({edgeFile = EDGE, edgeSize = MEDIUM})
 XPBarBackdrop:SetBackdropBorderColor(unpack(GREY))
-XPBarBackdrop:SetFrameLevel(MainMenuExpBar:GetFrameLevel() + 1)
+XPBarBackdrop:SetFrameLevel(MainMenuExpBar:GetFrameLevel() + 2)
 
 local function HideXPTextures()
     for i = 0, 3 do
@@ -17,7 +17,7 @@ local function HideXPTextures()
     end
 end
 
-local function UpdateExperienceBar()
+local function UpdateXPBar()
     if UnitLevel("player") == MAX_PLAYER_LEVEL then
         MainMenuExpBar:Hide()
     else
@@ -41,12 +41,12 @@ ExperienceBarFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 ExperienceBarFrame:RegisterEvent("PLAYER_LEVEL_UP")
 ExperienceBarFrame:RegisterEvent("PLAYER_XP_UPDATE")
 ExperienceBarFrame:RegisterEvent("UPDATE_EXHAUSTION")
-ExperienceBarFrame:SetScript("OnEvent", UpdateExperienceBar)
+ExperienceBarFrame:SetScript("OnEvent", UpdateXPBar)
 
 
 -- EXPERIENCE TOOLTIP FUNCTIONALITY
 
-local function ExpTooltip()
+local function XPTooltip()
     local CurrentExperience, MaxExperience = UnitXP("player"), UnitXPMax("player")
     local RestedExperience = GetXPExhaustion() or 0
 
@@ -70,18 +70,18 @@ local function ExpTooltip()
     GameTooltip:Show()
 end
 
-MainMenuExpBar:HookScript("OnEnter", ExpTooltip)
+MainMenuExpBar:HookScript("OnEnter", XPTooltip)
 MainMenuExpBar:HookScript("OnLeave", function() GameTooltip:Hide() end)
 
 
 -- REPUTATION BAR
 
-local RepBarBackdrop = CreateFrame("Frame", nil, ReputationWatchBar.StatusBar, "BackdropTemplate")
-RepBarBackdrop:SetPoint("TOPLEFT", ReputationWatchBar.StatusBar, "TOPLEFT", -3, 3)
-RepBarBackdrop:SetPoint("BOTTOMRIGHT", ReputationWatchBar.StatusBar, "BOTTOMRIGHT", 3, -3)
-RepBarBackdrop:SetBackdrop({edgeFile = EDGE, edgeSize = MEDIUM})
-RepBarBackdrop:SetBackdropBorderColor(unpack(GREY))
-RepBarBackdrop:SetFrameLevel(ReputationWatchBar.StatusBar:GetFrameLevel() + 1)
+local RepBackdrop = CreateFrame("Frame", nil, ReputationWatchBar.StatusBar, "BackdropTemplate")
+RepBackdrop:SetPoint("TOPLEFT", ReputationWatchBar.StatusBar, "TOPLEFT", -3, 3)
+RepBackdrop:SetPoint("BOTTOMRIGHT", ReputationWatchBar.StatusBar, "BOTTOMRIGHT", 3, -3)
+RepBackdrop:SetBackdrop({edgeFile = EDGE, edgeSize = MEDIUM})
+RepBackdrop:SetBackdropBorderColor(unpack(GREY))
+RepBackdrop:SetFrameLevel(ReputationWatchBar.StatusBar:GetFrameLevel() + 2)
 
 local function HideRepTextures()
     local textureNames = {
@@ -97,7 +97,7 @@ local function HideRepTextures()
     end
 end
 
-local function UpdateReputationBar()
+local function UpdateRepBar()
     if not GetWatchedFactionInfo() then
         ReputationWatchBar.StatusBar:Hide()
         return
@@ -116,10 +116,10 @@ local function UpdateReputationBar()
     ReputationWatchBar.StatusBar:Show()
 end
 
-local ReputationBarFrame = CreateFrame("Frame")
-ReputationBarFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-ReputationBarFrame:RegisterEvent("UPDATE_FACTION")
-ReputationBarFrame:SetScript("OnEvent", UpdateReputationBar)
+local RepBarEvents = CreateFrame("Frame")
+RepBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+RepBarEvents:RegisterEvent("UPDATE_FACTION")
+RepBarEvents:SetScript("OnEvent", UpdateRepBar)
 
 
 -- REPUTATION TOOLTIP
@@ -154,3 +154,40 @@ end
 
 ReputationWatchBar.StatusBar:HookScript("OnEnter", RepTooltip)
 ReputationWatchBar.StatusBar:HookScript("OnLeave", function() GameTooltip:Hide() end)
+
+
+-- CREATE EXHAUSTION TIMER BACKDROP
+
+local function ExhTimerBackdrop(ExhaustionTimer)
+    
+    if not _G[ExhaustionTimer.."CustomBackdrop"] then
+        local ExhTimerBackdrop = CreateFrame("Frame", ExhaustionTimer.."CustomBackdrop", _G[ExhaustionTimer.."StatusBar"], "BackdropTemplate")
+        ExhTimerBackdrop:SetPoint("TOPLEFT", _G[ExhaustionTimer.."StatusBar"], "TOPLEFT", -3, 3)
+        ExhTimerBackdrop:SetPoint("BOTTOMRIGHT", _G[ExhaustionTimer.."StatusBar"], "BOTTOMRIGHT", 3, -3)
+        ExhTimerBackdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = MEDIUM})
+        ExhTimerBackdrop:SetBackdropBorderColor(unpack(GREY))
+        ExhTimerBackdrop:SetFrameLevel(_G[ExhaustionTimer.."StatusBar"]:GetFrameLevel() + 2)
+    end
+end
+
+
+-- UPDATE EXHAUSTION TIMERS
+
+local function UpdateExhTimer()
+    
+    for i = 1, MIRRORTIMER_NUMTIMERS do
+        local ExhaustionTimer = "MirrorTimer"..i
+        
+        _G[ExhaustionTimer.."Border"]:Hide()
+        _G[ExhaustionTimer.."StatusBar"]:SetStatusBarTexture(BAR)
+        _G[ExhaustionTimer.."Text"]:ClearAllPoints()
+        _G[ExhaustionTimer.."Text"]:SetPoint("CENTER", _G[ExhaustionTimer.."StatusBar"], "CENTER", 0, 0)
+
+        ExhTimerBackdrop(ExhaustionTimer)
+    end
+end
+
+local ExhTimerEvents = CreateFrame("Frame")
+ExhTimerEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+ExhTimerEvents:RegisterEvent("MIRROR_TIMER_START")
+ExhTimerEvents:SetScript("OnEvent", UpdateExhTimer)

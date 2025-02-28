@@ -49,7 +49,7 @@ MinimapTimeBackdrop:SetBackdrop({
 })
 MinimapTimeBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
 MinimapTimeBackdrop:SetBackdropBorderColor(unpack(GREY))
-MinimapTimeBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 1)
+MinimapTimeBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 2)
 
 local function MinimapTimeUpdate()
     for _, ButtonRegion in pairs({TimeManagerClockButton:GetRegions()}) do
@@ -85,7 +85,7 @@ MinimapMailBackdrop:SetBackdrop({
 })
 MinimapMailBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
 MinimapMailBackdrop:SetBackdropBorderColor(unpack(GREY))
-MinimapMailBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 1)
+MinimapMailBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 2)
 
 local function MinimapMailUpdate()
     MiniMapMailBorder:Hide()
@@ -118,7 +118,7 @@ MinimapBFBackdrop:SetBackdrop({
 })
 MinimapBFBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
 MinimapBFBackdrop:SetBackdropBorderColor(unpack(GREY))
-MinimapBFBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 1)
+MinimapBFBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 2)
 
 local function MinimapBFUpdate()
     MiniMapBattlefieldBorder:Hide()
@@ -154,7 +154,7 @@ MinimapTrackingBackdrop:SetBackdrop({
 })
 MinimapTrackingBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
 MinimapTrackingBackdrop:SetBackdropBorderColor(unpack(GREY))
-MinimapTrackingBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 1)
+MinimapTrackingBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 2)
 
 local function MinimapTrackingUpdate()
     MiniMapTrackingBorder:Hide()

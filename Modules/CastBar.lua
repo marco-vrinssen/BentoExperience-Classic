@@ -5,14 +5,14 @@ CastingBarBackdrop:SetPoint("TOPLEFT", CastingBarFrame, "TOPLEFT", -3, 3)
 CastingBarBackdrop:SetPoint("BOTTOMRIGHT", CastingBarFrame, "BOTTOMRIGHT", 3, -3)
 CastingBarBackdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = MEDIUM})
 CastingBarBackdrop:SetBackdropBorderColor(unpack(GREY))
-CastingBarBackdrop:SetFrameLevel(CastingBarFrame:GetFrameLevel() + 1)
+CastingBarBackdrop:SetFrameLevel(CastingBarFrame:GetFrameLevel() + 2)
 
 
 -- UPDATE CASTBAR
 
 local function UpdateCastBar()
     CastingBarFrame:ClearAllPoints()
-    CastingBarFrame:SetSize(160, 24)
+    CastingBarFrame:SetSize(160, 20)
     CastingBarFrame:SetMovable(true)
     CastingBarFrame:SetUserPlaced(true)
     CastingBarFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 242)

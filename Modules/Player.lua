@@ -149,3 +149,102 @@ end
 local PlayerPortraitFrame = CreateFrame("Frame")
 PlayerPortraitFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 PlayerPortraitFrame:SetScript("OnEvent", UpdatePlayerPortrait)
+
+
+-- UPDATE AURA POSITION
+
+local function UpdateAuraPosition()
+    BuffFrame:ClearAllPoints()
+    BuffFrame:SetPoint("TOPRIGHT", Minimap, "TOPLEFT", -40, 0)
+end
+
+
+-- UPDATE TIMER TEXT
+
+local function UpdateAuraTimer(Aura)
+    local AuraDuration = _G[Aura:GetName().."Duration"]
+    if AuraDuration then
+        AuraDuration:SetFont(FONT, 10, "OUTLINE")
+        AuraDuration:SetTextColor(1, 1, 1)
+        AuraDuration:ClearAllPoints()
+        AuraDuration:SetPoint("BOTTOM", Aura, "BOTTOM", 1, -12)
+    end
+end
+
+
+-- UPDATE AURAS
+
+local function UpdatePlayerAuras()
+    UpdateAuraPosition()
+    
+    for i = 1, BUFF_MAX_DISPLAY do
+        local Buff = _G["BuffButton"..i]
+        if Buff then
+            UpdateAuraTimer(Buff)
+        end
+    end
+
+    for i = 1, DEBUFF_MAX_DISPLAY do
+        local Debuff = _G["DebuffButton"..i]
+        if Debuff then
+            UpdateAuraTimer(Debuff)
+        end
+    end
+end
+
+
+-- INITIALIZE AURA UPDATES
+
+local AuraTimeEvent = CreateFrame("Frame")
+AuraTimeEvent:RegisterEvent("PLAYER_ENTERING_WORLD")
+AuraTimeEvent:RegisterEvent("UNIT_AURA")
+AuraTimeEvent:SetScript("OnEvent", UpdatePlayerAuras)
+
+
+-- HOOK AURA BUTTON UPDATE DURATION
+
+hooksecurefunc("AuraButton_UpdateDuration", function(Aura)
+    if Aura then
+        UpdateAuraTimer(Aura)
+    end
+end)
+
+
+-- UPDATE PLAYER GROUP ELEMENTS
+
+local function UpdatePlayerGroup()
+    if PlayerFrameGroupIndicator then
+        PlayerFrameGroupIndicator:SetAlpha(0)
+        PlayerFrameGroupIndicator:Hide()
+        
+        if not PlayerFrameGroupIndicator.hooked then
+            hooksecurefunc(PlayerFrameGroupIndicator, "Show", function(self)
+                self:SetAlpha(0)
+                self:Hide()
+            end)
+            PlayerFrameGroupIndicator.hooked = true
+        end
+    end
+
+    local MultiGroupFrame = _G["MultiGroupFrame"]
+    if MultiGroupFrame then
+        MultiGroupFrame:SetTexture(nil)
+        MultiGroupFrame:SetAlpha(0)
+        MultiGroupFrame:Hide()
+        
+        if not MultiGroupFrame.hooked then
+            hooksecurefunc(MultiGroupFrame, "Show", function(self)
+                self:SetTexture(nil)
+                self:SetAlpha(0)
+                self:Hide()
+            end)
+            MultiGroupFrame.hooked = true
+        end
+    end
+end
+
+local PlayerGroupFrame = CreateFrame("Frame")
+PlayerGroupFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+PlayerGroupFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+PlayerGroupFrame:RegisterEvent("PARTY_LEADER_CHANGED")
+PlayerGroupFrame:SetScript("OnEvent", UpdatePlayerGroup)
