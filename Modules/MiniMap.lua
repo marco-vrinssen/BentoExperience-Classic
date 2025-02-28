@@ -42,13 +42,13 @@ local MinimapTimeBackdrop = CreateFrame("Frame", nil, Minimap, "BackdropTemplate
 MinimapTimeBackdrop:SetSize(48, 24)
 MinimapTimeBackdrop:SetPoint("CENTER", Minimap, "BOTTOM", 0, -2)
 MinimapTimeBackdrop:SetBackdrop({
-    bgFile = T.BG, -- Updated background
-    edgeFile = T.EDGE,
-      edgeSize = T.EDGE_SIZE,
+    bgFile = BG, -- Updated background
+    edgeFile = EDGE,
+      edgeSize = MEDIUM,
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
 MinimapTimeBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
-MinimapTimeBackdrop:SetBackdropBorderColor(unpack(N.RGB))
+MinimapTimeBackdrop:SetBackdropBorderColor(unpack(GREY))
 MinimapTimeBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 1)
 
 local function MinimapTimeUpdate()
@@ -60,7 +60,7 @@ local function MinimapTimeUpdate()
     TimeManagerClockButton:SetParent(MinimapTimeBackdrop)
     TimeManagerClockButton:SetAllPoints(MinimapTimeBackdrop)
     TimeManagerClockTicker:SetPoint("CENTER", TimeManagerClockButton, "CENTER", 0, 0)
-    TimeManagerClockTicker:SetFont(F.TYPE, F.SIZE)
+    TimeManagerClockTicker:SetFont(FONT, MEDIUM)
     TimeManagerFrame:ClearAllPoints()
     TimeManagerFrame:SetPoint("TOPRIGHT", MinimapTimeBackdrop, "BOTTOMRIGHT", 0, -4)
 end
@@ -78,13 +78,13 @@ local MinimapMailBackdrop = CreateFrame("Frame", nil, MiniMapMailFrame, "Backdro
 MinimapMailBackdrop:SetPoint("TOPLEFT", MiniMapMailFrame, "TOPLEFT", -4, 4)
 MinimapMailBackdrop:SetPoint("BOTTOMRIGHT", MiniMapMailFrame, "BOTTOMRIGHT", 4, -4)
 MinimapMailBackdrop:SetBackdrop({
-    bgFile = T.BG,
-    edgeFile = T.EDGE,
-    edgeSize = T.EDGE_SIZE,
+    bgFile = BG,
+    edgeFile = EDGE,
+    edgeSize = MEDIUM,
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
 MinimapMailBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
-MinimapMailBackdrop:SetBackdropBorderColor(unpack(N.RGB))
+MinimapMailBackdrop:SetBackdropBorderColor(unpack(GREY))
 MinimapMailBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 1)
 
 local function MinimapMailUpdate()
@@ -111,13 +111,13 @@ local MinimapBFBackdrop = CreateFrame("Frame", nil, MiniMapBattlefieldFrame, "Ba
 MinimapBFBackdrop:SetPoint("TOPLEFT", MiniMapBattlefieldFrame, "TOPLEFT", -4, 4)
 MinimapBFBackdrop:SetPoint("BOTTOMRIGHT", MiniMapBattlefieldFrame, "BOTTOMRIGHT", 4, -4)
 MinimapBFBackdrop:SetBackdrop({
-    bgFile = T.BG, -- Updated background
-    edgeFile = T.EDGE,
-      edgeSize = T.EDGE_SIZE,
+    bgFile = BG, -- Updated background
+    edgeFile = EDGE,
+      edgeSize = MEDIUM,
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
 MinimapBFBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
-MinimapBFBackdrop:SetBackdropBorderColor(unpack(N.RGB))
+MinimapBFBackdrop:SetBackdropBorderColor(unpack(GREY))
 MinimapBFBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 1)
 
 local function MinimapBFUpdate()
@@ -147,13 +147,13 @@ local MinimapTrackingBackdrop = CreateFrame("Frame", nil, MiniMapTracking, "Back
 MinimapTrackingBackdrop:SetPoint("TOPLEFT", MiniMapTracking, "TOPLEFT", -4, 4)
 MinimapTrackingBackdrop:SetPoint("BOTTOMRIGHT", MiniMapTracking, "BOTTOMRIGHT", 4, -4)
 MinimapTrackingBackdrop:SetBackdrop({
-    bgFile = T.BG, -- Updated background
-    edgeFile = T.EDGE,
-      edgeSize = T.EDGE_SIZE,
+    bgFile = BG, -- Updated background
+    edgeFile = EDGE,
+      edgeSize = MEDIUM,
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
 MinimapTrackingBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
-MinimapTrackingBackdrop:SetBackdropBorderColor(unpack(N.RGB))
+MinimapTrackingBackdrop:SetBackdropBorderColor(unpack(GREY))
 MinimapTrackingBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 1)
 
 local function MinimapTrackingUpdate()
