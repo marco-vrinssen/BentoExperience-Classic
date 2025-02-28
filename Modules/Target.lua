@@ -226,6 +226,39 @@ TargetClassificationFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 TargetClassificationFrame:SetScript("OnEvent", TargetClassificationUpdate)
 
 
+-- CREATE AGGRO TEXT
+
+local AggroText = TargetFrame:CreateFontString(nil, "OVERLAY")
+AggroText:SetFont(FONT, MEDIUM, "OUTLINE")
+AggroText:SetPoint("BOTTOM", TargetClassificationText, "TOP", 0, 8)
+AggroText:Hide()
+
+
+-- UPDATE AGGRO STATUS
+
+local function UpdateAggroStatus()
+	local isTanking, status, threatpct = UnitDetailedThreatSituation("player", "target")
+	if status and threatpct then
+		AggroText:SetText(string.format("%d%%", threatpct))
+		if threatpct == 100 then
+			AggroText:SetTextColor(unpack(RED))
+		else
+			AggroText:SetTextColor(unpack(YELLOW))
+		end
+		AggroText:Show()
+	else
+		AggroText:Hide()
+	end
+end
+
+local AggroFrame = CreateFrame("Frame")
+AggroFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+AggroFrame:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE")
+AggroFrame:SetScript("OnEvent", UpdateAggroStatus)
+
+hooksecurefunc("TargetFrame_Update", UpdateAggroStatus)
+
+
 -- UPDATE TARGET RAID ICON
 
 local RaidTargetBackdrop = CreateFrame("Frame", nil, TargetFrame, "BackdropTemplate")
