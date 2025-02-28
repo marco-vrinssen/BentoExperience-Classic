@@ -3,9 +3,9 @@
 PlayerFrameBackdrop = CreateFrame("Button", nil, PlayerFrame, "SecureUnitButtonTemplate, BackdropTemplate")
 PlayerFrameBackdrop:SetPoint("BOTTOM", UIParent, "BOTTOM", -190, 240)
 PlayerFrameBackdrop:SetSize(124, 48)
-PlayerFrameBackdrop:SetBackdrop({edgeFile = T.EDGE, edgeSize = T.EDGE_SIZE})
-PlayerFrameBackdrop:SetBackdropBorderColor(unpack(N.RGB))
-PlayerFrameBackdrop:SetFrameStrata("HIGH")
+PlayerFrameBackdrop:SetBackdrop({edgeFile = EDGE, edgeSize = MEDIUM})
+PlayerFrameBackdrop:SetBackdropBorderColor(unpack(GREY))
+PlayerFrameBackdrop:SetFrameLevel(PlayerFrame:GetFrameLevel() + 2)
 PlayerFrameBackdrop:SetAttribute("unit", "player")
 PlayerFrameBackdrop:RegisterForClicks("AnyUp")
 PlayerFrameBackdrop:SetAttribute("type1", "target")
@@ -14,9 +14,9 @@ PlayerFrameBackdrop:SetAttribute("type2", "togglemenu")
 PlayerPortraitBackdrop = CreateFrame("Button", nil, PlayerFrame, "SecureUnitButtonTemplate, BackdropTemplate")
 PlayerPortraitBackdrop:SetPoint("RIGHT", PlayerFrameBackdrop, "LEFT", 0, 0)
 PlayerPortraitBackdrop:SetSize(48, 48)
-PlayerPortraitBackdrop:SetBackdrop({edgeFile = T.EDGE, edgeSize = T.EDGE_SIZE})
-PlayerPortraitBackdrop:SetBackdropBorderColor(unpack(N.RGB))
-PlayerPortraitBackdrop:SetFrameStrata("HIGH")
+PlayerPortraitBackdrop:SetBackdrop({edgeFile = EDGE, edgeSize = MEDIUM})
+PlayerPortraitBackdrop:SetBackdropBorderColor(unpack(GREY))
+PlayerPortraitBackdrop:SetFrameLevel(PlayerFrame:GetFrameLevel() + 2)
 PlayerPortraitBackdrop:SetAttribute("unit", "player")
 PlayerPortraitBackdrop:RegisterForClicks("AnyUp")
 PlayerPortraitBackdrop:SetAttribute("type1", "target")
@@ -51,13 +51,13 @@ local function UpdatePlayerFrame()
 
     PlayerName:ClearAllPoints()
     PlayerName:SetPoint("TOP", PlayerFrameBackdrop, "TOP", 0, -6)
-    PlayerName:SetFont(F.TYPE, F.SIZE, "OUTLINE")
-    PlayerName:SetTextColor(unpack(W.RGB))
+    PlayerName:SetFont(FONT, MEDIUM, "OUTLINE")
+    PlayerName:SetTextColor(unpack(WHITE))
 
     PlayerLevelText:ClearAllPoints()
     PlayerLevelText:SetPoint("TOP", PlayerPortraitBackdrop, "BOTTOM", 0, -4)
-    PlayerLevelText:SetFont(F.TYPE, F.SIZE, "OUTLINE")
-    PlayerLevelText:SetTextColor(unpack(W.RGB))
+    PlayerLevelText:SetFont(FONT, MEDIUM, "OUTLINE")
+    PlayerLevelText:SetTextColor(unpack(WHITE))
 
     if UnitLevel("player") == MAX_PLAYER_LEVEL then
         PlayerLevelText:Hide()
@@ -66,18 +66,18 @@ local function UpdatePlayerFrame()
     end
 
     PlayerFrameHealthBarText:SetPoint("CENTER", PlayerFrameHealthBar, "CENTER", 0, 0)
-    PlayerFrameHealthBarText:SetFont(F.TYPE, F.SIZE, "OUTLINE")
+    PlayerFrameHealthBarText:SetFont(FONT, MEDIUM, "OUTLINE")
     PlayerFrameHealthBarTextRight:SetPoint("RIGHT", PlayerFrameHealthBar, "RIGHT", -4, 0)
-    PlayerFrameHealthBarTextRight:SetFont(F.TYPE, F.SIZE, "OUTLINE")
+    PlayerFrameHealthBarTextRight:SetFont(FONT, MEDIUM, "OUTLINE")
     PlayerFrameHealthBarTextLeft:SetPoint("LEFT", PlayerFrameHealthBar, "LEFT", 4, 0)
-    PlayerFrameHealthBarTextLeft:SetFont(F.TYPE, F.SIZE, "OUTLINE")
+    PlayerFrameHealthBarTextLeft:SetFont(FONT, MEDIUM, "OUTLINE")
 
     PlayerFrameManaBarText:SetPoint("CENTER", PlayerFrameManaBar, "CENTER", 0, 0)
-    PlayerFrameManaBarText:SetFont(F.TYPE, 8, "OUTLINE")
+    PlayerFrameManaBarText:SetFont(FONT, 8, "OUTLINE")
     PlayerFrameManaBarTextLeft:SetPoint("LEFT", PlayerFrameManaBar, "LEFT", 4, 0)
-    PlayerFrameManaBarTextLeft:SetFont(F.TYPE, 8, "OUTLINE")
+    PlayerFrameManaBarTextLeft:SetFont(FONT, 8, "OUTLINE")
     PlayerFrameManaBarTextRight:SetPoint("RIGHT", PlayerFrameManaBar, "RIGHT", -4, 0)
-    PlayerFrameManaBarTextRight:SetFont(F.TYPE, 8, "OUTLINE")
+    PlayerFrameManaBarTextRight:SetFont(FONT, 8, "OUTLINE")
 end
 
 local PlayerFrameFrame = CreateFrame("Frame")
@@ -91,22 +91,22 @@ local function UpdatePlayerResources()
     PlayerFrameHealthBar:ClearAllPoints()
     PlayerFrameHealthBar:SetSize(PlayerFrameBackground:GetWidth(), 16)
     PlayerFrameHealthBar:SetPoint("BOTTOM", PlayerFrameManaBar, "TOP", 0, 0)
-    PlayerFrameHealthBar:SetStatusBarTexture(T.BAR)
-    PlayerFrameHealthBar:SetStatusBarColor(unpack(G.RGB))
+    PlayerFrameHealthBar:SetStatusBarTexture(BAR)
+    PlayerFrameHealthBar:SetStatusBarColor(unpack(GREEN))
 
     PlayerFrameManaBar:ClearAllPoints()
     PlayerFrameManaBar:SetPoint("BOTTOM", PlayerFrameBackdrop, "BOTTOM", 0, 3)
     PlayerFrameManaBar:SetSize(PlayerFrameBackground:GetWidth(), 8)
-    PlayerFrameManaBar:SetStatusBarTexture(T.BAR)
+    PlayerFrameManaBar:SetStatusBarTexture(BAR)
     
     local powerType = UnitPowerType("player")
     
     if powerType == 0 then -- Mana
-        PlayerFrameManaBar:SetStatusBarColor(unpack(B.RGB))
+        PlayerFrameManaBar:SetStatusBarColor(unpack(BLUE))
     elseif powerType == 1 then -- Rage
-        PlayerFrameManaBar:SetStatusBarColor(unpack(R.RGB))
+        PlayerFrameManaBar:SetStatusBarColor(unpack(RED))
     elseif powerType == 3 then -- Energy
-        PlayerFrameManaBar:SetStatusBarColor(unpack(Y.RGB))
+        PlayerFrameManaBar:SetStatusBarColor(unpack(YELLOW))
     end
 end
 
