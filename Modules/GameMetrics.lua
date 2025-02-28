@@ -12,7 +12,7 @@ FramerateLabel:HookScript("OnShow", EnforceHideFramerateLabel)
 local function FramerateUpdate()
     FramerateText:ClearAllPoints()
     FramerateText:SetPoint("TOP", UIParent, "TOP", 0, -16)
-    FramerateText:SetFont(F.TYPE, 12, "OUTLINE")
+    FramerateText:SetFont(FONT, 12, "OUTLINE")
 end
 
 local FramerateFrame = CreateFrame("Frame")
@@ -24,7 +24,7 @@ FramerateFrame:SetScript("OnEvent", FramerateUpdate)
 
 local LatencyFrame = CreateFrame("Frame", "BentoLatencyFrame", UIParent)
 local LatencyText = LatencyFrame:CreateFontString(nil, "OVERLAY")
-LatencyText:SetFont(F.TYPE, 16, "OUTLINE")
+LatencyText:SetFont(FONT, 16, "OUTLINE")
 LatencyText:SetPoint("TOP", FramerateText, "BOTTOM", 0, -8)
 
 
