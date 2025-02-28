@@ -2,32 +2,26 @@
 
 local function BagSlotUpdate()
     MainMenuBarBackpackButton:ClearAllPoints()
-    MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", HelpMicroButton, "TOPRIGHT", -2, -12)
-    MainMenuBarBackpackButton:SetScale(0.8)
+    MainMenuBarBackpackButton:SetPoint("BOTTOMRIGHT", HelpMicroButton, "TOPRIGHT", -2, -16)
 
     CharacterBag0Slot:ClearAllPoints()
     CharacterBag0Slot:SetPoint("RIGHT", MainMenuBarBackpackButton, "LEFT", -4, 0)
-    CharacterBag0Slot:SetScale(0.8)
     CharacterBag0Slot:SetParent(ContainerFrame1)
 
     CharacterBag1Slot:ClearAllPoints()
     CharacterBag1Slot:SetPoint("RIGHT", CharacterBag0Slot, "LEFT", -4, 0)
-    CharacterBag1Slot:SetScale(0.8)
     CharacterBag1Slot:SetParent(ContainerFrame1)
 
     CharacterBag2Slot:ClearAllPoints()
     CharacterBag2Slot:SetPoint("RIGHT", CharacterBag1Slot, "LEFT", -4, 0)
-    CharacterBag2Slot:SetScale(0.8)
     CharacterBag2Slot:SetParent(ContainerFrame1)
 
     CharacterBag3Slot:ClearAllPoints()
     CharacterBag3Slot:SetPoint("RIGHT", CharacterBag2Slot, "LEFT", -4, 0)
-    CharacterBag3Slot:SetScale(0.8)
     CharacterBag3Slot:SetParent(ContainerFrame1)
 
     KeyRingButton:ClearAllPoints()
     KeyRingButton:SetPoint("RIGHT", CharacterBag3Slot, "LEFT", -4, -1)
-    KeyRingButton:SetScale(0.8)
     KeyRingButton:SetParent(ContainerFrame1)
 end
 
