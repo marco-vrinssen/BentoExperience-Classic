@@ -10,7 +10,7 @@ hooksecurefunc("CompactUnitFrame_UpdateAuras", HideAllAuras)
 -- REPLACE RAID FRAME HEALTH BAR TEXTURE
 local function ReplaceHealthBarTexture(frame)
     if frame and frame.healthBar then
-        frame.healthBar:SetStatusBarTexture(T.BAR)
+        frame.healthBar:SetStatusBarTexture(BAR)
     end
 end
 
