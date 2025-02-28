@@ -279,7 +279,9 @@ local function UpdateRaidTargetIcon()
         TargetFrameTextureFrameRaidTargetIcon:ClearAllPoints()
         TargetFrameTextureFrameRaidTargetIcon:SetPoint("CENTER", RaidTargetBackdrop, "CENTER", 0, 0)
         TargetFrameTextureFrameRaidTargetIcon:SetSize(12, 12)
-		TargetFrameTextureFrameRaidTargetIcon:SetFrameLevel(RaidTargetBackdrop:GetFrameLevel() + 2)
+        if TargetFrameTextureFrameRaidTargetIcon then
+            TargetFrameTextureFrameRaidTargetIcon:SetFrameLevel(RaidTargetBackdrop:GetFrameLevel() + 2)
+        end
     else
         RaidTargetBackdrop:Hide()
     end
