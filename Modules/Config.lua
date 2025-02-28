@@ -4,8 +4,8 @@ local function UpdateCVars()
     SetCVar("ffxGlow", 0)
     SetCVar("ffxDeath", 0)
     SetCVar("ffxNether", 0)
-    SetCVar("worldLatencyTextScale", 1.25)
-    SetCVar("cameraDistanceMaxZoomFactor", 2.2)
+    SetCVar("WorldTextScale", 1.25)
+    SetCVar("cameraDistanceMaxZoomFactor", 2.4)
     SetCVar("HardwareCursor", 1)
 end
 
