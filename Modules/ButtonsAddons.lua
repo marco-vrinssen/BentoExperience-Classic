@@ -32,13 +32,13 @@ local function AddonButtonUpdate()
                 AddonButton.background:SetPoint("TOPLEFT", AddonButton, "TOPLEFT", -3, 3)
                 AddonButton.background:SetPoint("BOTTOMRIGHT", AddonButton, "BOTTOMRIGHT", 3, -3)
                 AddonButton.background:SetBackdrop({
-                    bgFile = T.BG,
-                    edgeFile = T.EDGE,
-                    edgeSize = T.EDGE_SIZE,
+                    bgFile = BG,
+                    edgeFile = EDGE,
+                    edgeSize = MEDIUM,
                     insets = {left = 2, right = 2, top = 2, bottom = 2}
                 })
-                AddonButton.background:SetBackdropColor(unpack(D.RGB))
-                AddonButton.background:SetBackdropBorderColor(unpack(N.RGB))
+                AddonButton.background:SetBackdropColor(unpack(BLACK))
+                AddonButton.background:SetBackdropBorderColor(unpack(GREY))
                 AddonButton.background:SetFrameLevel(AddonButton:GetFrameLevel() - 1)
             end
         end
