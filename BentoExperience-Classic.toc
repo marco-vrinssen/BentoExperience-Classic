@@ -13,9 +13,8 @@ Modules/Commands.lua
 Modules/Compatibility.lua
 Modules/Config.lua
 Modules/Items.lua
-Modules/LFGButton.lua
+Modules/Menu.lua
 Modules/MetricsDisplay.lua
-Modules/MicroMenu.lua
 Modules/MiniMap.lua
 Modules/NamePlates.lua
 Modules/Player.lua
