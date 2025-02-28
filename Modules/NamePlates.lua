@@ -220,10 +220,10 @@ local function NameplateConfigUpdate()
     SetCVar("nameplateSelectedScale", 1)
     SetCVar("nameplateMaxScale", 1)
     
-    SetCVar("nameplateOverlapV", 0.8)
-    SetCVar("nameplateOverlapH", 0.8)
+    SetCVar("nameplateOverlapH", 1)
+    SetCVar("nameplateOverlapV", 1)
     
-    SetCVar("nameplateMaxDistance", 60)
+    SetCVar("nameplateMaxDistance", 40)
 end
 
 local NameplateConfigEvents = CreateFrame("Frame")
