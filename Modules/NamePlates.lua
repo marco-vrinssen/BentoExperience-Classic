@@ -8,15 +8,15 @@ local function NameplateUpdate(Nameplate, unitID)
     if not NameplateHealthbar then return end
 
     local HealthBarTexture = NameplateHealthbar:GetStatusBarTexture()
-    HealthBarTexture:SetTexture(T.BAR)
+    HealthBarTexture:SetTexture(BAR)
 
     if not NameplateHealthbar.CastbarBackdrop then
         NameplateHealthbar.CastbarBackdrop = CreateFrame("Frame", nil, NameplateHealthbar, "BackdropTemplate")
         NameplateHealthbar.CastbarBackdrop:SetPoint("TOPLEFT", NameplateHealthbar, -3, 3)
         NameplateHealthbar.CastbarBackdrop:SetPoint("BOTTOMRIGHT", NameplateHealthbar, 3, -3)
-        NameplateHealthbar.CastbarBackdrop:SetFrameStrata("HIGH")
-        NameplateHealthbar.CastbarBackdrop:SetBackdrop({edgeFile = T.EDGE, edgeSize = T.EDGE_SIZE})
-        NameplateHealthbar.CastbarBackdrop:SetBackdropBorderColor(unpack(N.RGB))
+        NameplateHealthbar.CastbarBackdrop:SetBackdrop({edgeFile = EDGE, edgeSize = MEDIUM})
+        NameplateHealthbar.CastbarBackdrop:SetBackdropBorderColor(unpack(GREY))
+        NameplateHealthbar.CastbarBackdrop:SetFrameLevel(NameplateHealthbar:GetFrameLevel() + 1)
     end
 
     NameplateHealthbar.border:Hide()
@@ -28,24 +28,24 @@ local function NameplateUpdate(Nameplate, unitID)
 
     UnitNameplate.name:ClearAllPoints()
     UnitNameplate.name:SetPoint("BOTTOM", NameplateHealthbar, "TOP", 0, 8)
-    UnitNameplate.name:SetFont(F.TYPE, F.SIZE, "OUTLINE")
+    UnitNameplate.name:SetFont(FONT, MEDIUM, "OUTLINE")
 
     if UnitExists(unitID) then
         if UnitIsPlayer(unitID) then
             if UnitIsEnemy("player", unitID) and UnitCanAttack("player", unitID) then
-                UnitNameplate.name:SetTextColor(unpack(R.RGB)) -- Red for enemy players that can be attacked
+                UnitNameplate.name:SetTextColor(unpack(RED)) -- Red for enemy players that can be attacked
             elseif UnitReaction("player", unitID) == 4 then
-                UnitNameplate.name:SetTextColor(unpack(Y.RGB)) -- Yellow for neutral players
+                UnitNameplate.name:SetTextColor(unpack(YELLOW)) -- Yellow for neutral players
             else
-                UnitNameplate.name:SetTextColor(unpack(W.RGB)) -- White for friendly players
+                UnitNameplate.name:SetTextColor(unpack(WHITE)) -- White for friendly players
             end
         else
             if UnitIsEnemy("player", unitID) and UnitCanAttack("player", unitID) then
-                UnitNameplate.name:SetTextColor(unpack(R.RGB)) -- Red for aggressive NPCs
+                UnitNameplate.name:SetTextColor(unpack(RED)) -- Red for aggressive NPCs
             elseif UnitReaction("player", unitID) == 4 and UnitCanAttack("player", unitID) then
-                UnitNameplate.name:SetTextColor(unpack(Y.RGB)) -- Yellow for neutral but attackable NPCs
+                UnitNameplate.name:SetTextColor(unpack(YELLOW)) -- Yellow for neutral but attackable NPCs
             elseif UnitReaction("player", unitID) >= 4 then
-                UnitNameplate.name:SetTextColor(unpack(W.RGB)) -- White for friendly NPCs
+                UnitNameplate.name:SetTextColor(unpack(WHITE)) -- White for friendly NPCs
             end
         end
     end
@@ -65,22 +65,22 @@ local function NameplateUpdate(Nameplate, unitID)
     local UnitEnemyPlayer = UnitIsPlayer(unitID) and UnitIsEnemy("player", unitID)
 
     if UnitTapState then
-        NameplateHealthbar:SetStatusBarColor(unpack(N.RGB))
+        NameplateHealthbar:SetStatusBarColor(unpack(GREY))
     elseif UnitEnemyPlayer then
         if UnitCanAttack("player", unitID) then
-            NameplateHealthbar:SetStatusBarColor(unpack(R.RGB))
+            NameplateHealthbar:SetStatusBarColor(unpack(RED))
         else
-            NameplateHealthbar:SetStatusBarColor(unpack(Y.RGB))
+            NameplateHealthbar:SetStatusBarColor(unpack(YELLOW))
         end
     elseif UnitThreat and UnitThreat >= 2 then
-        NameplateHealthbar:SetStatusBarColor(unpack(O.RGB))
+        NameplateHealthbar:SetStatusBarColor(unpack(ORANGE))
     elseif UnitReaction then
         if UnitReaction >= 5 then
-            NameplateHealthbar:SetStatusBarColor(unpack(G.RGB))
+            NameplateHealthbar:SetStatusBarColor(unpack(GREEN))
         elseif UnitReaction == 4 then
-            NameplateHealthbar:SetStatusBarColor(unpack(Y.RGB))
+            NameplateHealthbar:SetStatusBarColor(unpack(YELLOW))
         else
-            NameplateHealthbar:SetStatusBarColor(unpack(R.RGB))
+            NameplateHealthbar:SetStatusBarColor(unpack(RED))
         end
     else
         local OriginalColor = NameplateHealthbar.originalColor
