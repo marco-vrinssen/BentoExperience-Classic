@@ -35,20 +35,20 @@ local function CreateComboPoint()
     local cp = CreateFrame("Frame", nil, ComboPointsFrame, "BackdropTemplate")
     cp:SetSize(PointSize, PointSize)
     cp:SetBackdrop({
-        bgFile = T.BG,
-        edgeFile = T.EDGE,
-        edgeSize = T.EDGE_SIZE,
+        bgFile = BG,
+        edgeFile = EDGE,
+        edgeSize = MEDIUM,
         insets = {left = 2, right = 2, top = 2, bottom = 2}
     })
-    cp:SetBackdropBorderColor(unpack(N.RGB))
+    cp:SetBackdropBorderColor(unpack(GREY))
     return cp
 end
 
 local function ComboPointTextures(cp, active)
     if active then
-        cp:SetBackdropColor(unpack(R.RGB))
+        cp:SetBackdropColor(unpack(RED))
     else
-        cp:SetBackdropColor(unpack(N.RGB))
+        cp:SetBackdropColor(unpack(GREY))
     end
 end
 
