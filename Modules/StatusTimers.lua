@@ -10,12 +10,12 @@ local function ExhaustionTimerBackdrop(ExhaustionTimer)
         ExhaustionTimerBackdrop:SetPoint("BOTTOMRIGHT", _G[ExhaustionTimer.."StatusBar"], "BOTTOMRIGHT", 3, -3)
         
         ExhaustionTimerBackdrop:SetBackdrop({
-            edgeFile = T.EDGE,
-            edgeSize = T.EDGE_SIZE
+            edgeFile = EDGE,
+            edgeSize = MEDIUM
         })
         
-        ExhaustionTimerBackdrop:SetBackdropBorderColor(unpack(N.RGB))
-        ExhaustionTimerBackdrop:SetFrameStrata("HIGH")
+        ExhaustionTimerBackdrop:SetBackdropBorderColor(unpack(GREY))
+        ExhaustionTimerBackdrop:SetFrameLevel(_G[ExhaustionTimer.."StatusBar"]:GetFrameLevel() + 1)
     end
 end
 
@@ -26,7 +26,7 @@ local function ExhaustionTimerUpdate()
         local ExhaustionTimer = "MirrorTimer"..i
         
         _G[ExhaustionTimer.."Border"]:Hide()
-        _G[ExhaustionTimer.."StatusBar"]:SetStatusBarTexture(T.BAR)
+        _G[ExhaustionTimer.."StatusBar"]:SetStatusBarTexture(BAR)
         _G[ExhaustionTimer.."Text"]:ClearAllPoints()
         _G[ExhaustionTimer.."Text"]:SetPoint("CENTER", _G[ExhaustionTimer.."StatusBar"], "CENTER", 0, 0)
 
