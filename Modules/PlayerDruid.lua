@@ -7,14 +7,14 @@ if ClassIdentifier == "DRUID" then
     local DruidManaBarBackdrop = CreateFrame("Frame", nil, PlayerFrame, "BackdropTemplate")
     DruidManaBarBackdrop:SetPoint("TOP", PlayerFrameBackdrop, "BOTTOM", 0, 0)
     DruidManaBarBackdrop:SetSize(PlayerFrameBackdrop:GetWidth() - 2, 16)
-    DruidManaBarBackdrop:SetBackdrop({edgeFile = T.EDGE, edgeSize = T.EDGE_SIZE, })
-    DruidManaBarBackdrop:SetBackdropBorderColor(unpack(N.RGB))
+    DruidManaBarBackdrop:SetBackdrop({edgeFile = EDGE, edgeSize = MEDIUM, })
+    DruidManaBarBackdrop:SetBackdropBorderColor(unpack(GREY))
 
     local DruidManaBar = CreateFrame("StatusBar", nil, PlayerFrame, "BackdropTemplate")
     DruidManaBar:SetSize(DruidManaBarBackdrop:GetWidth()-4, DruidManaBarBackdrop:GetHeight()-4)
     DruidManaBar:SetPoint("CENTER", DruidManaBarBackdrop, "CENTER", 0, 0)
-    DruidManaBar:SetStatusBarTexture(T.BAR)
-    DruidManaBar:SetStatusBarColor(unpack(B.RGB))
+    DruidManaBar:SetStatusBarTexture(BAR)
+    DruidManaBar:SetStatusBarColor(unpack(BLUE))
     DruidManaBar:SetMinMaxValues(0, 1)
 
     DruidManaBarBackdrop:SetFrameLevel(DruidManaBar:GetFrameLevel() + 1)
@@ -22,7 +22,7 @@ if ClassIdentifier == "DRUID" then
     local DruidManaText = DruidManaBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
     DruidManaText:SetPoint("CENTER", DruidManaBar, "CENTER", 0, 0)
     DruidManaText:SetTextColor(1, 1, 1)
-    DruidManaText:SetFont(GameFontNormal:GetFont(), F.SIZE_SMALL, "OUTLINE")
+    DruidManaText:SetFont(GameFontNormal:GetFont(), SMALL, "OUTLINE")
 
     local function DruidManaBarUpdate()
         local PlayerPowerType, PowerToken = UnitPowerType("player")
