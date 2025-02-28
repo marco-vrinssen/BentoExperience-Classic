@@ -3,9 +3,9 @@
 local XPBarBackdrop = CreateFrame("Frame", nil, MainMenuExpBar, "BackdropTemplate")
 XPBarBackdrop:SetPoint("TOPLEFT", MainMenuExpBar, "TOPLEFT", -3, 3)
 XPBarBackdrop:SetPoint("BOTTOMRIGHT", MainMenuExpBar, "BOTTOMRIGHT", 3, -3)
-XPBarBackdrop:SetBackdrop({edgeFile = T.EDGE, edgeSize = T.EDGE_SIZE})
-XPBarBackdrop:SetBackdropBorderColor(unpack(N.RGB))
-XPBarBackdrop:SetFrameStrata("HIGH")
+XPBarBackdrop:SetBackdrop({edgeFile = EDGE, edgeSize = MEDIUM})
+XPBarBackdrop:SetBackdropBorderColor(unpack(GREY))
+XPBarBackdrop:SetFrameLevel(MainMenuExpBar:GetFrameLevel() + 1)
 
 local function HideXPTextures()
     for i = 0, 3 do
@@ -30,8 +30,8 @@ local function UpdateExperienceBar()
     MainMenuExpBar:SetHeight(12)
     MainMenuExpBar:ClearAllPoints()
     MainMenuExpBar:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 16, -16)
-    MainMenuExpBar:SetStatusBarTexture(T.BAR)
-    MainMenuExpBar:SetStatusBarColor(unpack(V.RGB))
+    MainMenuExpBar:SetStatusBarTexture(BAR)
+    MainMenuExpBar:SetStatusBarColor(unpack(PURPLE))
     
     MainMenuExpBar:EnableMouse(true)
 end
@@ -57,12 +57,12 @@ local function ExpTooltip()
         "%sCurrent:%s %s%d%s\n" ..
         "%sMissing:%s %s%d%s\n" ..
         "%sTotal:%s %s%d%s",
-        V.LUA, "|r",
-        Y.LUA, "|r", W.LUA, math.floor((CurrentExperience / MaxExperience) * 100), "|r",
-        Y.LUA, "|r", W.LUA, math.floor((RestedExperience / MaxExperience) * 100), "|r",
-        Y.LUA, "|r", W.LUA, CurrentExperience, "|r",
-        Y.LUA, "|r", W.LUA, MaxExperience - CurrentExperience, "|r",
-        Y.LUA, "|r", W.LUA, MaxExperience, "|r"
+        PURPLE_LUA, "|r",
+        YELLOW_LUA, "|r", WHITE_LUA, math.floor((CurrentExperience / MaxExperience) * 100), "|r",
+        YELLOW_LUA, "|r", WHITE_LUA, math.floor((RestedExperience / MaxExperience) * 100), "|r",
+        YELLOW_LUA, "|r", WHITE_LUA, CurrentExperience, "|r",
+        YELLOW_LUA, "|r", WHITE_LUA, MaxExperience - CurrentExperience, "|r",
+        YELLOW_LUA, "|r", WHITE_LUA, MaxExperience, "|r"
     )
 
     GameTooltip:SetOwner(MainMenuExpBar, "ANCHOR_BOTTOMRIGHT", 4, -4)
@@ -79,9 +79,9 @@ MainMenuExpBar:HookScript("OnLeave", function() GameTooltip:Hide() end)
 local RepBarBackdrop = CreateFrame("Frame", nil, ReputationWatchBar.StatusBar, "BackdropTemplate")
 RepBarBackdrop:SetPoint("TOPLEFT", ReputationWatchBar.StatusBar, "TOPLEFT", -3, 3)
 RepBarBackdrop:SetPoint("BOTTOMRIGHT", ReputationWatchBar.StatusBar, "BOTTOMRIGHT", 3, -3)
-RepBarBackdrop:SetBackdrop({edgeFile = T.EDGE, edgeSize = T.EDGE_SIZE})
-RepBarBackdrop:SetBackdropBorderColor(unpack(N.RGB))
-RepBarBackdrop:SetFrameStrata("HIGH")
+RepBarBackdrop:SetBackdrop({edgeFile = EDGE, edgeSize = MEDIUM})
+RepBarBackdrop:SetBackdropBorderColor(unpack(GREY))
+RepBarBackdrop:SetFrameLevel(ReputationWatchBar.StatusBar:GetFrameLevel() + 1)
 
 local function HideRepTextures()
     local textureNames = {
@@ -109,8 +109,8 @@ local function UpdateReputationBar()
     ReputationWatchBar.StatusBar:SetHeight(12)
     ReputationWatchBar.StatusBar:ClearAllPoints()
     ReputationWatchBar.StatusBar:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 16, -32)
-    ReputationWatchBar.StatusBar:SetStatusBarTexture(T.BAR)
-    ReputationWatchBar.StatusBar:SetStatusBarColor(unpack(BL.RGB))
+    ReputationWatchBar.StatusBar:SetStatusBarTexture(BAR)
+    ReputationWatchBar.StatusBar:SetStatusBarColor(unpack(LIGHTBLUE))
     
     ReputationWatchBar.StatusBar:EnableMouse(true)
     ReputationWatchBar.StatusBar:Show()
@@ -138,12 +138,12 @@ local function RepTooltip()
             "%sProgress:%s %s%d%%%s\n" ..
             "%sCurrent:%s %s%d%s\n" ..
             "%sTotal:%s %s%d%s",
-            BL.LUA, "|r",
-            Y.LUA, "|r", W.LUA, name, "|r",
-            Y.LUA, "|r", W.LUA, _G["FACTION_STANDING_LABEL"..standing], "|r",
-            Y.LUA, "|r", W.LUA, progressPercent, "|r",
-            Y.LUA, "|r", W.LUA, progress, "|r",
-            Y.LUA, "|r", W.LUA, total, "|r"
+            LIGHTBLUE_LUA, "|r",
+            YELLOW_LUA, "|r", WHITE_LUA, name, "|r",
+            YELLOW_LUA, "|r", WHITE_LUA, _G["FACTION_STANDING_LABEL"..standing], "|r",
+            YELLOW_LUA, "|r", WHITE_LUA, progressPercent, "|r",
+            YELLOW_LUA, "|r", WHITE_LUA, progress, "|r",
+            YELLOW_LUA, "|r", WHITE_LUA, total, "|r"
         )
 
         GameTooltip:SetOwner(ReputationWatchBar.StatusBar, "ANCHOR_BOTTOMRIGHT", 4, -4)
