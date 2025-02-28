@@ -3,9 +3,9 @@
 TargetFrameBackdrop = CreateFrame("Button", nil, TargetFrame, "SecureUnitButtonTemplate, BackdropTemplate")
 TargetFrameBackdrop:SetPoint("BOTTOM", UIParent, "BOTTOM", 190, 240)
 TargetFrameBackdrop:SetSize(124, 48)
-TargetFrameBackdrop:SetBackdrop({ edgeFile = T.EDGE, edgeSize = T.EDGE_SIZE })
-TargetFrameBackdrop:SetBackdropBorderColor(unpack(N.RGB))
-TargetFrameBackdrop:SetFrameStrata("HIGH")
+TargetFrameBackdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = MEDIUM })
+TargetFrameBackdrop:SetBackdropBorderColor(unpack(GREY))
+TargetFrameBackdrop:SetFrameLevel(TargetFrame:GetFrameLevel() + 2)
 TargetFrameBackdrop:SetAttribute("unit", "target")
 TargetFrameBackdrop:RegisterForClicks("AnyUp")
 TargetFrameBackdrop:SetAttribute("type1", "target")
@@ -14,9 +14,9 @@ TargetFrameBackdrop:SetAttribute("type2", "togglemenu")
 TargetPortraitBackdrop = CreateFrame("Button", nil, TargetFrame, "SecureUnitButtonTemplate, BackdropTemplate")
 TargetPortraitBackdrop:SetPoint("LEFT", TargetFrameBackdrop, "RIGHT", 0, 0)
 TargetPortraitBackdrop:SetSize(48, 48)
-TargetPortraitBackdrop:SetBackdrop({ edgeFile = T.EDGE, edgeSize = T.EDGE_SIZE })
-TargetPortraitBackdrop:SetBackdropBorderColor(unpack(N.RGB))
-TargetPortraitBackdrop:SetFrameStrata("HIGH")
+TargetPortraitBackdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = MEDIUM })
+TargetPortraitBackdrop:SetBackdropBorderColor(unpack(GREY))
+TargetPortraitBackdrop:SetFrameLevel(TargetFrame:GetFrameLevel() + 1)
 TargetPortraitBackdrop:SetAttribute("unit", "target")
 TargetPortraitBackdrop:RegisterForClicks("AnyUp")
 TargetPortraitBackdrop:SetAttribute("type1", "target")
@@ -46,29 +46,29 @@ local function UpdateTargetFrame()
 	TargetFrameNameBackground:Hide()
 	TargetFrameTextureFrameName:ClearAllPoints()
 	TargetFrameTextureFrameName:SetPoint("TOP", TargetFrameBackdrop, "TOP", 0, -7)
-	TargetFrameTextureFrameName:SetFont(F.TYPE, F.SIZE, "OUTLINE")
+	TargetFrameTextureFrameName:SetFont(FONT, MEDIUM, "OUTLINE")
 	
 	TargetFrameTextureFrameLevelText:ClearAllPoints()
     TargetFrameTextureFrameLevelText:SetPoint("TOP", TargetPortraitBackdrop, "BOTTOM", 0, -4)
-	TargetFrameTextureFrameLevelText:SetFont(F.TYPE, F.SIZE, "OUTLINE")
-    TargetFrameTextureFrameLevelText:SetTextColor(unpack(W.RGB))
+	TargetFrameTextureFrameLevelText:SetFont(FONT, MEDIUM, "OUTLINE")
+    TargetFrameTextureFrameLevelText:SetTextColor(unpack(WHITE))
 
 	TargetFrameTextureFrameHighLevelTexture:Hide()
 
 	if UnitExists("target") then
 		if UnitIsPlayer("target") then
 			if UnitIsEnemy("player", "target") and UnitCanAttack("player", "target") then
-				TargetFrameTextureFrameName:SetTextColor(unpack(R.RGB)) -- Red for enemy players that can be attacked
+				TargetFrameTextureFrameName:SetTextColor(unpack(RED)) -- Red for enemy players that can be attacked
 			else
-				TargetFrameTextureFrameName:SetTextColor(unpack(W.RGB)) -- White for neutral or friendly players
+				TargetFrameTextureFrameName:SetTextColor(unpack(WHITE)) -- White for neutral or friendly players
 			end
 		else
 			if UnitIsEnemy("player", "target") and UnitCanAttack("player", "target") then
-				TargetFrameTextureFrameName:SetTextColor(unpack(R.RGB)) -- Red for hostile NPCs
+				TargetFrameTextureFrameName:SetTextColor(unpack(RED)) -- Red for hostile NPCs
 			elseif UnitReaction("player", "target") == 4 and UnitCanAttack("player", "target") then
-				TargetFrameTextureFrameName:SetTextColor(unpack(Y.RGB)) -- Yellow for neutral but attackable NPCs
+				TargetFrameTextureFrameName:SetTextColor(unpack(YELLOW)) -- Yellow for neutral but attackable NPCs
 			else
-				TargetFrameTextureFrameName:SetTextColor(unpack(W.RGB)) -- White for neutral non-attackable or friendly NPCs
+				TargetFrameTextureFrameName:SetTextColor(unpack(WHITE)) -- White for neutral non-attackable or friendly NPCs
 			end
 		end
 	end
@@ -86,22 +86,22 @@ local function UpdateTargetResources()
 	TargetFrameHealthBar:ClearAllPoints()
 	TargetFrameHealthBar:SetSize(TargetFrameBackground:GetWidth(), 16)
 	TargetFrameHealthBar:SetPoint("BOTTOM", TargetFrameManaBar, "TOP", 0, 0)
-	TargetFrameHealthBar:SetStatusBarTexture(T.BAR)
-	TargetFrameHealthBar:SetStatusBarColor(unpack(G.RGB))
+	TargetFrameHealthBar:SetStatusBarTexture(BAR)
+	TargetFrameHealthBar:SetStatusBarColor(unpack(GREEN))
 
 	TargetFrameManaBar:ClearAllPoints()
 	TargetFrameManaBar:SetSize(TargetFrameBackground:GetWidth(), 8)
 	TargetFrameManaBar:SetPoint("BOTTOM", TargetFrameBackdrop, "BOTTOM", 0, 3)
-	TargetFrameManaBar:SetStatusBarTexture(T.BAR)
+	TargetFrameManaBar:SetStatusBarTexture(BAR)
 	
 	local powerType = UnitPowerType("target")
     
     if powerType == 0 then -- Mana
-        TargetFrameManaBar:SetStatusBarColor(unpack(B.RGB))
+        TargetFrameManaBar:SetStatusBarColor(unpack(BLUE))
     elseif powerType == 1 then -- Rage
-        TargetFrameManaBar:SetStatusBarColor(unpack(R.RGB))
+        TargetFrameManaBar:SetStatusBarColor(unpack(RED))
     elseif powerType == 3 then -- Energy
-        TargetFrameManaBar:SetStatusBarColor(unpack(Y.RGB))
+        TargetFrameManaBar:SetStatusBarColor(unpack(YELLOW))
     end
 end
 
