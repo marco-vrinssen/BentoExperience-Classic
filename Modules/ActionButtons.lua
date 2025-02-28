@@ -56,15 +56,32 @@ ActionBarFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 ActionBarFrame:SetScript("OnEvent", UpdateActionButtons)
 
 
+-- UPDATE BUTTON USABILITY
+
+local function UpdateButtonUsability(self)
+    if not self or not self.action then 
+        return 
+    end
+
+    local isUsable = IsUsableAction(self.action)
+    local inRange = IsActionInRange(self.action)
+
+    local color = (not isUsable or inRange == false) and RED or WHITE
+    self.icon:SetVertexColor(unpack(color))
+end
+
+hooksecurefunc("ActionButton_OnUpdate", UpdateButtonUsability)
+
+
 -- UPDATE ACTION BUTTONS
 
 local function UpdateActionButtonAppearance()
     local function hideNormalTexture(button)
         if button then
-            local PetButtonTexture1 = _G[button:GetName() .. "NormalTexture"]
-            if PetButtonTexture1 then
-                PetButtonTexture1:SetAlpha(0)
-                PetButtonTexture1:SetTexture(nil)
+            local normalTexture = _G[button:GetName() .. "NormalTexture"]
+            if normalTexture then
+                normalTexture:SetAlpha(0)
+                normalTexture:SetTexture(nil)
             end
             local floatingBG = _G[button:GetName() .. "FloatingBG"]
             if floatingBG then
@@ -106,7 +123,6 @@ local function UpdateActionButtonAppearance()
                 hotkey:SetFont(FONT, MEDIUM, "OUTLINE")
                 hotkey:SetTextColor(unpack(WHITE))
                 hotkey:SetAlpha(0.75)
-                hotkey.SetVertexColor = function() end
             end
         end
     end
