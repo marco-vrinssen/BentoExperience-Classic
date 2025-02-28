@@ -4,12 +4,12 @@ local RaidTargetBackdrop = CreateFrame("Frame", nil, TargetFrame, "BackdropTempl
 RaidTargetBackdrop:SetPoint("BOTTOMLEFT", TargetPortraitBackdrop, "TOPRIGHT", -2, -2)
 RaidTargetBackdrop:SetSize(28, 28)
 RaidTargetBackdrop:SetBackdrop({
-    bgFile = T.BG,
-    edgeFile = T.EDGE, edgeSize = T.EDGE_SIZE,
+    bgFile = BG,
+    edgeFile = EDGE, edgeSize = MEDIUM,
     insets = {left = 3, right = 3, top = 3, bottom = 3}
 })
 RaidTargetBackdrop:SetBackdropColor(0, 0, 0, 1)
-RaidTargetBackdrop:SetBackdropBorderColor(unpack(N.RGB))
+RaidTargetBackdrop:SetBackdropBorderColor(unpack(GREY))
 RaidTargetBackdrop:Hide()
 
 local function UpdateRaidTargetIcon()
