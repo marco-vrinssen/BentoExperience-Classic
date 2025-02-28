@@ -28,7 +28,7 @@ local function CustomizeChatTab(chatFrame)
     
     HideFrameTextures(chatTab)
     if chatTabText then
-        chatTabText:SetFont(F.TYPE, 14)
+        chatTabText:SetFont(FONT, 14)
         chatTabText:ClearAllPoints()
         chatTabText:SetPoint("LEFT", chatTab, "LEFT", 4, 0)
     end
@@ -113,7 +113,7 @@ end)
 
 local function RecolorWhisperMessages(self, event, message, sender, ...)
     if event == "CHAT_MSG_WHISPER" then
-        return false, PL.LUA .. message .. "|r", sender, ...
+        return false, LIGHTPINK_LUA .. message .. "|r", sender, ...
     end
 end
 
