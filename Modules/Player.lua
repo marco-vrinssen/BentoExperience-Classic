@@ -133,7 +133,7 @@ end)
 local function UpdatePlayerPortrait()
     PlayerPortrait:ClearAllPoints()
     PlayerPortrait:SetPoint("CENTER", PlayerPortraitBackdrop, "CENTER", 0, 0)
-    PlayerPortrait:SetTexCoord(0.2, 0.8, 0.2, 0.8)
+    PlayerPortrait:SetTexCoord(0.15, 0.85, 0.15, 0.85)
     PlayerPortrait:SetSize(PlayerPortraitBackdrop:GetHeight() - 6, PlayerPortraitBackdrop:GetHeight() - 6)
     
     PlayerFrame:UnregisterEvent("UNIT_COMBAT")

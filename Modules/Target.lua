@@ -154,7 +154,7 @@ local function PortraitTextureUpdate(TargetPortrait)
 				TargetPortrait.portrait:SetDrawLayer("BACKGROUND", -1)
 			end
 		else
-			TargetPortrait.portrait:SetTexCoord(0.2, 0.8, 0.2, 0.8)
+			TargetPortrait.portrait:SetTexCoord(0.15, 0.85, 0.15, 0.85)
 		end
 	end
 end
