@@ -1,91 +1,87 @@
 -- COLORS
 
-W = {                               -- #FFFFFF
-    RGB = {1, 1, 1},               
-    LUA = "|cFFFFFFFF"             
-}
 
-D = {                               -- #000000
-    RGB = {0, 0, 0},               
-    LUA = "|cFF000000"             
-}
+-- #FFFFFF
+WHITE = {1, 1, 1}
+WHITE_LUA = "|cFFFFFFFF"
 
-N = {                               -- #808080
-    RGB = {0.5, 0.5, 0.5},         
-    LUA = "|cFF808080"             
-}
 
-Y = {                               -- #FBD134
-    RGB = {0.984, 0.820, 0.204},   
-    LUA = "|cFFFBD134"             
-}
+-- #000000
+BLACK = {0, 0, 0}
+BLACK_LUA = "|cFF000000"
 
-YL = {                              -- #FDFE9E
-    RGB = {0.992, 0.996, 0.620},   
-    LUA = "|cFFFDFE9E"             
-}
 
-O = {                               -- #FB8128
-    RGB = {0.984, 0.506, 0.157},   
-    LUA = "|cFFFB8128"             
-}
+-- #808080
+GREY = {0.5, 0.5, 0.5}
+GRAY_LUA = "|cFF808080"
 
-R = {                               -- #EA2029
-    RGB = {0.918, 0.125, 0.161},   
-    LUA = "|cFFEA2029"             
-}
 
-P = {                               -- #FB18B2
-    RGB = {0.984, 0.094, 0.698},   
-    LUA = "|cFFFB18B2"             
-}
+-- #FBD134
+YELLOW = {0.984, 0.820, 0.204}
+YELLOW_LUA = "|cFFFBD134"
 
-PL = {                              -- #FFCCFE
-    RGB = {1.000, 0.800, 0.996},   
-    LUA = "|cFFFFCCFE"             
-}
 
-V = {                               -- #A43BEA
-    RGB = {0.643, 0.231, 0.918},   
-    LUA = "|cFFA43BEA"             
-}
+-- #FDFE9E
+LIGHTYELLOW = {0.992, 0.996, 0.620}
+LIGHTYELLOW_LUA = "|cFFFDFE9E"
 
-BL = {                              -- #2871D9
-    RGB = {0.157, 0.443, 0.851},   
-    LUA = "|cFF2871D9"             
-}
 
-B = {                               -- #220FC9
-    RGB = {0.133, 0.059, 0.788},   
-    LUA = "|cFF220FC9"             
-}
+-- #FB8128
+ORANGE = {0.984, 0.506, 0.157}
+ORANGE_LUA = "|cFFFB8128"
 
-G = {                               -- #00C800
-    RGB = {0.0, 0.784, 0.0},       
-    LUA = "|cFF00C800"             
-}
 
-GD = {                              -- #119826
-    RGB = {0.067, 0.596, 0.149},    
-    LUA = "|cFF119826"             
-}
+-- #EA2029
+RED = {0.918, 0.125, 0.161}
+RED_LUA = "|cFFEA2029"
+
+
+-- #FB18B2
+PINK = {0.984, 0.094, 0.698}
+PINK_LUA = "|cFFFB18B2"
+
+
+-- #FFCCFE
+LIGHTPINK = {1.000, 0.800, 0.996}
+LIGHTPINK_LUA = "|cFFFFCCFE"
+
+
+-- #A43BEA
+PURPLE = {0.643, 0.231, 0.918}
+PURPLE_LUA = "|cFFA43BEA"
+
+
+-- #2871D9
+LIGHTBLUE = {0.157, 0.443, 0.851}
+LIGHTBLUE_LUA = "|cFF2871D9"
+
+
+-- #220FC9
+BLUE = {0.133, 0.059, 0.788}
+BLUE_LUA = "|cFF220FC9"
+
+
+-- #00C800
+GREEN = {0.0, 0.784, 0.0}
+GREEN_LUA = "|cFF00C800"
+
+
+-- #119826
+DARKGREEN = {0.067, 0.596, 0.149}
+DARKGREEN_LUA = "|cFF119826"
 
 
 -- TEXTURES
+BAR = "Interface/AddOns/BentoExperience-Classic/Assets/Statusbar.blp"
+BG = "Interface/Tooltips/UI-Tooltip-Background.blp"
+EDGE = "Interface/Tooltips/UI-Tooltip-Border.blp"
 
-T = {
-    BAR = "Interface/AddOns/BentoExperience-Classic/Assets/Statusbar.blp",
-    BG = "Interface/Tooltips/UI-Tooltip-Background.blp",
-    EDGE = "Interface/Tooltips/UI-Tooltip-Border.blp",
-    EDGE_SIZE = 12,
-}
+
+-- SIZES
+SMALL = 10
+MEDIUM = 12
+LARGE = 14
 
 
 -- FONTS
-
-F = {
-    TYPE = STANDARD_TEXT_FONT,
-    SIZE = 12,
-    SIZE_SMALL = 10,
-    SIZE_LARGE = 14,
-}
+FONT = STANDARD_TEXT_FONT
