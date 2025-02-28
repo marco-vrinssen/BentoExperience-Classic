@@ -25,9 +25,9 @@ local function AddCustomBorderToPetButton(button)
         local backdrop = CreateFrame("Frame", nil, button, "BackdropTemplate")
         backdrop:SetPoint("TOPLEFT", button, "TOPLEFT", -3, 3)
         backdrop:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 3, -3)
-        backdrop:SetBackdrop({ edgeFile = T.EDGE, edgeSize = T.EDGE_SIZE })
-        backdrop:SetBackdropBorderColor(unpack(N.RGB))
-        backdrop:SetFrameStrata("HIGH")
+        backdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = MEDIUM })
+        backdrop:SetBackdropBorderColor(unpack(GREY))
+        backdrop:SetFrameLevel(button:GetFrameLevel() + 1)
         button.customBorder = backdrop
     end
     
