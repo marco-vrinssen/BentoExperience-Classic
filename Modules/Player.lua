@@ -46,7 +46,10 @@ local function UpdatePlayerFrame()
     PlayerRestGlow:SetTexture(nil)
     PlayerRestIcon:SetTexture(nil)
     PlayerPVPIconHitArea:Hide()
+    
     PlayerPVPTimerText:Hide()
+    PlayerPVPTimerText:SetAlpha(0)
+
     PlayerPVPIcon:SetAlpha(0)
 
     PlayerName:ClearAllPoints()
