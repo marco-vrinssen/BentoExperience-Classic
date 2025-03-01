@@ -1,12 +1,12 @@
 -- UPDATE AURA DURATION
 
 local function UpdateAuraTimer(aura)
-    local auraDuration = _G[aura:GetName().."Duration"]
-    if auraDuration then
-        auraDuration:SetFont(FONT, 10, "OUTLINE")
-        auraDuration:SetTextColor(1, 1, 1)
-        auraDuration:ClearAllPoints()
-        auraDuration:SetPoint("BOTTOM", aura, "BOTTOM", 1, -12)
+    local AuraDuration = _G[aura:GetName().."Duration"]
+    if AuraDuration then
+        AuraDuration:SetFont(FONT, 10, "OUTLINE")
+        AuraDuration:SetTextColor(1, 1, 1)
+        AuraDuration:ClearAllPoints()
+        AuraDuration:SetPoint("BOTTOM", aura, "BOTTOM", 1, -12)
     end
 end
 
