@@ -19,9 +19,17 @@ local function UpdateMicroMenuButtons()
   CharacterMicroButton:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -totalMenuWidth, 16)
 end
 
+
+-- DELAYED MICROMENU UPDATE
+
+local function DelayedMicroMenuUpdate()
+  C_Timer.After(0.1, UpdateMicroMenuButtons)
+end
+
 local microMenuEvents = CreateFrame("Frame")
 microMenuEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
-microMenuEvents:SetScript("OnEvent", UpdateMicroMenuButtons)
+microMenuEvents:RegisterEvent("PLAYER_LOGIN")
+microMenuEvents:SetScript("OnEvent", DelayedMicroMenuUpdate)
 
 
 -- RELOAD UI ON GAME MICRO MENU RIGHT CLICK
