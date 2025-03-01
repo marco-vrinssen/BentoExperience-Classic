@@ -45,10 +45,15 @@ local function UpdateActionButtons()
     MainMenuMaxLevelBar3:Hide()
     MainMenuBarMaxLevelBar:Hide()
     MainMenuBarOverlayFrame:Hide()
+    
     SlidingActionBarTexture0:Hide()
     SlidingActionBarTexture0.Show = SlidingActionBarTexture0.Hide
+
     SlidingActionBarTexture1:Hide()
     SlidingActionBarTexture1.Show = SlidingActionBarTexture1.Hide
+
+    MainMenuBarPerformanceBarFrame:Hide()
+    MainMenuBarPerformanceBarFrame.Show = MainMenuBarPerformanceBarFrame.Hide
 end
 
 local ActionBarFrame = CreateFrame("Frame")
