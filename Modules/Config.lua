@@ -5,7 +5,7 @@ local function UpdateCVars()
     SetCVar("ffxDeath", 0)
     SetCVar("ffxNether", 0)
     SetCVar("WorldTextScale", 1.25)
-    SetCVar("cameraDistanceMaxZoomFactor", 2.4)
+    SetCVar("cameraDistanceMaxZoomFactor", 2.2)
     SetCVar("HardwareCursor", 1)
 end
 
