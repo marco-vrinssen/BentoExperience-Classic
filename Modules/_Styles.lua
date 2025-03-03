@@ -1,45 +1,36 @@
 -- COLORS
 
-
 -- #FFFFFF
 WHITE = {1, 1, 1}
 WHITE_LUA = "|cFFFFFFFF"
-
 
 -- #000000
 BLACK = {0, 0, 0}
 BLACK_LUA = "|cFF000000"
 
-
 -- #808080
 GREY = {0.5, 0.5, 0.5}
 GRAY_LUA = "|cFF808080"
-
 
 -- #FBD134
 YELLOW = {0.984, 0.820, 0.204}
 YELLOW_LUA = "|cFFFBD134"
 
-
 -- #FDFE9E
 LIGHTYELLOW = {0.992, 0.996, 0.620}
 LIGHTYELLOW_LUA = "|cFFFDFE9E"
-
 
 -- #FB8128
 ORANGE = {0.984, 0.506, 0.157}
 ORANGE_LUA = "|cFFFB8128"
 
-
 -- #EA2029
 RED = {0.918, 0.125, 0.161}
 RED_LUA = "|cFFEA2029"
 
-
 -- #FB18B2
 PINK = {0.984, 0.094, 0.698}
 PINK_LUA = "|cFFFB18B2"
-
 
 -- #FFCCFE
 LIGHTPINK = {1.000, 0.800, 0.996}
@@ -50,21 +41,17 @@ LIGHTPINK_LUA = "|cFFFFCCFE"
 PURPLE = {0.643, 0.231, 0.918}
 PURPLE_LUA = "|cFFA43BEA"
 
-
 -- #2871D9
 LIGHTBLUE = {0.157, 0.443, 0.851}
 LIGHTBLUE_LUA = "|cFF2871D9"
-
 
 -- #220FC9
 BLUE = {0.133, 0.059, 0.788}
 BLUE_LUA = "|cFF220FC9"
 
-
 -- #00C800
 GREEN = {0.0, 0.784, 0.0}
 GREEN_LUA = "|cFF00C800"
-
 
 -- #119826
 DARKGREEN = {0.067, 0.596, 0.149}
@@ -72,16 +59,19 @@ DARKGREEN_LUA = "|cFF119826"
 
 
 -- TEXTURES
+
 BAR = "Interface/AddOns/BentoExperience-Classic/Assets/Statusbar.blp"
 BG = "Interface/Tooltips/UI-Tooltip-Background.blp"
 EDGE = "Interface/Tooltips/UI-Tooltip-Border.blp"
 
 
 -- SIZES
+
 SMALL = 10
 MEDIUM = 12
 LARGE = 14
 
 
 -- FONTS
+
 FONT = STANDARD_TEXT_FONT
