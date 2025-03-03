@@ -23,6 +23,7 @@ local function UpdateToT()
 	TargetFrameToTTextureFrameName:SetParent(TargetFrameToT)
 	TargetFrameToTTextureFrameName:ClearAllPoints()
 	TargetFrameToTTextureFrameName:SetPoint("BOTTOMLEFT", ToTFrameBackdrop, "TOPLEFT", 2, 2)
+	TargetFrameToTTextureFrameName:SetWidth(ToTFrameBackdrop:GetWidth() - 4)
 	TargetFrameToTTextureFrameName:SetTextColor(1, 1, 1, 1)
 	TargetFrameToTTextureFrameName:SetFont(FONT, 10, "OUTLINE")
 
