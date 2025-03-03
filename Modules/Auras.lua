@@ -6,7 +6,7 @@ local function UpdateAuraTimer(aura)
         AuraDuration:SetFont(FONT, 10, "OUTLINE")
         AuraDuration:SetTextColor(1, 1, 1)
         AuraDuration:ClearAllPoints()
-        AuraDuration:SetPoint("BOTTOM", aura, "BOTTOM", 1, -12)
+        AuraDuration:SetPoint("BOTTOM", aura, "BOTTOM", 1, -16)
     end
 end
 
