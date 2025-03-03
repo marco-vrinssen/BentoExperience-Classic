@@ -1,6 +1,6 @@
 -- UPDATE GRAPHICS CONFIG
 
-local function UpdateCVars()
+local function updateCVars()
     SetCVar("ffxGlow", 0)
     SetCVar("ffxDeath", 0)
     SetCVar("ffxNether", 0)
@@ -9,14 +9,14 @@ local function UpdateCVars()
     SetCVar("HardwareCursor", 1)
 end
 
-local GraphicsFrame = CreateFrame("Frame")
-GraphicsFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-GraphicsFrame:SetScript("OnEvent", UpdateCVars)
+local graphicsFrame = CreateFrame("Frame")
+graphicsFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+graphicsFrame:SetScript("OnEvent", updateCVars)
 
 
 -- MUTE SOUNDS
 
-local MutedSounds = {
+local mutedSounds = {
     555124,
     548067,
     567677,
@@ -28,26 +28,26 @@ local MutedSounds = {
     567721,
 }
 
-local function ApplySoundConfiguration()
-    for _, SoundID in ipairs(MutedSounds) do
-        MuteSoundFile(SoundID)
+local function applySoundConfiguration()
+    for _, soundId in ipairs(mutedSounds) do
+        MuteSoundFile(soundId)
     end
 end
 
-local SoundFrame = CreateFrame("Frame")
-SoundFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-SoundFrame:SetScript("OnEvent", ApplySoundConfiguration)
+local soundFrame = CreateFrame("Frame")
+soundFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+soundFrame:SetScript("OnEvent", applySoundConfiguration)
 
 
 -- ENFORCE DEFAULT SOUND OUTPUT
 
-local function OnCVarChanged(event, cvar, value)
+local function onCVarChanged(event, cvar, value)
     if cvar == "Sound_OutputDriverIndex" and value ~= "0" then
         SetCVar("Sound_OutputDriverIndex", "0")
         Sound_GameSystem_RestartSoundSystem()
     end
 end
 
-local CVarFrame = CreateFrame("Frame")
-CVarFrame:RegisterEvent("CVAR_UPDATE")
-CVarFrame:SetScript("OnEvent", OnCVarChanged)
+local cVarFrame = CreateFrame("Frame")
+cVarFrame:RegisterEvent("CVAR_UPDATE")
+cVarFrame:SetScript("OnEvent", onCVarChanged)
