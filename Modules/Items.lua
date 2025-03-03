@@ -1,41 +1,47 @@
 -- AUTO SELL AND REPAIR ITEMS
 
-local function RepairItems()
-    if CanMerchantRepair() then
-        RepairAllItems()
-    end
+local function repairItems()
+  if CanMerchantRepair() then
+    RepairAllItems()
+  end
 end
 
-local function SellGreyItems()
-    for NumBags = 0, 4 do
-        for NumSlots = 1, C_Container.GetContainerNumSlots(NumBags) do
-            local ItemLink = C_Container.GetContainerItemLink(NumBags, NumSlots)
-            if ItemLink then
-                local _, _, ItemRarity = GetItemInfo(ItemLink)
-                if ItemRarity == 0 then
-                    C_Container.UseContainerItem(NumBags, NumSlots)
-                end
-            end
+
+local function sellGreyItems()
+  for numBags = 0, 4 do
+    for numSlots = 1, C_Container.GetContainerNumSlots(numBags) do
+      local itemLink = C_Container.GetContainerItemLink(numBags, numSlots)
+      if itemLink then
+        local _, _, itemRarity = GetItemInfo(itemLink)
+        if itemRarity == 0 then
+          C_Container.UseContainerItem(numBags, numSlots)
         end
+      end
     end
+  end
+
 end
 
-local function AutoSellRepair()
-    RepairItems()
-    SellGreyItems()
-    C_Timer.After(0, SellGreyItems)
+
+local function autoSellRepair()
+  repairItems()
+  sellGreyItems()
+  C_Timer.After(0, sellGreyItems)
 end
 
-local MerchantFrame = CreateFrame("Frame")
-MerchantFrame:RegisterEvent("MERCHANT_SHOW")
-MerchantFrame:SetScript("OnEvent", AutoSellRepair)
+
+local merchantEvents = CreateFrame("Frame")
+merchantEvents:RegisterEvent("MERCHANT_SHOW")
+merchantEvents:SetScript("OnEvent", autoSellRepair)
 
 
 
 
--- SPEED UP AUTO LOOTING ITEMSs
+-- SPEED UP AUTO LOOTING ITEMS
 
-local function LootItems()
+local function lootItems()
+
+  
   if GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") then
     local lootMethod, masterLooter = GetLootMethod()
     if lootMethod == "master" and masterLooter == UnitName("player") then
@@ -51,8 +57,10 @@ local function LootItems()
     LootFrame:Show()
     LootFrame:SetAlpha(1)
   end
+
 end
 
-local LootFrame = CreateFrame("Frame")
-LootFrame:RegisterEvent("LOOT_READY")
-LootFrame:SetScript("OnEvent", LootItems)
+
+local lootEvents = CreateFrame("Frame")
+lootEvents:RegisterEvent("LOOT_READY")
+lootEvents:SetScript("OnEvent", lootItems)
