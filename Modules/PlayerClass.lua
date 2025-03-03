@@ -1,90 +1,105 @@
 -- ENABLE DRUID MANA BAR
+  
+local _, classIdentifier = UnitClass("player")
 
-local _, ClassIdentifier = UnitClass("player")
+if classIdentifier == "DRUID" then
 
-if ClassIdentifier == "DRUID" then
-
-    local DruidManaBarBackdrop = CreateFrame("Frame", nil, PlayerFrame, "BackdropTemplate")
-    DruidManaBarBackdrop:SetPoint("TOP", PlayerFrameBackdrop, "BOTTOM", 0, 0)
-    DruidManaBarBackdrop:SetSize(PlayerFrameBackdrop:GetWidth() - 2, 16)
-    DruidManaBarBackdrop:SetBackdrop({edgeFile = EDGE, edgeSize = MEDIUM, })
-    DruidManaBarBackdrop:SetBackdropBorderColor(unpack(GREY))
-
-    local DruidManaBar = CreateFrame("StatusBar", nil, PlayerFrame, "BackdropTemplate")
-    DruidManaBar:SetSize(DruidManaBarBackdrop:GetWidth()-4, DruidManaBarBackdrop:GetHeight()-4)
-    DruidManaBar:SetPoint("CENTER", DruidManaBarBackdrop, "CENTER", 0, 0)
-    DruidManaBar:SetStatusBarTexture(BAR)
-    DruidManaBar:SetStatusBarColor(unpack(BLUE))
-    DruidManaBar:SetMinMaxValues(0, 1)
-
-    DruidManaBarBackdrop:SetFrameLevel(DruidManaBar:GetFrameLevel() + 2)
-
-    local DruidManaText = DruidManaBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    DruidManaText:SetPoint("CENTER", DruidManaBar, "CENTER", 0, 0)
-    DruidManaText:SetTextColor(1, 1, 1)
-    DruidManaText:SetFont(GameFontNormal:GetFont(), SMALL, "OUTLINE")
-
-    local function DruidManaBarUpdate()
-        local PlayerPowerType, PowerToken = UnitPowerType("player")
-        local PlayerForm = GetShapeshiftFormID()
+    local druidManaBackdrop = CreateFrame("Frame", nil, PlayerFrame, "BackdropTemplate")
+    druidManaBackdrop:SetPoint("TOP", PlayerFrameBackdrop, "BOTTOM", 0, 0)
+    druidManaBackdrop:SetSize(PlayerFrameBackdrop:GetWidth() - 2, 16)
+    druidManaBackdrop:SetBackdrop({edgeFile = EDGE, edgeSize = MEDIUM})
+    druidManaBackdrop:SetBackdropBorderColor(unpack(GREY))
     
-        if PlayerForm and PowerToken ~= "MANA" then
-            local PlayerMana = UnitPower("player", Enum.PowerType.Mana)
-            local PlayerMaxMana = UnitPowerMax("player", Enum.PowerType.Mana)
-            DruidManaBar:SetValue(PlayerMana / PlayerMaxMana)
-            DruidManaText:SetText(PlayerMana .. " / " .. PlayerMaxMana)
-            DruidManaBar:Show()
-            DruidManaBarBackdrop:Show()
+
+    -- SET UP DRUID MANA BAR
+    
+    local druidManaBar = CreateFrame("StatusBar", nil, PlayerFrame, "BackdropTemplate")
+    druidManaBar:SetSize(druidManaBackdrop:GetWidth() - 4, druidManaBackdrop:GetHeight() - 4)
+    druidManaBar:SetPoint("CENTER", druidManaBackdrop, "CENTER", 0, 0)
+    druidManaBar:SetStatusBarTexture(BAR)
+    druidManaBar:SetStatusBarColor(unpack(BLUE))
+    druidManaBar:SetMinMaxValues(0, 1)
+    
+    druidManaBackdrop:SetFrameLevel(druidManaBar:GetFrameLevel() + 2)
+    
+      
+    -- CREATE DRUID MANA TEXT
+    
+    local druidManaEvents = druidManaBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    druidManaEvents:SetPoint("CENTER", druidManaBar, "CENTER", 0, 0)
+    druidManaEvents:SetTextColor(1, 1, 1)
+    druidManaEvents:SetFont(GameFontNormal:GetFont(), SMALL, "OUTLINE")
+    
+      
+    -- DRUID MANA BAR UPDATE FUNCTION
+    
+    local function druidManaBarUpdate()
+        local playerPowerType, powerToken = UnitPowerType("player")
+        local playerForm = GetShapeshiftFormID()
+    
+        if playerForm and powerToken ~= "MANA" then
+            local playerMana = UnitPower("player", Enum.PowerType.Mana)
+            local playerMaxMana = UnitPowerMax("player", Enum.PowerType.Mana)
+            druidManaBar:SetValue(playerMana / playerMaxMana)
+            druidManaEvents:SetText(playerMana .. " / " .. playerMaxMana)
+            druidManaBar:Show()
+            druidManaBackdrop:Show()
         else
-            DruidManaBar:Hide()
-            DruidManaBarBackdrop:Hide()
+            druidManaBar:Hide()
+            druidManaBackdrop:Hide()
         end
     end
-
-    local DruidManaBarFrame = CreateFrame("Frame")
-    DruidManaBarFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-    DruidManaBarFrame:RegisterEvent("UNIT_POWER_UPDATE")
-    DruidManaBarFrame:RegisterEvent("UNIT_DISPLAYPOWER")
-    DruidManaBarFrame:SetScript("OnEvent", DruidManaBarUpdate)
+    
+    local druidManaBarEvents = CreateFrame("Frame")
+    druidManaBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+    druidManaBarEvents:RegisterEvent("UNIT_POWER_UPDATE")
+    druidManaBarEvents:RegisterEvent("UNIT_DISPLAYPOWER")
+    druidManaBarEvents:SetScript("OnEvent", druidManaBarUpdate)
 end
 
 
 -- UPDATE ROGUE COMBO POINTS
-
-local _, ClassIdentifier = UnitClass("player")
-if ClassIdentifier ~= "ROGUE" and ClassIdentifier ~= "DRUID" then
+  
+local _, classIdentifier = UnitClass("player")
+if classIdentifier ~= "ROGUE" and classIdentifier ~= "DRUID" then
     return
 end
 
--- Constants setup
+  
+-- CONFIGURE COMBO POINT CONSTANTS
+  
+local pointSize = 24
+local pointMargin = 4
+local pointsTotalWidth = 5 * pointSize + 4 * pointMargin
 
-local PointSize = 24
-local PointMargin = 4
-local PointsTotalWidth = 5 * PointSize + 4 * PointMargin
-
--- Hide default combo points
-
-local function HideDefaultComboPoints()
+  
+-- HIDE DEFAULT COMBO POINTS FUNCTION
+  
+local function hideDefaultComboPoints()
     for i = 1, 5 do
-        local point = _G["ComboPoint"..i]
+        local point = _G["ComboPoint" .. i]
         if point then
             point:Hide()
-            point:SetScript("OnShow", function(self) self:Hide() end)
+            point:SetScript("OnShow", function(self)
+                self:Hide()
+            end)
         end
     end
 end
 
-local ComboPointsFrame = CreateFrame("Frame", "ComboPointsFrame", UIParent)
-ComboPointsFrame:SetSize(PointsTotalWidth, PointSize)
-ComboPointsFrame:SetPoint("BOTTOM", CastingBarFrame, "TOP", 0, 4)
+local comboPointsFrame = CreateFrame("Frame", "ComboPointsFrame", UIParent)
+comboPointsFrame:SetSize(pointsTotalWidth, pointSize)
+comboPointsFrame:SetPoint("BOTTOM", CastingBarFrame, "TOP", 0, 4)
 
-local ComboPoints = {}
+  
+local comboPoints = {}
 
--- Create combo point frames
-
-local function CreateComboPoint()
-    local cp = CreateFrame("Frame", nil, ComboPointsFrame, "BackdropTemplate")
-    cp:SetSize(PointSize, PointSize)
+  
+-- CREATE COMBO POINT FRAME FUNCTION
+  
+local function createComboPoint()
+    local cp = CreateFrame("Frame", nil, comboPointsFrame, "BackdropTemplate")
+    cp:SetSize(pointSize, pointSize)
     cp:SetBackdrop({
         bgFile = BG,
         edgeFile = EDGE,
@@ -95,7 +110,10 @@ local function CreateComboPoint()
     return cp
 end
 
-local function ComboPointTextures(cp, active)
+  
+-- SET COMBO POINT TEXTURES FUNCTION
+  
+local function comboPointTextures(cp, active)
     if active then
         cp:SetBackdropColor(unpack(RED))
     else
@@ -104,37 +122,35 @@ local function ComboPointTextures(cp, active)
 end
 
 for i = 1, 5 do
-    ComboPoints[i] = CreateComboPoint()
-    ComboPointTextures(ComboPoints[i], false)
-    ComboPoints[i]:SetPoint("LEFT", ComboPointsFrame, "LEFT", PointSize * (i - 1) + PointMargin * (i - 1), 0)
+    comboPoints[i] = createComboPoint()
+    comboPointTextures(comboPoints[i], false)
+    comboPoints[i]:SetPoint("LEFT", comboPointsFrame, "LEFT", pointSize * (i - 1) + pointMargin * (i - 1), 0)
 end
 
--- Update combo points display
-
-local function ComboPointsUpdate()
+      
+-- UPDATE COMBO POINTS DISPLAY FUNCTION
+  
+local function comboPointsUpdate()
     local count = GetComboPoints("player", "target") or 0
     
     if count > 0 then
-        ComboPointsFrame:Show()
+        comboPointsFrame:Show()
         for i = 1, 5 do
-            ComboPointTextures(ComboPoints[i], i <= count)
+            comboPointTextures(comboPoints[i], i <= count)
         end
     else
-        ComboPointsFrame:Hide()
+        comboPointsFrame:Hide()
     end
 end
 
--- Register events
-
-local EventFrame = CreateFrame("Frame")
-EventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-EventFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-EventFrame:RegisterUnitEvent("UNIT_POWER_UPDATE", "player")
-EventFrame:SetScript("OnEvent", function(self, event, ...)
-    ComboPointsUpdate()
+local comboPointEvents = CreateFrame("Frame")
+comboPointEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+comboPointEvents:RegisterEvent("PLAYER_TARGET_CHANGED")
+comboPointEvents:RegisterUnitEvent("UNIT_POWER_UPDATE", "player")
+comboPointEvents:SetScript("OnEvent", function(self, event, ...)
+    comboPointsUpdate()
     
-    -- Hide default combo points initially and after UI reloads
     if event == "PLAYER_ENTERING_WORLD" then
-        HideDefaultComboPoints()
+        hideDefaultComboPoints()
     end
 end)
