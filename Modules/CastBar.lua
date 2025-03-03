@@ -1,16 +1,16 @@
 -- CREATE CASTBAR BACKDROP
 
-local CastingBarBackdrop = CreateFrame("Frame", nil, CastingBarFrame, "BackdropTemplate")
-CastingBarBackdrop:SetPoint("TOPLEFT", CastingBarFrame, "TOPLEFT", -3, 3)
-CastingBarBackdrop:SetPoint("BOTTOMRIGHT", CastingBarFrame, "BOTTOMRIGHT", 3, -3)
-CastingBarBackdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = MEDIUM})
-CastingBarBackdrop:SetBackdropBorderColor(unpack(GREY))
-CastingBarBackdrop:SetFrameLevel(CastingBarFrame:GetFrameLevel() + 2)
+local castingBarBackdrop = CreateFrame("Frame", nil, CastingBarFrame, "BackdropTemplate")
+castingBarBackdrop:SetPoint("TOPLEFT", CastingBarFrame, "TOPLEFT", -3, 3)
+castingBarBackdrop:SetPoint("BOTTOMRIGHT", CastingBarFrame, "BOTTOMRIGHT", 3, -3)
+castingBarBackdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = MEDIUM})
+castingBarBackdrop:SetBackdropBorderColor(unpack(GREY))
+castingBarBackdrop:SetFrameLevel(CastingBarFrame:GetFrameLevel() + 2)
 
 
 -- UPDATE CASTBAR
 
-local function UpdateCastBar()
+local function updateCastBar()
     CastingBarFrame:ClearAllPoints()
     CastingBarFrame:SetSize(160, 20)
     CastingBarFrame:SetMovable(true)
@@ -21,23 +21,38 @@ local function UpdateCastBar()
     CastingBarFrame.Spark:SetTexture(nil)
     CastingBarFrame.Flash:SetTexture(nil)
     CastingBarFrame.Text:ClearAllPoints()
-    CastingBarFrame.Text:SetPoint("CENTER", CastingBarFrame, "CENTER", 0, 0)
+    CastingBarFrame.Text:SetPoint("TOPLEFT", CastingBarFrame, "TOPLEFT", 4, -4)
+    CastingBarFrame.Text:SetPoint("BOTTOMRIGHT", CastingBarFrame, "BOTTOMRIGHT", -4, 4)
     CastingBarFrame.Text:SetFont(FONT, MEDIUM, "OUTLINE")
 end
 
-local function RecolorCastBar(event)
+
+-- RECOLOR CASTBAR ON EVENTS
+
+local function recolorCastBar(event)
     if event == "UNIT_SPELLCAST_START" then
         CastingBarFrame:SetStatusBarColor(unpack(YELLOW))
+    elseif event == "UNIT_SPELLCAST_STOP" or event == "UNIT_SPELLCAST_INTERRUPTED" or event == "UNIT_SPELLCAST_FAILED" then
+        CastingBarFrame:SetStatusBarColor(unpack(RED))
+    elseif event == "UNIT_SPELLCAST_SUCCEEDED" then
+        CastingBarFrame:SetStatusBarColor(unpack(GREEN))
     end
 end  
 
-local CastBarFrame = CreateFrame("Frame")
-CastBarFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-CastBarFrame:RegisterEvent("UNIT_SPELLCAST_START")
-CastBarFrame:SetScript("OnEvent", function(self, event, ...)
+
+-- INITIALIZE CASTBAR FRAME
+
+local castBarEvents = CreateFrame("Frame")
+castBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+castBarEvents:RegisterEvent("UNIT_SPELLCAST_START")
+castBarEvents:RegisterEvent("UNIT_SPELLCAST_STOP")
+castBarEvents:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
+castBarEvents:RegisterEvent("UNIT_SPELLCAST_FAILED")
+castBarEvents:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+castBarEvents:SetScript("OnEvent", function(self, event, ...)
     if event == "PLAYER_ENTERING_WORLD" then
-        UpdateCastBar()
+        updateCastBar()
     else
-        RecolorCastBar(event)
+        recolorCastBar(event)
     end
 end)
