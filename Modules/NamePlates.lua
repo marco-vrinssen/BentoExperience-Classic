@@ -146,6 +146,11 @@ local function nameplateUpdate(nameplate, unitID)
     
     unitNameplate.name:SetTextColor(unpack(WHITE))
     
+    if unitNameplate.RaidTargetFrame then
+        unitNameplate.RaidTargetFrame:ClearAllPoints()
+        unitNameplate.RaidTargetFrame:SetPoint("LEFT", nameplateHealthbar, "RIGHT", 8, 0)
+    end
+    
     updateNamePlateHealthBar(nameplate, unitID)
     
     if not nameplate.namePlateCastBar then
