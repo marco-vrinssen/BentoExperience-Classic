@@ -24,8 +24,8 @@ PlayerPortraitBackdrop:SetAttribute("type2", "togglemenu")
 
 
 -- UPDATE PLAYER FRAME
-
-local function UpdatePlayerFrame()
+  
+local function updatePlayerFrame()
     PlayerFrame:ClearAllPoints()
     PlayerFrame:SetPoint("TOPLEFT", PlayerPortraitBackdrop, "TOPLEFT", 0, 0)
     PlayerFrame:SetPoint("BOTTOMRIGHT", PlayerFrameBackdrop, "BOTTOMRIGHT", 0, 0)
@@ -83,14 +83,15 @@ local function UpdatePlayerFrame()
     PlayerFrameManaBarTextRight:SetFont(FONT, 8, "OUTLINE")
 end
 
-local PlayerFrameFrame = CreateFrame("Frame")
-PlayerFrameFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-PlayerFrameFrame:SetScript("OnEvent", UpdatePlayerFrame)
+
+local playerFrameFrame = CreateFrame("Frame")
+playerFrameFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+playerFrameFrame:SetScript("OnEvent", updatePlayerFrame)
 
 
 -- UPDATE PLAYER RESOURCES
-
-local function UpdatePlayerResources()
+  
+local function updatePlayerResources()
     PlayerFrameHealthBar:ClearAllPoints()
     PlayerFrameHealthBar:SetSize(PlayerFrameBackground:GetWidth(), 16)
     PlayerFrameHealthBar:SetPoint("BOTTOM", PlayerFrameManaBar, "TOP", 0, 0)
@@ -113,27 +114,28 @@ local function UpdatePlayerResources()
     end
 end
 
-local PlayerResourceFrame = CreateFrame("Frame")
-PlayerResourceFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-PlayerResourceFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-PlayerResourceFrame:RegisterEvent("UNIT_HEALTH")
-PlayerResourceFrame:RegisterEvent("UNIT_HEALTH_FREQUENT")
-PlayerResourceFrame:RegisterEvent("UNIT_MAXHEALTH")
-PlayerResourceFrame:RegisterEvent("UNIT_POWER_UPDATE")
-PlayerResourceFrame:RegisterEvent("UNIT_MAXPOWER")
-PlayerResourceFrame:RegisterEvent("UNIT_DISPLAYPOWER")
-PlayerResourceFrame:SetScript("OnEvent", function(self, event, unit)
+local playerResourceFrame = CreateFrame("Frame")
+playerResourceFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+playerResourceFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
+playerResourceFrame:RegisterEvent("UNIT_HEALTH")
+playerResourceFrame:RegisterEvent("UNIT_HEALTH_FREQUENT")
+playerResourceFrame:RegisterEvent("UNIT_MAXHEALTH")
+playerResourceFrame:RegisterEvent("UNIT_POWER_UPDATE")
+playerResourceFrame:RegisterEvent("UNIT_MAXPOWER")
+playerResourceFrame:RegisterEvent("UNIT_DISPLAYPOWER")
+playerResourceFrame:SetScript("OnEvent", function(self, event, unit)
+  
     if event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_TARGET_CHANGED" then
-        UpdatePlayerResources()
+        updatePlayerResources()
     elseif unit == "player" then
-        UpdatePlayerResources()
+        updatePlayerResources()
     end
 end)
 
 
 -- UPDATE PLAYER PORTRAIT
-
-local function UpdatePlayerPortrait()
+  
+local function updatePlayerPortrait()
     PlayerPortrait:ClearAllPoints()
     PlayerPortrait:SetPoint("CENTER", PlayerPortraitBackdrop, "CENTER", 0, 0)
     PlayerPortrait:SetTexCoord(0.15, 0.85, 0.15, 0.85)
@@ -149,14 +151,14 @@ local function UpdatePlayerPortrait()
     PlayerMasterIcon:SetScale(0.75)
 end
 
-local PlayerPortraitFrame = CreateFrame("Frame")
-PlayerPortraitFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-PlayerPortraitFrame:SetScript("OnEvent", UpdatePlayerPortrait)
+local playerPortraitFrame = CreateFrame("Frame")
+playerPortraitFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+playerPortraitFrame:SetScript("OnEvent", updatePlayerPortrait)
 
 
 -- UPDATE PLAYER GROUP ELEMENTS
-
-local function UpdatePlayerGroup()
+  
+local function updatePlayerGroup()
     if PlayerFrameGroupIndicator then
         PlayerFrameGroupIndicator:SetAlpha(0)
         PlayerFrameGroupIndicator:Hide()
@@ -170,25 +172,25 @@ local function UpdatePlayerGroup()
         end
     end
 
-    local MultiGroupFrame = _G["MultiGroupFrame"]
-    if MultiGroupFrame then
-        MultiGroupFrame:SetTexture(nil)
-        MultiGroupFrame:SetAlpha(0)
-        MultiGroupFrame:Hide()
+    local multiGroupFrame = _G["MultiGroupFrame"]
+    if multiGroupFrame then
+        multiGroupFrame:SetTexture(nil)
+        multiGroupFrame:SetAlpha(0)
+        multiGroupFrame:Hide()
         
-        if not MultiGroupFrame.hooked then
-            hooksecurefunc(MultiGroupFrame, "Show", function(self)
+        if not multiGroupFrame.hooked then
+            hooksecurefunc(multiGroupFrame, "Show", function(self)
                 self:SetTexture(nil)
                 self:SetAlpha(0)
                 self:Hide()
             end)
-            MultiGroupFrame.hooked = true
+            multiGroupFrame.hooked = true
         end
     end
 end
 
-local PlayerGroupFrame = CreateFrame("Frame")
-PlayerGroupFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-PlayerGroupFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-PlayerGroupFrame:RegisterEvent("PARTY_LEADER_CHANGED")
-PlayerGroupFrame:SetScript("OnEvent", UpdatePlayerGroup)
+local playerGroupFrame = CreateFrame("Frame")
+playerGroupFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+playerGroupFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
+playerGroupFrame:RegisterEvent("PARTY_LEADER_CHANGED")
+playerGroupFrame:SetScript("OnEvent", updatePlayerGroup)
