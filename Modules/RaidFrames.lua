@@ -1,52 +1,54 @@
 -- HIDE AURAS ON RAID FRAMES
 
-local function HideAllAuras(frame)
+local function hideAllAuras(frame)
     CompactUnitFrame_HideAllBuffs(frame)
     CompactUnitFrame_HideAllDebuffs(frame)
 end
 
-hooksecurefunc("CompactUnitFrame_UpdateAuras", HideAllAuras)
+hooksecurefunc("CompactUnitFrame_UpdateAuras", hideAllAuras)
+
 
 -- REPLACE RAID FRAME HEALTH BAR TEXTURE
-local function ReplaceHealthBarTexture(frame)
+
+local function replaceHealthBarTexture(frame)
     if frame and frame.healthBar then
         frame.healthBar:SetStatusBarTexture(BAR)
     end
 end
 
 hooksecurefunc("CompactUnitFrame_UpdateHealthColor", function(frame)
-    ReplaceHealthBarTexture(frame)
+    replaceHealthBarTexture(frame)
 end)
 
 hooksecurefunc("CompactUnitFrame_UpdateHealth", function(frame)
-    ReplaceHealthBarTexture(frame)
+    replaceHealthBarTexture(frame)
 end)
 
 hooksecurefunc("DefaultCompactUnitFrameSetup", function(frame)
-    ReplaceHealthBarTexture(frame)
+    replaceHealthBarTexture(frame)
 end)
 
-local textureFrame = CreateFrame("Frame")
-textureFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-textureFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-textureFrame:SetScript("OnEvent", function(self, event)
+local groupTextureEvents = CreateFrame("Frame")
+groupTextureEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+groupTextureEvents:RegisterEvent("GROUP_ROSTER_UPDATE")
+groupTextureEvents:SetScript("OnEvent", function(self, event)
     C_Timer.After(0.5, function()
         if CompactRaidFrameContainer then
-            for i=1, 40 do
+            for i = 1, 40 do
                 local frame = _G["CompactRaidFrame"..i]
                 if frame and frame:IsVisible() then
-                    ReplaceHealthBarTexture(frame)
+                    replaceHealthBarTexture(frame)
                 end
                 
                 local groupFrame = _G["CompactRaidGroup1Member"..i]
                 if groupFrame and groupFrame:IsVisible() then
-                    ReplaceHealthBarTexture(groupFrame)
+                    replaceHealthBarTexture(groupFrame)
                 end
             end
             
             if CompactRaidFrameContainer.flowFrames then
                 for _, frame in pairs(CompactRaidFrameContainer.flowFrames) do
-                    ReplaceHealthBarTexture(frame)
+                    replaceHealthBarTexture(frame)
                 end
             end
         end
@@ -56,13 +58,13 @@ end)
 
 -- UPDATE GROUP FRAME CONFIG
 
-local function UpdateGroupConfig()
+local function updateGroupConfig()
     SetCVar("useCompactPartyFrames", 1)
     SetCVar("raidFramesDisplayClassColor", 1)
     SetCVar("raidFramesDisplayBorder", 0)
 end
 
-local GroupConfigFrame = CreateFrame("Frame")
-GroupConfigFrame:RegisterEvent("PLAYER_LOGIN")
-GroupConfigFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-GroupConfigFrame:SetScript("OnEvent", UpdateGroupConfig)
+local groupConfigEvents = CreateFrame("Frame")
+groupConfigEvents:RegisterEvent("PLAYER_LOGIN")
+groupConfigEvents:RegisterEvent("GROUP_ROSTER_UPDATE")
+groupConfigEvents:SetScript("OnEvent", updateGroupConfig)
