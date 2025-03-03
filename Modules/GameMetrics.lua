@@ -1,72 +1,72 @@
 -- HIDE DEFAULT FRAMERATE LABEL
 
-local function EnforceHideFramerateLabel()
+local function enforceHideFramerateLabel()
     FramerateLabel:Hide()
 end
 
-FramerateLabel:HookScript("OnShow", EnforceHideFramerateLabel)
+FramerateLabel:HookScript("OnShow", enforceHideFramerateLabel)
 
 
 -- SETUP FRAMERATE DISPLAY
 
-local function FramerateUpdate()
+local function framerateUpdate()
     FramerateText:ClearAllPoints()
     FramerateText:SetPoint("TOP", UIParent, "TOP", 0, -16)
     FramerateText:SetFont(FONT, 12, "OUTLINE")
 end
 
-local FramerateFrame = CreateFrame("Frame")
-FramerateFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-FramerateFrame:SetScript("OnEvent", FramerateUpdate)
+local framerateEvents = CreateFrame("Frame")
+framerateEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+framerateEvents:SetScript("OnEvent", framerateUpdate)
 
 
 -- CREATE LATENCY DISPLAY
 
-local LatencyFrame = CreateFrame("Frame", "BentoLatencyFrame", UIParent)
-local LatencyText = LatencyFrame:CreateFontString(nil, "OVERLAY")
-LatencyText:SetFont(FONT, 16, "OUTLINE")
-LatencyText:SetPoint("TOP", FramerateText, "BOTTOM", 0, -8)
+local latencyFrame = CreateFrame("Frame", "BentoLatencyFrame", UIParent)
+local latencyText = latencyFrame:CreateFontString(nil, "OVERLAY")
+latencyText:SetFont(FONT, 16, "OUTLINE")
+latencyText:SetPoint("TOP", FramerateText, "BOTTOM", 0, -8)
 
 
 -- UPDATE LATENCY INFORMATION
 
-local function UpdateLatency()
+local function updateLatency()
     local homeLatency, worldLatency = select(3, GetNetStats())
-    LatencyText:SetText(homeLatency.."ms / "..worldLatency.."ms")
+    latencyText:SetText(homeLatency.."ms / "..worldLatency.."ms")
 end
 
-LatencyFrame:SetScript("OnShow", UpdateLatency)
+latencyFrame:SetScript("OnShow", updateLatency)
 
 
 -- LINK FRAMERATE AND LATENCY VISIBILITY
 
-local function UpdateLatencyFrameVisibility()
+local function updateLatencyFrameVisibility()
     if FramerateText:IsShown() then
-        LatencyFrame:Show()
+        latencyFrame:Show()
     else
-        LatencyFrame:Hide()
+        latencyFrame:Hide()
     end
 end
 
-FramerateText:HookScript("OnShow", UpdateLatencyFrameVisibility)
-FramerateText:HookScript("OnHide", UpdateLatencyFrameVisibility)
+FramerateText:HookScript("OnShow", updateLatencyFrameVisibility)
+FramerateText:HookScript("OnHide", updateLatencyFrameVisibility)
 
 
 -- INITIALIZE ON PLAYER LOGIN
 
-LatencyFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-LatencyFrame:SetScript("OnEvent", UpdateLatencyFrameVisibility)
+latencyFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+latencyFrame:SetScript("OnEvent", updateLatencyFrameVisibility)
 
 
 -- PERIODIC LATENCY UPDATES
 
 local updateTimer = 0
-LatencyFrame:SetScript("OnUpdate", function(self, elapsed)
+latencyFrame:SetScript("OnUpdate", function(self, elapsed)
     updateTimer = updateTimer + elapsed
     if updateTimer >= 1 then -- Update every second
         updateTimer = 0
-        if LatencyFrame:IsShown() then
-            UpdateLatency()
+        if latencyFrame:IsShown() then
+            updateLatency()
         end
     end
 end)
