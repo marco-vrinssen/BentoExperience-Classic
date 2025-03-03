@@ -1,14 +1,12 @@
 -- UPDATE MAIL FRAME AND CHECK MAIL
-
-function UpdateMailFrame()
+function updateMailFrame()
     C_Timer.After(0.5, function()
-        CheckInbox()
-        if MailFrame:IsShown() then
-            MailFrame_Update()
+        if MailFrame:IsVisible() then
+            CheckInbox()
         end
     end)
 end
 
-MailEvents = CreateFrame("Frame")
-MailEvents:RegisterEvent("MAIL_SHOW")
-MailEvents:SetScript("OnEvent", UpdateMailFrame)
+local mailEvents = CreateFrame("Frame")
+mailEvents:RegisterEvent("MAIL_SHOW")
+mailEvents:SetScript("OnEvent", updateMailFrame)
