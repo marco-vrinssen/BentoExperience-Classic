@@ -1,6 +1,6 @@
 -- UPDATE AND REPOSITION ACTION BARS
 
-local function UpdateActionButtons()
+local function updateActionButtons()
     MainMenuBar:SetWidth(512)
     MainMenuBar:ClearAllPoints()
     MainMenuBar:SetPoint("BOTTOM", UIParent, "BOTTOM", -2, 88)
@@ -56,14 +56,14 @@ local function UpdateActionButtons()
     MainMenuBarPerformanceBarFrame.Show = MainMenuBarPerformanceBarFrame.Hide
 end
 
-local ActionBarFrame = CreateFrame("Frame")
-ActionBarFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-ActionBarFrame:SetScript("OnEvent", UpdateActionButtons)
+local actionBarFrame = CreateFrame("Frame")
+actionBarFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+actionBarFrame:SetScript("OnEvent", updateActionButtons)
 
 
 -- UPDATE BUTTON USABILITY
 
-local function UpdateButtonUsability(self)
+local function updateButtonUsability(self)
     if not self or not self.action then 
         return 
     end
@@ -75,12 +75,12 @@ local function UpdateButtonUsability(self)
     self.icon:SetVertexColor(unpack(color))
 end
 
-hooksecurefunc("ActionButton_OnUpdate", UpdateButtonUsability)
+hooksecurefunc("ActionButton_OnUpdate", updateButtonUsability)
 
 
 -- UPDATE ACTION BUTTONS
 
-local function UpdateActionButtonAppearance()
+local function updateActionButtonAppearance()
     local function hideNormalTexture(button)
         if button then
             local normalTexture = _G[button:GetName() .. "NormalTexture"]
@@ -148,24 +148,24 @@ local function UpdateActionButtonAppearance()
     end
 end
 
-local ActionButtonFrame = CreateFrame("Frame")
-ActionButtonFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-ActionButtonFrame:SetScript("OnEvent", UpdateActionButtonAppearance)
+local actionButtonFrame = CreateFrame("Frame")
+actionButtonFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+actionButtonFrame:SetScript("OnEvent", updateActionButtonAppearance)
 
 
 -- UPDATE CLASS BUTTONS
 
-local function HideClassButtonTextures(button)
-    for NumTextures = 1, 3 do
-        local NormalTexture = _G[button:GetName() .. "NormalTexture" .. NumTextures]
-        if NormalTexture then
-            NormalTexture:SetAlpha(0)
-            NormalTexture:SetTexture(nil)
+local function hideClassButtonTextures(button)
+    for numTextures = 1, 3 do
+        local normalTexture = _G[button:GetName() .. "NormalTexture" .. numTextures]
+        if normalTexture then
+            normalTexture:SetAlpha(0)
+            normalTexture:SetTexture(nil)
         end
     end
 end
 
-local function AddCustomBorderToClassButton(button)
+local function addCustomBorderToClassButton(button)
     if not button.customBorder then
         local backdrop = CreateFrame("Frame", nil, button, "BackdropTemplate")
         backdrop:SetPoint("TOPLEFT", button, "TOPLEFT", -3, 3)
@@ -182,29 +182,29 @@ local function AddCustomBorderToClassButton(button)
     end
 end
 
-local function UpdateClassButtons()
+local function updateClassButtons()
     if InCombatLockdown() then return end
     
-    local PreviousClassButton
-    local AnchorButton = MultiBarBottomLeftButton1:IsShown() and MultiBarBottomLeftButton1 or ActionButton1
+    local previousClassButton
+    local anchorButton = MultiBarBottomLeftButton1:IsShown() and MultiBarBottomLeftButton1 or ActionButton1
 
-    for NumStances = 1, NUM_STANCE_SLOTS do
-        local ClassButton = _G["StanceButton" .. NumStances]
+    for numStances = 1, NUM_STANCE_SLOTS do
+        local classButton = _G["StanceButton" .. numStances]
         
-        ClassButton:ClearAllPoints()
+        classButton:ClearAllPoints()
 
-        if not PreviousClassButton then
-            ClassButton:SetPoint("BOTTOMLEFT", AnchorButton, "TOPLEFT", 0, 8)
+        if not previousClassButton then
+            classButton:SetPoint("BOTTOMLEFT", anchorButton, "TOPLEFT", 0, 8)
         else
-            ClassButton:SetPoint("LEFT", PreviousClassButton, "RIGHT", 4, 0)
+            classButton:SetPoint("LEFT", previousClassButton, "RIGHT", 4, 0)
         end
 
-        ClassButton:SetScale(0.9)
+        classButton:SetScale(0.9)
         
-        HideClassButtonTextures(ClassButton)
-        AddCustomBorderToClassButton(ClassButton)
+        hideClassButtonTextures(classButton)
+        addCustomBorderToClassButton(classButton)
 
-        PreviousClassButton = ClassButton
+        previousClassButton = classButton
     end
 
     StanceBarLeft:SetAlpha(0)
@@ -215,39 +215,39 @@ local function UpdateClassButtons()
     StanceBarRight:SetTexture(nil)
 end
 
-local ClassButtonsFrame = CreateFrame("Frame")
-ClassButtonsFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-ClassButtonsFrame:RegisterEvent("UPDATE_STEALTH")
-ClassButtonsFrame:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
-ClassButtonsFrame:RegisterEvent("UPDATE_SHAPESHIFT_USABLE")
-ClassButtonsFrame:RegisterEvent("UPDATE_SHAPESHIFT_COOLDOWN")
-ClassButtonsFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-ClassButtonsFrame:SetScript("OnEvent", UpdateClassButtons)
+local classButtonsFrame = CreateFrame("Frame")
+classButtonsFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+classButtonsFrame:RegisterEvent("UPDATE_STEALTH")
+classButtonsFrame:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
+classButtonsFrame:RegisterEvent("UPDATE_SHAPESHIFT_USABLE")
+classButtonsFrame:RegisterEvent("UPDATE_SHAPESHIFT_COOLDOWN")
+classButtonsFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+classButtonsFrame:SetScript("OnEvent", updateClassButtons)
 
 
 -- UPDATE PET BUTTONS
 
-local function HidePetButtonTextures(button)
-    local PetButtonTexture1 = _G[button:GetName() .. "NormalTexture"]
-    if PetButtonTexture1 then
-        PetButtonTexture1:SetAlpha(0)
-        PetButtonTexture1:SetTexture(nil)
+local function hidePetButtonTextures(button)
+    local petButtonTexture1 = _G[button:GetName() .. "NormalTexture"]
+    if petButtonTexture1 then
+        petButtonTexture1:SetAlpha(0)
+        petButtonTexture1:SetTexture(nil)
     end
     
-    local PetButtonTexture2 = _G[button:GetName() .. "NormalTexture2"]
-    if PetButtonTexture2 then
-        PetButtonTexture2:SetAlpha(0)
-        PetButtonTexture2:SetTexture(nil)
+    local petButtonTexture2 = _G[button:GetName() .. "NormalTexture2"]
+    if petButtonTexture2 then
+        petButtonTexture2:SetAlpha(0)
+        petButtonTexture2:SetTexture(nil)
     end
     
-    local AutoCastable = _G[button:GetName() .. "AutoCastable"]
-    if AutoCastable then
-        AutoCastable:SetAlpha(0)
-        AutoCastable:Hide()
+    local autoCastable = _G[button:GetName() .. "AutoCastable"]
+    if autoCastable then
+        autoCastable:SetAlpha(0)
+        autoCastable:Hide()
     end
 end
 
-local function AddCustomBorderToPetButton(button)
+local function addCustomBorderToPetButton(button)
     if not button.customBorder then
         local backdrop = CreateFrame("Frame", nil, button, "BackdropTemplate")
         backdrop:SetPoint("TOPLEFT", button, "TOPLEFT", -3, 3)
@@ -264,41 +264,41 @@ local function AddCustomBorderToPetButton(button)
     end
 end
 
-local function UpdatePetButton()
-    local PreviousPetButton
+local function updatePetButton()
+    local previousPetButton
 
-    for NumStances = 1, 10 do
-        local PetButton = _G["PetActionButton" .. NumStances]
-        PetButton:ClearAllPoints()
+    for numStances = 1, 10 do
+        local petButton = _G["PetActionButton" .. numStances]
+        petButton:ClearAllPoints()
 
-        if not PreviousPetButton then
-            PetButton:SetPoint("BOTTOMLEFT", MultiBarBottomLeft, "TOPLEFT", 0, 6)
+        if not previousPetButton then
+            petButton:SetPoint("BOTTOMLEFT", MultiBarBottomLeft, "TOPLEFT", 0, 6)
         else
-            PetButton:SetPoint("LEFT", PreviousPetButton, "RIGHT", 6, 0)
+            petButton:SetPoint("LEFT", previousPetButton, "RIGHT", 6, 0)
         end
 
-        PetButton:SetScale(0.9)
+        petButton:SetScale(0.9)
 
-        HidePetButtonTextures(PetButton)
-        AddCustomBorderToPetButton(PetButton)
+        hidePetButtonTextures(petButton)
+        addCustomBorderToPetButton(petButton)
 
-        PreviousPetButton = PetButton
+        previousPetButton = petButton
     end
 end
 
-local PetButtonsFrame = CreateFrame("Frame")
-PetButtonsFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-PetButtonsFrame:RegisterEvent("UNIT_PET")
-PetButtonsFrame:RegisterEvent("PET_BAR_UPDATE")
-PetButtonsFrame:SetScript("OnEvent", UpdatePetButton)
+local petButtonsFrame = CreateFrame("Frame")
+petButtonsFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+petButtonsFrame:RegisterEvent("UNIT_PET")
+petButtonsFrame:RegisterEvent("PET_BAR_UPDATE")
+petButtonsFrame:SetScript("OnEvent", updatePetButton)
 
 
 -- UPDATE VEHICLE LEAVE BUTTON
 
-local function VehicleButtonUpdate()
+local function vehicleButtonUpdate()
     MainMenuBarVehicleLeaveButton:SetSize(24, 24)
     MainMenuBarVehicleLeaveButton:ClearAllPoints()
     MainMenuBarVehicleLeaveButton:SetPoint("BOTTOMRIGHT", PlayerPortrait, "TOPLEFT", -2, 2)
 end
 
-MainMenuBarVehicleLeaveButton:HookScript("OnShow", VehicleButtonUpdate)
+MainMenuBarVehicleLeaveButton:HookScript("OnShow", vehicleButtonUpdate)
