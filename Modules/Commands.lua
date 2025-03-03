@@ -1,10 +1,10 @@
 -- COMMAND INTRO MESSAGE
 
-local function CommandsIntro()
+local function commandsIntro()
     print(YELLOW_LUA .. "/bentocmd" .. "|r" .. " for available commands.")
 end
 
-local function PrintCommands()
+local function showCommandList()
     print(YELLOW_LUA .. "/f KEYWORD" .. "|r" .. ": " .. "|r" .. "Filters all active channels for KEYWORD and reposts matching messages." .. "|r")
     print(YELLOW_LUA .. "/f KEYWORD1+KEYWORD2" .. "|r" .. ": " .. "|r" .. "Filters all active channels for the combination of KEYWORD1 and KEYWORD2 and reposts matching messages." .. "|r")
     print(YELLOW_LUA .. "/f" .. "|r" .. ": " .. "|r" .. "Clears and stops the filtering." .. "|r")
@@ -22,31 +22,33 @@ local function PrintCommands()
     print(YELLOW_LUA .. "/lua" .. "|r" .. ": " .. "|r" .. "Toggles the display of LUA errors." .. "|r")
 end
 
-local IntroFrame = CreateFrame("Frame")
-IntroFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-IntroFrame:SetScript("OnEvent", CommandsIntro)
+local introEvents = CreateFrame("Frame")
+introEvents:RegisterEvent("PLAYER_LOGIN")
+introEvents:SetScript("OnEvent", commandsIntro)
 
 SLASH_BENTOCMD1 = "/bentocmd"
 SlashCmdList["BENTOCMD"] = function(msg, editBox)
     if msg == "" then
-        PrintCommands()
+        showCommandList()
     end
 end
 
 
 -- KEYWORD FILTERING
 
-local KeywordTable = {}
+local keywordTable = {}
 local playerName = UnitName("player")
 
-local function KeywordMatch(msg, senderName)
+
+local function keywordMatch(msg, senderName)
     local playerLink = "|Hplayer:" .. senderName .. "|h" .. YELLOW_LUA .. "[" .. senderName .. "]: " .. "|r" .. "|h"
     print(playerLink .. msg)
     PlaySound(3175, "Master", true)
 end
 
-local function KeywordFilter(msg)
-    for _, keywordSet in ipairs(KeywordTable) do
+
+local function keywordFilter(msg)
+    for _, keywordSet in ipairs(keywordTable) do
         if type(keywordSet) == "string" then
             local pattern = strlower(keywordSet)
             if strfind(strlower(msg), pattern) then
@@ -69,27 +71,30 @@ local function KeywordFilter(msg)
     return false
 end
 
-local function KeywordValidation(self, event, msg, senderName, languageName, channelName, ...)
-    if next(KeywordTable) and strmatch(channelName, "%d+") then
+
+local function keywordValidation(self, event, msg, senderName, languageName, channelName, ...)
+    if next(keywordTable) and strmatch(channelName, "%d+") then
         local channelNumber = tonumber(strmatch(channelName, "%d+"))
-        if channelNumber and channelNumber >= 1 and channelNumber <= 20 and KeywordFilter(msg) then
-            KeywordMatch(msg, senderName)
+        if channelNumber and channelNumber >= 1 and channelNumber <= 20 and keywordFilter(msg) then
+            keywordMatch(msg, senderName)
         end
     end
 end
 
-local FilterFrame = CreateFrame("Frame")
-FilterFrame:SetScript("OnEvent", KeywordValidation)
+
+local filterCommandEvents = CreateFrame("Frame")
+filterCommandEvents:SetScript("OnEvent", keywordValidation)
+
 
 SLASH_FILTER1 = "/f"
 SlashCmdList["FILTER"] = function(msg)
     if msg == "" then
-        wipe(KeywordTable)
+        wipe(keywordTable)
         print(YELLOW_LUA .. "Filter:" .. "|r" .. " Cleared.")
-        FilterFrame:UnregisterEvent("CHAT_MSG_CHANNEL")
+        filterCommandEvents:UnregisterEvent("CHAT_MSG_CHANNEL")
     else
-        if not FilterFrame:IsEventRegistered("CHAT_MSG_CHANNEL") then
-            FilterFrame:RegisterEvent("CHAT_MSG_CHANNEL")
+        if not filterCommandEvents:IsEventRegistered("CHAT_MSG_CHANNEL") then
+            filterCommandEvents:RegisterEvent("CHAT_MSG_CHANNEL")
         end
 
         if strfind(msg, "+") then
@@ -100,30 +105,31 @@ SlashCmdList["FILTER"] = function(msg)
                     for keyword in string.gmatch(set, "[^+]+") do
                         table.insert(compoundSet, keyword)
                     end
-                    table.insert(KeywordTable, compoundSet)
+                    table.insert(keywordTable, compoundSet)
                 else
-                    table.insert(KeywordTable, set)
+                    table.insert(keywordTable, set)
                 end
             end
         else
-            table.insert(KeywordTable, msg)
+            table.insert(keywordTable, msg)
         end
 
         local newKeywordsStr = ""
-        for i, keywordSet in ipairs(KeywordTable) do
+        for i, keywordSet in ipairs(keywordTable) do
             if type(keywordSet) == "string" then
                 newKeywordsStr = newKeywordsStr .. "\"" .. keywordSet .. "\""
             elseif type(keywordSet) == "table" then
                 local compoundStr = table.concat(keywordSet, " + ")
                 newKeywordsStr = newKeywordsStr .. "\"" .. compoundStr .. "\""
             end
-            if i ~= #KeywordTable then
+            if i ~= #keywordTable then
                 newKeywordsStr = newKeywordsStr .. ", "
             end
         end
         print(YELLOW_LUA .. "Filtering:" .. "|r" .. " " .. newKeywordsStr:gsub('"', '') .. ".")
     end
 end
+
 
 
 -- WHISPER ALL PLAYERS IN /WHO COMMAND
@@ -203,23 +209,21 @@ SlashCmdList["WHISPERLASTN"] = function(msg)
     end
 end
 
-
-local function TrackWhispers(_, _, msg, playerName)
+local function trackWhispers(_, _, msg, playerName)
     table.insert(recentWhispers, playerName)
     if #recentWhispers > 100 then
         table.remove(recentWhispers, 1)
     end
 end
 
-
-local WhisperLastFrame = CreateFrame("Frame")
-WhisperLastFrame:RegisterEvent("CHAT_MSG_WHISPER")
-WhisperLastFrame:SetScript("OnEvent", TrackWhispers)
+local latestWhispEvents = CreateFrame("Frame")
+latestWhispEvents:RegisterEvent("CHAT_MSG_WHISPER")
+latestWhispEvents:SetScript("OnEvent", trackWhispers)
 
 
 -- CLOSE ALL WHISPER TABS
 
-local function CloseTabs()
+local function closeAllChatTabs()
     for _, chatFrameName in pairs(CHAT_FRAMES) do
         local chatFrame = _G[chatFrameName]
         if chatFrame and chatFrame.isTemporary then
@@ -229,34 +233,34 @@ local function CloseTabs()
 end
 
 SLASH_CLOSETABS1 = "/c"
-SlashCmdList["CLOSETABS"] = CloseTabs
+SlashCmdList["CLOSETABS"] = closeAllChatTabs
 
 
 -- READY CHECK
 
-local function ReadyCheck()
+local function readyCheck()
     DoReadyCheck()
 end
 
 SLASH_READYCHECK1 = "/rc"
-SlashCmdList["READYCHECK"] = ReadyCheck
+SlashCmdList["READYCHECK"] = readyCheck
 
 
 -- QUIT GROUP
 
-local function QuitParty() 
+local function quitParty() 
     if IsInGroup() then 
         LeaveParty() 
     end 
 end
 
 SLASH_QUITPARTY1 = "/q"
-SlashCmdList["QUITPARTY"] = QuitParty
+SlashCmdList["QUITPARTY"] = quitParty
 
 
 -- TOGGLE LUA ERRORS
 
-local function ToggleLua()
+local function toggleLUAErrors()
     local currentSetting = GetCVar("scriptErrors")
     if currentSetting == "1" then
         SetCVar("scriptErrors", 0)
@@ -268,7 +272,7 @@ local function ToggleLua()
 end
 
 SLASH_TOGGLELUA1 = "/lua"
-SlashCmdList["TOGGLELUA"] = ToggleLua
+SlashCmdList["TOGGLELUA"] = toggleLUAErrors
 
 
 -- RELOAD THE UI
@@ -289,11 +293,11 @@ end
 
 -- RELOAD THE UI AND RESTART THE GRAPHICS ENGINE AND CLEAR GAME CACHE
 
-local function FullReload()
+local function fullReload()
     ReloadUI()
     ConsoleExec("gxRestart")
     ConsoleExec("clearCache")
 end
 
 SLASH_FULLRELOAD1 = "/rl"
-SlashCmdList["FULLRELOAD"] = FullReload
+SlashCmdList["FULLRELOAD"] = fullReload
