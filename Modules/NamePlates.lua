@@ -1,6 +1,6 @@
 -- SETUP NAMEPLATE APPEARANCE
 
-local function CreateBackdrop(parent)
+local function createBackdrop(parent)
     local backdrop = CreateFrame("Frame", nil, parent, "BackdropTemplate")
     backdrop:SetPoint("TOPLEFT", parent, "TOPLEFT", -3, 3)
     backdrop:SetPoint("BOTTOMRIGHT", parent, "BOTTOMRIGHT", 3, -3)
@@ -13,16 +13,16 @@ end
 
 -- HANDLE CASTBAR ANIMATION UPDATES
 
-local function OnUpdate(self, elapsed)
+local function onUpdate(self, elapsed)
     if self.casting or self.channeling then
-        local CurrentTimer = GetTime()
-        if CurrentTimer > self.maxValue then
+        local currentTimer = GetTime()
+        if currentTimer > self.maxValue then
             self:SetValue(self.maxValue)
             self.casting = false
             self.channeling = false
             self:Hide()
         else
-            self:SetValue(CurrentTimer)
+            self:SetValue(currentTimer)
         end
     end
 end
@@ -30,191 +30,191 @@ end
 
 -- SETUP NAMEPLATE CASTBAR
 
-local function NameplateCastbarSetup(Nameplate)
-    local HealthbarReference = Nameplate.UnitFrame.healthBar
+local function nameplateCastbarSetup(nameplate)
+    local healthbarReference = nameplate.UnitFrame.healthBar
 
-    local NamePlateCastBar = CreateFrame("StatusBar", nil, Nameplate)
-    NamePlateCastBar:SetStatusBarTexture(BAR)
-    NamePlateCastBar:SetStatusBarColor(unpack(YELLOW))
-    NamePlateCastBar:SetSize(HealthbarReference:GetWidth(), 10)
+    local namePlateCastBar = CreateFrame("StatusBar", nil, nameplate)
+    namePlateCastBar:SetStatusBarTexture(BAR)
+    namePlateCastBar:SetStatusBarColor(unpack(YELLOW))
+    namePlateCastBar:SetSize(healthbarReference:GetWidth(), 10)
     -- Change this line to create 4px margin between healthbar and castbar
-    NamePlateCastBar:SetPoint("TOP", HealthbarReference, "BOTTOM", 0, -4)
-    NamePlateCastBar:SetMinMaxValues(0, 1)
-    NamePlateCastBar:SetValue(0)
+    namePlateCastBar:SetPoint("TOP", healthbarReference, "BOTTOM", 0, -4)
+    namePlateCastBar:SetMinMaxValues(0, 1)
+    namePlateCastBar:SetValue(0)
 
     -- Use the same backdrop style as the healthbar
-    NamePlateCastBar.backdrop = CreateBackdrop(NamePlateCastBar)
+    namePlateCastBar.backdrop = createBackdrop(namePlateCastBar)
 
-    local CastBarText = NamePlateCastBar:CreateFontString(nil, "OVERLAY")
-    CastBarText:SetFont(FONT, 8, "OUTLINE")
-    CastBarText:SetPoint("CENTER", NamePlateCastBar)
+    local castBarText = namePlateCastBar:CreateFontString(nil, "OVERLAY")
+    castBarText:SetFont(FONT, 8, "OUTLINE")
+    castBarText:SetPoint("CENTER", namePlateCastBar)
 
-    NamePlateCastBar.CastBarText = CastBarText
-    NamePlateCastBar:Hide()
+    namePlateCastBar.CastBarText = castBarText
+    namePlateCastBar:Hide()
 
-    return NamePlateCastBar
+    return namePlateCastBar
 end
 
 
 -- UPDATE NAMEPLATE CASTBAR
 
-local function UpdateNamePlateCastBar(NamePlateCastBar, Unit)
-    if not NamePlateCastBar or not Unit then return end
+local function updateNamePlateCastBar(namePlateCastBar, unit)
+    if not namePlateCastBar or not unit then return end
     
-    local name, _, _, startTime, endTime, _, _, SpellInterruptible = UnitCastingInfo(Unit)
-    local channelName, _, _, channelStartTime, channelEndTime = UnitChannelInfo(Unit)
+    local name, _, _, startTime, endTime, _, _, spellInterruptible = UnitCastingInfo(unit)
+    local channelName, _, _, channelStartTime, channelEndTime = UnitChannelInfo(unit)
 
     if name or channelName then
-        local CastDuration = (endTime or channelEndTime) / 1000
-        local CurrentTimer = GetTime()
+        local castDuration = (endTime or channelEndTime) / 1000
+        local currentTimer = GetTime()
 
-        NamePlateCastBar:SetMinMaxValues((startTime or channelStartTime) / 1000, CastDuration)
-        NamePlateCastBar:SetValue(CurrentTimer)
+        namePlateCastBar:SetMinMaxValues((startTime or channelStartTime) / 1000, castDuration)
+        namePlateCastBar:SetValue(currentTimer)
 
-        if SpellInterruptible then
-            NamePlateCastBar:SetStatusBarColor(unpack(GREY))
+        if spellInterruptible then
+            namePlateCastBar:SetStatusBarColor(unpack(GREY))
         else
-            NamePlateCastBar:SetStatusBarColor(unpack(YELLOW))
+            namePlateCastBar:SetStatusBarColor(unpack(YELLOW))
         end
 
-        NamePlateCastBar.casting = name ~= nil
-        NamePlateCastBar.channeling = channelName ~= nil
-        NamePlateCastBar.maxValue = CastDuration
-        NamePlateCastBar.CastBarText:SetText(name or channelName)
-        NamePlateCastBar:Show()
+        namePlateCastBar.casting = name ~= nil
+        namePlateCastBar.channeling = channelName ~= nil
+        namePlateCastBar.maxValue = castDuration
+        namePlateCastBar.CastBarText:SetText(name or channelName)
+        namePlateCastBar:Show()
     else
-        NamePlateCastBar:Hide()
+        namePlateCastBar:Hide()
     end
 end
 
 
 -- UPDATE HEALTHBAR COLOR
 
-local function UpdateNamePlateHealthBar(Nameplate, unitID)
-    if not Nameplate or not unitID then return end
+local function updateNamePlateHealthBar(nameplate, unitID)
+    if not nameplate or not unitID then return end
     
-    local NameplateHealthbar = Nameplate.UnitFrame.healthBar
+    local nameplateHealthbar = nameplate.UnitFrame.healthBar
     
-    if not NameplateHealthbar.originalColor then
-        local r, g, b = NameplateHealthbar:GetStatusBarColor()
-        NameplateHealthbar.originalColor = {r, g, b}
+    if not nameplateHealthbar.originalColor then
+        local r, g, b = nameplateHealthbar:GetStatusBarColor()
+        nameplateHealthbar.originalColor = {r, g, b}
     end
 
-    local UnitThreat = UnitThreatSituation("player", unitID)
-    local UnitTapState = UnitIsTapDenied(unitID)
+    local unitThreat = UnitThreatSituation("player", unitID)
+    local unitTapState = UnitIsTapDenied(unitID)
     
-    if UnitThreat and UnitThreat >= 2 then
-        NameplateHealthbar:SetStatusBarColor(unpack(ORANGE))
-    elseif UnitTapState then
-        NameplateHealthbar:SetStatusBarColor(unpack(GREY))
+    if unitThreat and unitThreat >= 2 then
+        nameplateHealthbar:SetStatusBarColor(unpack(ORANGE))
+    elseif unitTapState then
+        nameplateHealthbar:SetStatusBarColor(unpack(GREY))
     elseif UnitCanAttack("player", unitID) then
         if UnitReaction(unitID, "player") <= 3 then
-            NameplateHealthbar:SetStatusBarColor(unpack(RED))
+            nameplateHealthbar:SetStatusBarColor(unpack(RED))
         else
-            NameplateHealthbar:SetStatusBarColor(unpack(YELLOW))
+            nameplateHealthbar:SetStatusBarColor(unpack(YELLOW))
         end
     else
-        NameplateHealthbar:SetStatusBarColor(unpack(GREEN))
+        nameplateHealthbar:SetStatusBarColor(unpack(GREEN))
     end
 end
 
 
 -- UPDATE NAMEPLATE APPEARANCE
 
-local function NameplateUpdate(Nameplate, unitID)
-    local UnitNameplate = Nameplate and Nameplate.UnitFrame
-    if not UnitNameplate then return end
+local function nameplateUpdate(nameplate, unitID)
+    local unitNameplate = nameplate and nameplate.UnitFrame
+    if not unitNameplate then return end
 
-    local NameplateHealthbar = UnitNameplate.healthBar
+    local nameplateHealthbar = unitNameplate.healthBar
 
-    NameplateHealthbar:SetStatusBarTexture(BAR)
+    nameplateHealthbar:SetStatusBarTexture(BAR)
     
-    NameplateHealthbar.border:Hide()
-    UnitNameplate.LevelFrame:Hide()
+    nameplateHealthbar.border:Hide()
+    unitNameplate.LevelFrame:Hide()
 
-    if not NameplateHealthbar.backdrop then
-        NameplateHealthbar.backdrop = CreateBackdrop(NameplateHealthbar)
+    if not nameplateHealthbar.backdrop then
+        nameplateHealthbar.backdrop = createBackdrop(nameplateHealthbar)
     end
 
-    NameplateHealthbar:ClearAllPoints()
-    NameplateHealthbar:SetPoint("CENTER", UnitNameplate, "CENTER", 0, 8)
-    NameplateHealthbar:SetWidth(UnitNameplate:GetWidth())
+    nameplateHealthbar:ClearAllPoints()
+    nameplateHealthbar:SetPoint("CENTER", unitNameplate, "CENTER", 0, 8)
+    nameplateHealthbar:SetWidth(unitNameplate:GetWidth())
 
-    UnitNameplate.name:ClearAllPoints()
-    UnitNameplate.name:SetPoint("BOTTOM", NameplateHealthbar, "TOP", 0, 8)
-    UnitNameplate.name:SetFont(FONT, MEDIUM, "OUTLINE")
+    unitNameplate.name:ClearAllPoints()
+    unitNameplate.name:SetPoint("BOTTOM", nameplateHealthbar, "TOP", 0, 8)
+    unitNameplate.name:SetFont(FONT, MEDIUM, "OUTLINE")
     
-    UnitNameplate.name:SetTextColor(unpack(WHITE))
+    unitNameplate.name:SetTextColor(unpack(WHITE))
     
-    UpdateNamePlateHealthBar(Nameplate, unitID)
+    updateNamePlateHealthBar(nameplate, unitID)
     
-    if not Nameplate.NamePlateCastBar then
-        Nameplate.NamePlateCastBar = NameplateCastbarSetup(Nameplate)
-        Nameplate.NamePlateCastBar:SetScript("OnUpdate", OnUpdate)
+    if not nameplate.namePlateCastBar then
+        nameplate.namePlateCastBar = nameplateCastbarSetup(nameplate)
+        nameplate.namePlateCastBar:SetScript("OnUpdate", onUpdate)
     end
     
-    UpdateNamePlateCastBar(Nameplate.NamePlateCastBar, unitID)
+    updateNamePlateCastBar(nameplate.namePlateCastBar, unitID)
 end
 
 
 -- HANDLE NAMEPLATE SHOW EVENT
 
-local function NameplateOnShow(Nameplate)
-    local unitID = Nameplate.unit
+local function nameplateOnShow(nameplate)
+    local unitID = nameplate.unit
     if unitID then
-        NameplateUpdate(Nameplate, unitID)
+        nameplateUpdate(nameplate, unitID)
     end
 end
 
 
 -- REGISTER NAMEPLATE EVENTS
 
-local NameplateEvents = CreateFrame("Frame")
-NameplateEvents:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-NameplateEvents:SetScript("OnEvent", function(self, event, unitID)
-    local Nameplate = C_NamePlate.GetNamePlateForUnit(unitID)
-    if Nameplate then
-        NameplateUpdate(Nameplate, unitID)
+local nameplateEvents = CreateFrame("Frame")
+nameplateEvents:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+nameplateEvents:SetScript("OnEvent", function(self, event, unitID)
+    local nameplate = C_NamePlate.GetNamePlateForUnit(unitID)
+    if nameplate then
+        nameplateUpdate(nameplate, unitID)
     end
 end)
 
 
 -- REGISTER THREAT EVENTS
 
-local NamePlateHealthBarEvents = CreateFrame("Frame")
-NamePlateHealthBarEvents:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE")
-NamePlateHealthBarEvents:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
-NamePlateHealthBarEvents:SetScript("OnEvent", function(self, event, unitID)
-    local Nameplate = C_NamePlate.GetNamePlateForUnit(unitID)
-    if Nameplate then
-        UpdateNamePlateHealthBar(Nameplate, unitID)
+local nameplateHealthBarEvents = CreateFrame("Frame")
+nameplateHealthBarEvents:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE")
+nameplateHealthBarEvents:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
+nameplateHealthBarEvents:SetScript("OnEvent", function(self, event, unitID)
+    local nameplate = C_NamePlate.GetNamePlateForUnit(unitID)
+    if nameplate then
+        updateNamePlateHealthBar(nameplate, unitID)
     end
 end)
 
 
 -- REGISTER CASTBAR EVENTS
 
-local NameplateCastbarEvents = CreateFrame("Frame")
-NameplateCastbarEvents:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-NameplateCastbarEvents:RegisterEvent("UNIT_SPELLCAST_START")
-NameplateCastbarEvents:RegisterEvent("UNIT_SPELLCAST_STOP")
-NameplateCastbarEvents:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
-NameplateCastbarEvents:RegisterEvent("UNIT_SPELLCAST_CHANNEL_STOP")
-NameplateCastbarEvents:SetScript("OnEvent", function(self, event, unitID)
-    local Nameplate = C_NamePlate.GetNamePlateForUnit(unitID)
-    if Nameplate then
-        if not Nameplate.NamePlateCastBar then
-            Nameplate.NamePlateCastBar = NameplateCastbarSetup(Nameplate)
-            Nameplate.NamePlateCastBar:SetScript("OnUpdate", OnUpdate)
+local nameplateCastbarEvents = CreateFrame("Frame")
+nameplateCastbarEvents:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+nameplateCastbarEvents:RegisterEvent("UNIT_SPELLCAST_START")
+nameplateCastbarEvents:RegisterEvent("UNIT_SPELLCAST_STOP")
+nameplateCastbarEvents:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
+nameplateCastbarEvents:RegisterEvent("UNIT_SPELLCAST_CHANNEL_STOP")
+nameplateCastbarEvents:SetScript("OnEvent", function(self, event, unitID)
+    local nameplate = C_NamePlate.GetNamePlateForUnit(unitID)
+    if nameplate then
+        if not nameplate.namePlateCastBar then
+            nameplate.namePlateCastBar = nameplateCastbarSetup(nameplate)
+            nameplate.namePlateCastBar:SetScript("OnUpdate", onUpdate)
         end
-        UpdateNamePlateCastBar(Nameplate.NamePlateCastBar, unitID)
+        updateNamePlateCastBar(nameplate.namePlateCastBar, unitID)
     end
 end)
 
 
 -- UPDATE NAMEPLATE CONFIG
 
-local function NameplateConfigUpdate()
+local function nameplateConfigUpdate()
     SetCVar("nameplateMinScale", 0.8)
     
     SetCVar("nameplateSelectedScale", 1)
@@ -226,6 +226,6 @@ local function NameplateConfigUpdate()
     SetCVar("nameplateMaxDistance", 40)
 end
 
-local NameplateConfigEvents = CreateFrame("Frame")
-NameplateConfigEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
-NameplateConfigEvents:SetScript("OnEvent", NameplateConfigUpdate)
+local nameplateConfigEvents = CreateFrame("Frame")
+nameplateConfigEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+nameplateConfigEvents:SetScript("OnEvent", nameplateConfigUpdate)
