@@ -98,30 +98,18 @@ local function updateQuestieIcons()
         return
     end
 
+    Questie.db.profile.nameplateX = -24
+    Questie.db.profile.nameplateY = 8
+    Questie.db.profile.nameplateScale = 1.25
 
-    -- POSITION QUESTIE ICONS
-
-    local function positionQuestieIcons()
-        if QuestieNameplate then
-            QuestieNameplate:SetScale(1.2)
-            QuestieNameplate:ClearAllPoints()
-            QuestieNameplate:SetPoint("LEFT", NameplateHealthbar, "RIGHT", -16, 0)
-        end
-
-        if QuestieTargetFrame then
-            QuestieTargetFrame:SetScale(1.5)
-            QuestieTargetFrame:ClearAllPoints()
-            QuestieTargetFrame:SetPoint("CENTER", TargetPortraitBackdrop, "BOTTOMRIGHT", 0, 0)
-            QuestieTargetFrame:SetFrameLevel(TargetPortraitBackdrop:GetFrameLevel() + 2)
-        end
-    end
-
-
-    -- CREATE FRAME FOR QUESTIE SUPPORT
-
-    local questieSupportFrame = CreateFrame("Frame")
-    questieSupportFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-    questieSupportFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-    questieSupportFrame:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-    questieSupportFrame:SetScript("OnEvent", updateQuestieIcons)
+    Questie.db.profile.nameplateTargetFrameX = -32
+    Questie.db.profile.nameplateTargetFrameY = 16
+    Questie.db.profile.nameplateTargetFrameScale = 1.25
 end
+
+
+-- CREATE FRAME FOR QUESTIE UPDATE
+
+local questieSupportFrame = CreateFrame("Frame")
+questieSupportFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+questieSupportFrame:SetScript("OnEvent", updateQuestieIcons)
