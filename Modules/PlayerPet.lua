@@ -14,7 +14,7 @@ PetFrameBackdrop:SetAttribute("type2", "togglemenu")
 
 -- UPDATE PET FRAME
 
-local function UpdatePetFrame()
+local function updatePetFrame()
 	PetFrame:ClearAllPoints()
 	PetFrame:SetPoint("CENTER", PetFrameBackdrop, "CENTER", 0, 0)
 	PetFrame:SetSize(PetFrameBackdrop:GetWidth(), PetFrameBackdrop:GetHeight())
@@ -25,7 +25,8 @@ local function UpdatePetFrame()
     PetPortrait:Hide()
 
     PetName:ClearAllPoints()
-    PetName:SetPoint("BOTTOMRIGHT", PetFrameBackdrop, "TOPRIGHT", 0, 2)
+    PetName:SetPoint("BOTTOMRIGHT", PetFrameBackdrop, "TOPRIGHT", -2, 2)
+    PetName:SetWidth(PetFrameBackdrop:GetWidth() - 4)
     PetName:SetFont(FONT, SMALL, "OUTLINE")
     PetName:SetTextColor(unpack(WHITE))
 
@@ -44,10 +45,10 @@ local function UpdatePetFrame()
 	end
 end
 
-local PetFrameFrame = CreateFrame("Frame")
-PetFrameFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-PetFrameFrame:RegisterEvent("UNIT_PET")
-PetFrameFrame:SetScript("OnEvent", UpdatePetFrame)
+local petFrameEvents = CreateFrame("Frame")
+petFrameEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+petFrameEvents:RegisterEvent("UNIT_PET")
+petFrameEvents:SetScript("OnEvent", updatePetFrame)
 
 
 -- UPDATE PET RESOURCES
@@ -74,11 +75,11 @@ local function UpdatePetResources()
     PetFrameManaBarTextRight:SetAlpha(0)
 end
 
-local PetResourceFrame = CreateFrame("Frame")
-PetResourceFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-PetResourceFrame:RegisterEvent("UNIT_PET")
-PetResourceFrame:RegisterEvent("UNIT_POWER_UPDATE")
-PetResourceFrame:SetScript("OnEvent", function(self, event, unit)
+local petResourceEvents = CreateFrame("Frame")
+petResourceEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+petResourceEvents:RegisterEvent("UNIT_PET")
+petResourceEvents:RegisterEvent("UNIT_POWER_UPDATE")
+petResourceEvents:SetScript("OnEvent", function(self, event, unit)
     if event == "PLAYER_ENTERING_WORLD" or event == "UNIT_PET" or 
        (event == "UNIT_POWER_UPDATE" and unit == "pet") then
         UpdatePetResources()
@@ -88,38 +89,38 @@ end)
 
 -- CREATE PET HAPPINESS BACKDROP
 
-local PetHappinessBackdrop = CreateFrame("Frame", nil, PetFrame, "BackdropTemplate")
-PetHappinessBackdrop:SetSize(24, 24)
-PetHappinessBackdrop:SetPoint("RIGHT", PetFrameBackdrop, "LEFT", 0, 0)
-PetHappinessBackdrop:SetBackdrop({
+local petHappinessBackdrop = CreateFrame("Frame", nil, PetFrame, "BackdropTemplate")
+petHappinessBackdrop:SetSize(24, 24)
+petHappinessBackdrop:SetPoint("RIGHT", PetFrameBackdrop, "LEFT", 0, 0)
+petHappinessBackdrop:SetBackdrop({
     bgFile = "Interface\\Icons\\ability_hunter_beasttraining",
     edgeFile = EDGE, edgeSize = MEDIUM,
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
-PetHappinessBackdrop:SetBackdropBorderColor(unpack(GREY))
-PetHappinessBackdrop:SetFrameLevel(PetFrame:GetFrameLevel() + 2)
+petHappinessBackdrop:SetBackdropBorderColor(unpack(GREY))
+petHappinessBackdrop:SetFrameLevel(PetFrame:GetFrameLevel() + 2)
 
 
 -- UPDATE PET HAPPINESS
 
-local function UpdatePetHappiness()
+local function updatePetHappiness()
     PetFrameHappiness:Hide()
     PetFrameHappinessTexture:Hide()
 
     local happiness = GetPetHappiness()
     if happiness and happiness < 3 then
-        PetHappinessBackdrop:Show()
+        petHappinessBackdrop:Show()
     else
-        PetHappinessBackdrop:Hide()
+        petHappinessBackdrop:Hide()
     end
 end
 
-local PetHappinessFrame = CreateFrame("Frame")
-PetHappinessFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-PetHappinessFrame:RegisterEvent("UNIT_HAPPINESS")
-PetHappinessFrame:RegisterEvent("UNIT_PET")
-PetHappinessFrame:SetScript("OnEvent", function(self, event, unit)
+local petHappinessEvents = CreateFrame("Frame")
+petHappinessEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+petHappinessEvents:RegisterEvent("UNIT_HAPPINESS")
+petHappinessEvents:RegisterEvent("UNIT_PET")
+petHappinessEvents:SetScript("OnEvent", function(self, event, unit)
     if unit == "pet" or event == "PLAYER_ENTERING_WORLD" then
-        UpdatePetHappiness()
+        updatePetHappiness()
     end
 end)
