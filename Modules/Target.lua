@@ -165,17 +165,28 @@ hooksecurefunc("UnitFramePortrait_Update", portraitTextureUpdate)
 -- UPDATE TARGET AURAS
 
 local function updateTargetAuras()
-    local buff, buffIndex, debuff, debuffIndex = 1, 1, 1, 1
-    local buffColumns, debuffColumns = 5, 5
+
+    -- INITIALIZE VARIABLES
+    local maxAurasPerRow = 5
+    local maxRows = 10
     local auraSize = 20
     local xOffset, yOffset = 4, 4
     local horizontalStartOffset = 4
-    local verticalStartOffset = 4  -- Add vertical offset to move auras up by 4px
+    local verticalStartOffset = 4
 
-    local currentBuff = _G["TargetFrameBuff"..buffIndex]
-    while currentBuff do
-        local row = ceil(buffIndex / buffColumns) - 1
-        local col = (buffIndex - 1) % buffColumns
+    -- COUNT VISIBLE BUFFS
+    local buffCount = 0
+    local currentBuff = _G["TargetFrameBuff1"]
+    while currentBuff and currentBuff:IsShown() and buffCount < maxAurasPerRow * maxRows do
+        buffCount = buffCount + 1
+        currentBuff = _G["TargetFrameBuff"..(buffCount + 1)]
+    end
+
+    -- UPDATE BUFFS
+    for i = 1, buffCount do
+        local currentBuff = _G["TargetFrameBuff"..i]
+        local row = math.floor((i - 1) / maxAurasPerRow)
+        local col = (i - 1) % maxAurasPerRow
         
         currentBuff:ClearAllPoints()
         currentBuff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 
@@ -197,23 +208,24 @@ local function updateTargetAuras()
         if icon then
             icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
         end
-        
-        buffIndex = buffIndex + 1
-        currentBuff = _G["TargetFrameBuff"..buffIndex]
     end
+
+    -- PROCESS DEBUFFS - CONTINUE FROM WHERE BUFFS LEFT OFF
+    local debuffCount = 0
+    local currentDebuff = _G["TargetFrameDebuff1"]
     
-    local currentDebuff = _G["TargetFrameDebuff"..debuffIndex]
-    while currentDebuff do
-        local row = ceil(debuffIndex / debuffColumns) - 1
-        local col = (debuffIndex - 1) % debuffColumns
+    while currentDebuff and currentDebuff:IsShown() and (buffCount + debuffCount) < maxAurasPerRow * maxRows do
+        debuffCount = debuffCount + 1
         
-        local buffRows = ceil((buffIndex - 1) / buffColumns)
-        local verticalOffset = buffRows * (auraSize + yOffset) + yOffset
+        -- Calculate position based on total number of auras (buffs + debuffs)
+        local totalIndex = buffCount + debuffCount
+        local row = math.floor((totalIndex - 1) / maxAurasPerRow)
+        local col = (totalIndex - 1) % maxAurasPerRow
         
         currentDebuff:ClearAllPoints()
         currentDebuff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 
             horizontalStartOffset + col * (auraSize + xOffset), 
-            verticalStartOffset + verticalOffset + row * (auraSize + yOffset))
+            verticalStartOffset + row * (auraSize + yOffset))
         
         currentDebuff:SetSize(auraSize, auraSize)
         
@@ -233,8 +245,7 @@ local function updateTargetAuras()
 
         currentDebuff.backdrop:SetBackdropBorderColor(unpack(RED))
         
-        debuffIndex = debuffIndex + 1
-        currentDebuff = _G["TargetFrameDebuff"..debuffIndex]
+        currentDebuff = _G["TargetFrameDebuff"..(debuffCount + 1)]
     end
 end
 
