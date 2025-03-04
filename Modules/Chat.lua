@@ -34,6 +34,28 @@ local function customizeChatTab(chatFrame)
     end
 end
 
+local function addCustomBackdropToEditBox(editBox)
+    if editBox and not editBox.customBackdrop then
+        local editBoxBackdrop = CreateFrame("Frame", nil, editBox, "BackdropTemplate")
+        editBoxBackdrop:SetPoint("TOPLEFT", editBox, "TOPLEFT", 0, 0)
+        editBoxBackdrop:SetPoint("BOTTOMRIGHT", editBox, "BOTTOMRIGHT", 0, 0)
+        editBoxBackdrop:SetBackdrop({
+            bgFile = BG,
+            edgeFile = BORD,
+            edgeSize = 12,
+            insets = {left = 2, right = 2, top = 2, bottom = 2}
+        })
+        editBoxBackdrop:SetBackdropColor(unpack(BLACK_UI))
+        editBoxBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
+        editBox.customBackdrop = editBoxBackdrop
+        
+        
+        -- SET BACKDROP BELOW CONTENT
+        
+        editBoxBackdrop:SetFrameLevel(editBox:GetFrameLevel() - 1)
+    end
+end
+
 local function customizeChatFrame(chatFrame)
     hideFrameTextures(chatFrame)
     
@@ -45,6 +67,11 @@ local function customizeChatFrame(chatFrame)
     
     hideChildUIElements(chatFrame, elementsToHide)
     customizeChatTab(chatFrame)
+    
+    local editBox = _G[chatFrame:GetName() .. "EditBox"]
+    if editBox then
+        addCustomBackdropToEditBox(editBox)
+    end
 end
 
 local function alignEditBoxHeaders()
@@ -53,14 +80,20 @@ local function alignEditBoxHeaders()
         local editBoxHeader = _G["ChatFrame" .. i .. "EditBoxHeader"]
         if editBox and editBoxHeader then
             editBoxHeader:ClearAllPoints()
-            editBoxHeader:SetPoint("LEFT", editBox, "LEFT", 6, 0)
+            editBoxHeader:SetPoint("LEFT", editBox, "LEFT", 8, 0)
         end
     end
 end
 
 local function updateAllChatFrames()
     for i = 1, NUM_CHAT_WINDOWS do
-        customizeChatFrame(_G["ChatFrame" .. i])
+        local chatFrame = _G["ChatFrame" .. i]
+        customizeChatFrame(chatFrame)
+        
+        local editBox = _G["ChatFrame" .. i .. "EditBox"]
+        if editBox then
+            addCustomBackdropToEditBox(editBox)
+        end
     end
     
     hideUIElement(ChatFrameMenuButton)
@@ -104,6 +137,11 @@ hooksecurefunc("FCF_OpenTemporaryWindow", function()
         customizeChatFrame(currentChatFrame)
         hookChatTabScroll(currentChatFrame:GetID())
         alignEditBoxHeaders()
+        
+        local editBox = _G[currentChatFrame:GetName() .. "EditBox"]
+        if editBox then
+            addCustomBackdropToEditBox(editBox)
+        end
     end
 end)
 
@@ -136,15 +174,15 @@ local function updateChatColors()
     end
 
     for i = 1, 50 do
-        SetChatColorNameByClass("BEIGE_CHAT" .. i, true)
+        SetChatColorNameByClass("CORAL_CHAT" .. i, true)
     end
     
 
     -- PLAYER MESSAGES COLORS
 
-    ChangeChatColor("SAY", unpack(BEIGE_CHAT))
-    ChangeChatColor("EMOTE", unpack(BEIGE_CHAT))
-    ChangeChatColor("YELL", unpack(BEIGE_CHAT))
+    ChangeChatColor("SAY", unpack(CORAL_CHAT))
+    ChangeChatColor("EMOTE", unpack(CORAL_CHAT))
+    ChangeChatColor("YELL", unpack(CORAL_CHAT))
     ChangeChatColor("GREEN_CHAT", unpack(GREEN_CHAT))
     ChangeChatColor("OFFICER", unpack(GREEN_CHAT))
     ChangeChatColor("PINK_CHAT", unpack(PINK_CHAT))
@@ -162,12 +200,12 @@ local function updateChatColors()
     ChangeChatColor("INSTANCE_CHAT_LEADER", unpack(BLUE_CHAT))
 
 
-    -- BEIGE_CHAT COLORS
+    -- CORAL_CHAT COLORS
 
     for i = 1, GetNumDisplayChannels() do
         local _, _, _, channelID = GetChannelDisplayInfo(i)
         if channelID then
-            ChangeChatColor("BEIGE_CHAT"..channelID, unpack(BEIGE_CHAT))
+            ChangeChatColor("CHANNEL"..channelID, unpack(CORAL_CHAT))
         end
     end
 
@@ -196,17 +234,17 @@ local function updateChatColors()
     ChangeChatColor("YELLOW_CHAT", unpack(YELLOW_CHAT))  -- System Messages
     ChangeChatColor("ERRORS", unpack(YELLOW_CHAT))  -- Errors
     ChangeChatColor("IGNORED", unpack(YELLOW_CHAT))  -- Ignored
-    ChangeChatColor("BEIGE_CHAT", unpack(YELLOW_CHAT))  -- Channel
+    ChangeChatColor("CORAL_CHAT", unpack(YELLOW_CHAT))  -- Channel
     ChangeChatColor("TARGETICONS", unpack(YELLOW_CHAT))  -- Target Icons
     ChangeChatColor("BN_INLINE_TOAST_ALERT", unpack(BLUE_CHAT))  -- Blizzard Services Alerts
 
     -- CREATURE COLORS
 
-    ChangeChatColor("MONSTER_SAY", unpack(BEIGE_CHAT))  -- Creature Say
-    ChangeChatColor("MONSTER_EMOTE", unpack(BEIGE_CHAT))  -- Creature Emote
-    ChangeChatColor("MONSTER_YELL", unpack(BEIGE_CHAT))  -- Creature Yell
+    ChangeChatColor("MONSTER_SAY", unpack(CORAL_CHAT))  -- Creature Say
+    ChangeChatColor("MONSTER_EMOTE", unpack(CORAL_CHAT))  -- Creature Emote
+    ChangeChatColor("MONSTER_YELL", unpack(CORAL_CHAT))  -- Creature Yell
     ChangeChatColor("MONSTER_WHISPER", unpack(PINK_CHAT))  -- Creature Whisper
-    ChangeChatColor("MONSTER_BOSS_EMOTE", unpack(BEIGE_CHAT))  -- Boss Emote
+    ChangeChatColor("MONSTER_BOSS_EMOTE", unpack(CORAL_CHAT))  -- Boss Emote
     ChangeChatColor("MONSTER_BOSS_WHISPER", unpack(PINK_CHAT))  -- Boss Whisper
 
 end
