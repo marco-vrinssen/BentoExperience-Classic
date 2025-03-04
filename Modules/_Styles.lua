@@ -17,8 +17,8 @@ GREEN_UI = {0.188, 0.996, 0.192}        -- #30FE31
 WHITE_CHAT = {1.0, 1.0, 1.0}            -- #FFFFFF
 WHITE_CHAT_LUA = "|cFFFFFFFF"           -- #FFFFFF
 
-BEIGE_CHAT = {1.0, 0.75, 0.75}          -- #FFC0C0
-BEIGE_CHAT_LUA = "|cFFFFC0C0"           -- #FFC0C0
+CORAL_CHAT = {1.0, 0.898, 0.898}        -- #FFE5E5
+CORAL_CHAT_LUA = "|cFFFFE5E5"           -- #FFE5E5
 
 YELLOW_CHAT = {0.99, 0.95, 0.45}        -- #FCF374
 YELLOW_CHAT_LUA = "|cFFFCF374"          -- #FCF374
