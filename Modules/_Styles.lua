@@ -36,7 +36,6 @@ PINK_LUA = "|cFFFB18B2"
 LIGHTPINK = {1.000, 0.800, 0.996}
 LIGHTPINK_LUA = "|cFFFFCCFE"
 
-
 -- #A43BEA
 PURPLE = {0.643, 0.231, 0.918}
 PURPLE_LUA = "|cFFA43BEA"
@@ -53,14 +52,10 @@ BLUE_LUA = "|cFF220FC9"
 GREEN = {0.0, 0.784, 0.0}
 GREEN_LUA = "|cFF00C800"
 
--- #119826
-DARKGREEN = {0.067, 0.596, 0.149}
-DARKGREEN_LUA = "|cFF119826"
-
 
 -- TEXTURES
 
-BAR = "Interface/AddOns/BentoExperience-Classic/Assets/Statusbar.blp"
+BAR = "Interface/RaidFrame/Raid-Bar-Hp-Fill.blp"
 BG = "Interface/Tooltips/UI-Tooltip-Background.blp"
 EDGE = "Interface/Tooltips/UI-Tooltip-Border.blp"
 

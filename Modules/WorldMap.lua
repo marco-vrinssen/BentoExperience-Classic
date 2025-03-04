@@ -32,7 +32,7 @@ fadeMapEvents:SetScript("OnEvent", fadeMap)
 -- HOOK MAP SCRIPTS FOR UPDATING AND INITIAL DISPLAY
 WorldMapFrame:HookScript("OnUpdate", updateWorldMap)
 WorldMapFrame:HookScript("OnShow", function()
-    local initialAlpha = IsPlayerMoving() and 0.25 or 1
+    local initialAlpha = IsPlayerMoving() and 0.5 or 1
     WorldMapFrame:SetAlpha(0)
     UIFrameFadeIn(WorldMapFrame, 0.1, 0, initialAlpha)
     updateWorldMap()

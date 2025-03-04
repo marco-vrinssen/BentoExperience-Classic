@@ -72,6 +72,14 @@ local function updateTargetFrame()
             end
         end
     end
+
+    TargetFrameHealthBar:ClearAllPoints()
+    TargetFrameHealthBar:SetSize(TargetFrameBackground:GetWidth(), 16)
+    TargetFrameHealthBar:SetPoint("BOTTOM", TargetFrameManaBar, "TOP", 0, 0)
+
+    TargetFrameManaBar:ClearAllPoints()
+    TargetFrameManaBar:SetSize(TargetFrameBackground:GetWidth(), 8)
+    TargetFrameManaBar:SetPoint("BOTTOM", TargetFrameBackdrop, "BOTTOM", 0, 3)
 end
 
 local targetEvents = CreateFrame("Frame")
@@ -83,26 +91,8 @@ targetEvents:SetScript("OnEvent", updateTargetFrame)
 -- UPDATE TARGET RESOURCES
 
 local function updateTargetResources()
-    TargetFrameHealthBar:ClearAllPoints()
-    TargetFrameHealthBar:SetSize(TargetFrameBackground:GetWidth(), 16)
-    TargetFrameHealthBar:SetPoint("BOTTOM", TargetFrameManaBar, "TOP", 0, 0)
     TargetFrameHealthBar:SetStatusBarTexture(BAR)
-    TargetFrameHealthBar:SetStatusBarColor(unpack(GREEN))
-
-    TargetFrameManaBar:ClearAllPoints()
-    TargetFrameManaBar:SetSize(TargetFrameBackground:GetWidth(), 8)
-    TargetFrameManaBar:SetPoint("BOTTOM", TargetFrameBackdrop, "BOTTOM", 0, 3)
     TargetFrameManaBar:SetStatusBarTexture(BAR)
-    
-    local powerType = UnitPowerType("target")
-    
-    if powerType == 0 then -- Mana
-        TargetFrameManaBar:SetStatusBarColor(unpack(BLUE))
-    elseif powerType == 1 then -- Rage
-        TargetFrameManaBar:SetStatusBarColor(unpack(RED))
-    elseif powerType == 3 then -- Energy
-        TargetFrameManaBar:SetStatusBarColor(unpack(YELLOW))
-    end
 end
 
 local targetResourceEvents = CreateFrame("Frame")
@@ -112,12 +102,10 @@ targetResourceEvents:RegisterEvent("UNIT_HEALTH")
 targetResourceEvents:RegisterEvent("UNIT_HEALTH_FREQUENT")
 targetResourceEvents:RegisterEvent("UNIT_MAXHEALTH")
 targetResourceEvents:RegisterEvent("UNIT_POWER_UPDATE")
+targetResourceEvents:RegisterEvent("UNIT_POWER_FREQUENT")
 targetResourceEvents:RegisterEvent("UNIT_MAXPOWER")
-targetResourceEvents:RegisterEvent("UNIT_DISPLAYPOWER")
-targetResourceEvents:SetScript("OnEvent", function(self, event, unit)
-    if event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_TARGET_CHANGED" then
-        updateTargetResources()
-    elseif unit == "target" then
+targetResourceEvents:SetScript("OnEvent", function(_, event, unit)
+    if event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_TARGET_CHANGED" or unit == "target" then
         updateTargetResources()
     end
 end)
@@ -174,6 +162,47 @@ local function updateTargetAuras()
     local horizontalStartOffset = 4
     local verticalStartOffset = 4
 
+
+    -- SETUP AURA FUNCTION
+    local function setupAura(aura, row, col, isDebuff)
+        -- Position the aura
+        aura:ClearAllPoints()
+        aura:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 
+            horizontalStartOffset + col * (auraSize + xOffset), 
+            verticalStartOffset + row * (auraSize + yOffset))
+        
+        aura:SetSize(auraSize, auraSize)
+        
+        -- Hide default border
+        local border = _G[aura:GetName().."Border"]
+        if border then
+            border:Hide()
+        end
+        
+        -- Create or update backdrop
+        if not aura.backdrop then
+            aura.backdrop = CreateFrame("Frame", nil, aura, "BackdropTemplate")
+            aura.backdrop:SetPoint("TOPLEFT", aura, "TOPLEFT", -2, 2)
+            aura.backdrop:SetPoint("BOTTOMRIGHT", aura, "BOTTOMRIGHT", 2, -2)
+            aura.backdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = 8 })
+            aura.backdrop:SetFrameLevel(aura:GetFrameLevel() + 2)
+        end
+        
+        -- Set border color based on aura type
+        if isDebuff then
+            aura.backdrop:SetBackdropBorderColor(unpack(RED))
+        else
+            aura.backdrop:SetBackdropBorderColor(unpack(GREY))
+        end
+        
+        -- Fix icon texture
+        local icon = _G[aura:GetName().."Icon"]
+        if icon then
+            icon:SetTexCoord(0.15, 0.85, 0.15, 0.85)
+        end
+    end
+
+
     -- COUNT VISIBLE BUFFS
     local buffCount = 0
     local currentBuff = _G["TargetFrameBuff1"]
@@ -182,33 +211,15 @@ local function updateTargetAuras()
         currentBuff = _G["TargetFrameBuff"..(buffCount + 1)]
     end
 
+
     -- UPDATE BUFFS
     for i = 1, buffCount do
         local currentBuff = _G["TargetFrameBuff"..i]
         local row = math.floor((i - 1) / maxAurasPerRow)
         local col = (i - 1) % maxAurasPerRow
-        
-        currentBuff:ClearAllPoints()
-        currentBuff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 
-            horizontalStartOffset + col * (auraSize + xOffset), 
-            verticalStartOffset + row * (auraSize + yOffset))
-        
-        currentBuff:SetSize(auraSize, auraSize)
-        
-        if not currentBuff.backdrop then
-            currentBuff.backdrop = CreateFrame("Frame", nil, currentBuff, "BackdropTemplate")
-            currentBuff.backdrop:SetPoint("TOPLEFT", currentBuff, "TOPLEFT", -2, 2)
-            currentBuff.backdrop:SetPoint("BOTTOMRIGHT", currentBuff, "BOTTOMRIGHT", 2, -2)
-            currentBuff.backdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = 8 })
-            currentBuff.backdrop:SetBackdropBorderColor(unpack(GREY))
-            currentBuff.backdrop:SetFrameLevel(currentBuff:GetFrameLevel() + 2)
-        end
-        
-        local icon = _G[currentBuff:GetName().."Icon"]
-        if icon then
-            icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-        end
+        setupAura(currentBuff, row, col, false)
     end
+
 
     -- PROCESS DEBUFFS - CONTINUE FROM WHERE BUFFS LEFT OFF
     local debuffCount = 0
@@ -222,28 +233,7 @@ local function updateTargetAuras()
         local row = math.floor((totalIndex - 1) / maxAurasPerRow)
         local col = (totalIndex - 1) % maxAurasPerRow
         
-        currentDebuff:ClearAllPoints()
-        currentDebuff:SetPoint("BOTTOMLEFT", TargetFrameBackdrop, "TOPLEFT", 
-            horizontalStartOffset + col * (auraSize + xOffset), 
-            verticalStartOffset + row * (auraSize + yOffset))
-        
-        currentDebuff:SetSize(auraSize, auraSize)
-        
-        if not currentDebuff.backdrop then
-            currentDebuff.backdrop = CreateFrame("Frame", nil, currentDebuff, "BackdropTemplate")
-            currentDebuff.backdrop:SetPoint("TOPLEFT", currentDebuff, "TOPLEFT", -2, 2)
-            currentDebuff.backdrop:SetPoint("BOTTOMRIGHT", currentDebuff, "BOTTOMRIGHT", 2, -2)
-            currentDebuff.backdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = 8 })
-            currentDebuff.backdrop:SetBackdropBorderColor(unpack(RED))
-            currentDebuff.backdrop:SetFrameLevel(currentDebuff:GetFrameLevel() + 2)
-        end
-        
-        local icon = _G[currentDebuff:GetName().."Icon"]
-        if icon then
-            icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-        end
-
-        currentDebuff.backdrop:SetBackdropBorderColor(unpack(RED))
+        setupAura(currentDebuff, row, col, true)
         
         currentDebuff = _G["TargetFrameDebuff"..(debuffCount + 1)]
     end

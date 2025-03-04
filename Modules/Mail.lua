@@ -1,9 +1,9 @@
 -- UPDATE MAIL FRAME AND CHECK MAIL
+
 function updateMailFrame()
     C_Timer.After(0.5, function()
-        if MailFrame:IsVisible() then
-            CheckInbox()
-        end
+        CheckInbox()
+        MailFrame_Update()
     end)
 end
 

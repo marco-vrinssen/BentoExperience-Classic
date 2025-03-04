@@ -68,6 +68,14 @@ local function updatePlayerFrame()
         PlayerLevelText:Show()
     end
 
+    PlayerFrameHealthBar:ClearAllPoints()
+    PlayerFrameHealthBar:SetSize(PlayerFrameBackground:GetWidth(), 16)
+    PlayerFrameHealthBar:SetPoint("BOTTOM", PlayerFrameManaBar, "TOP", 0, 0)
+
+    PlayerFrameManaBar:ClearAllPoints()
+    PlayerFrameManaBar:SetPoint("BOTTOM", PlayerFrameBackdrop, "BOTTOM", 0, 3)
+    PlayerFrameManaBar:SetSize(PlayerFrameBackground:GetWidth(), 8)
+
     PlayerFrameHealthBarText:SetPoint("CENTER", PlayerFrameHealthBar, "CENTER", 0, 0)
     PlayerFrameHealthBarText:SetFont(FONT, MEDIUM, "OUTLINE")
     PlayerFrameHealthBarTextRight:SetPoint("RIGHT", PlayerFrameHealthBar, "RIGHT", -4, 0)
@@ -83,51 +91,28 @@ local function updatePlayerFrame()
     PlayerFrameManaBarTextRight:SetFont(FONT, 8, "OUTLINE")
 end
 
+local playerFrameEvents = CreateFrame("Frame")
+playerFrameEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+playerFrameEvents:SetScript("OnEvent", updatePlayerFrame)
 
-local playerFrameFrame = CreateFrame("Frame")
-playerFrameFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-playerFrameFrame:SetScript("OnEvent", updatePlayerFrame)
 
+-- UPDATE PLAYER RESOURCE TEXTURES
 
--- UPDATE PLAYER RESOURCES
-  
 local function updatePlayerResources()
-    PlayerFrameHealthBar:ClearAllPoints()
-    PlayerFrameHealthBar:SetSize(PlayerFrameBackground:GetWidth(), 16)
-    PlayerFrameHealthBar:SetPoint("BOTTOM", PlayerFrameManaBar, "TOP", 0, 0)
     PlayerFrameHealthBar:SetStatusBarTexture(BAR)
-    PlayerFrameHealthBar:SetStatusBarColor(unpack(GREEN))
-
-    PlayerFrameManaBar:ClearAllPoints()
-    PlayerFrameManaBar:SetPoint("BOTTOM", PlayerFrameBackdrop, "BOTTOM", 0, 3)
-    PlayerFrameManaBar:SetSize(PlayerFrameBackground:GetWidth(), 8)
     PlayerFrameManaBar:SetStatusBarTexture(BAR)
-    
-    local powerType = UnitPowerType("player")
-    
-    if powerType == 0 then -- Mana
-        PlayerFrameManaBar:SetStatusBarColor(unpack(BLUE))
-    elseif powerType == 1 then -- Rage
-        PlayerFrameManaBar:SetStatusBarColor(unpack(RED))
-    elseif powerType == 3 then -- Energy
-        PlayerFrameManaBar:SetStatusBarColor(unpack(YELLOW))
-    end
 end
 
-local playerResourceFrame = CreateFrame("Frame")
-playerResourceFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-playerResourceFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
-playerResourceFrame:RegisterEvent("UNIT_HEALTH")
-playerResourceFrame:RegisterEvent("UNIT_HEALTH_FREQUENT")
-playerResourceFrame:RegisterEvent("UNIT_MAXHEALTH")
-playerResourceFrame:RegisterEvent("UNIT_POWER_UPDATE")
-playerResourceFrame:RegisterEvent("UNIT_MAXPOWER")
-playerResourceFrame:RegisterEvent("UNIT_DISPLAYPOWER")
-playerResourceFrame:SetScript("OnEvent", function(self, event, unit)
-  
-    if event == "PLAYER_ENTERING_WORLD" or event == "PLAYER_TARGET_CHANGED" then
-        updatePlayerResources()
-    elseif unit == "player" then
+local playerResourceEvents = CreateFrame("Frame")
+playerResourceEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+playerResourceEvents:RegisterEvent("UNIT_HEALTH")
+playerResourceEvents:RegisterEvent("UNIT_HEALTH_FREQUENT")
+playerResourceEvents:RegisterEvent("UNIT_MAXHEALTH")
+playerResourceEvents:RegisterEvent("UNIT_POWER_UPDATE")
+playerResourceEvents:RegisterEvent("UNIT_POWER_FREQUENT")
+playerResourceEvents:RegisterEvent("UNIT_MAXPOWER")
+playerResourceEvents:SetScript("OnEvent", function(_, event, unit)
+    if unit == "player" or event == "PLAYER_ENTERING_WORLD" then
         updatePlayerResources()
     end
 end)
@@ -151,9 +136,9 @@ local function updatePlayerPortrait()
     PlayerMasterIcon:SetScale(0.75)
 end
 
-local playerPortraitFrame = CreateFrame("Frame")
-playerPortraitFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-playerPortraitFrame:SetScript("OnEvent", updatePlayerPortrait)
+local playerPortraitEvents = CreateFrame("Frame")
+playerPortraitEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+playerPortraitEvents:SetScript("OnEvent", updatePlayerPortrait)
 
 
 -- UPDATE PLAYER GROUP ELEMENTS
@@ -189,8 +174,8 @@ local function updatePlayerGroup()
     end
 end
 
-local playerGroupFrame = CreateFrame("Frame")
-playerGroupFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-playerGroupFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-playerGroupFrame:RegisterEvent("PARTY_LEADER_CHANGED")
-playerGroupFrame:SetScript("OnEvent", updatePlayerGroup)
+local playerGroupEvents = CreateFrame("Frame")
+playerGroupEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
+playerGroupEvents:RegisterEvent("GROUP_ROSTER_UPDATE")
+playerGroupEvents:RegisterEvent("PARTY_LEADER_CHANGED")
+playerGroupEvents:SetScript("OnEvent", updatePlayerGroup)
