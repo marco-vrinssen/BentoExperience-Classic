@@ -1,25 +1,25 @@
 -- COMMAND INTRO MESSAGE
 
 local function commandsIntro()
-    print(YELLOW_LUA .. "/bentocmd" .. "|r" .. " for available commands.")
+    print(YELLOW_CHAT_LUA .. "/bentocmd" .. "|r" .. " for available commands.")
 end
 
 local function showCommandList()
-    print(YELLOW_LUA .. "/f KEYWORD" .. "|r" .. ": " .. "|r" .. "Filters all active channels for KEYWORD and reposts matching messages." .. "|r")
-    print(YELLOW_LUA .. "/f KEYWORD1+KEYWORD2" .. "|r" .. ": " .. "|r" .. "Filters all active channels for the combination of KEYWORD1 and KEYWORD2 and reposts matching messages." .. "|r")
-    print(YELLOW_LUA .. "/f" .. "|r" .. ": " .. "|r" .. "Clears and stops the filtering." .. "|r")
+    print(YELLOW_CHAT_LUA .. "/f KEYWORD" .. "|r" .. ": " .. "|r" .. "Filters all active channels for KEYWORD and reposts matching messages." .. "|r")
+    print(YELLOW_CHAT_LUA .. "/f KEYWORD1+KEYWORD2" .. "|r" .. ": " .. "|r" .. "Filters all active channels for the combination of KEYWORD1 and KEYWORD2 and reposts matching messages." .. "|r")
+    print(YELLOW_CHAT_LUA .. "/f" .. "|r" .. ": " .. "|r" .. "Clears and stops the filtering." .. "|r")
 
-    print(YELLOW_LUA .. "/ww MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to all players in a currently open /who instance." .. "|r")
-    print(YELLOW_LUA .. "/ww N MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to the first N count of players in a currently open /who instance." .. "|r")
-    print(YELLOW_LUA .. "/ww -CLASS MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to all players who are not of the specified CLASS in a currently open /who instance." .. "|r")
-    print(YELLOW_LUA .. "/ww N -CLASS MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to the first N count of players who are not of the specified CLASS in a currently open /who instance." .. "|r")
-    print(YELLOW_LUA .. "/wl N MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to the last N players who whispered you." .. "|r")
+    print(YELLOW_CHAT_LUA .. "/ww MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to all players in a currently open /who instance." .. "|r")
+    print(YELLOW_CHAT_LUA .. "/ww N MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to the first N count of players in a currently open /who instance." .. "|r")
+    print(YELLOW_CHAT_LUA .. "/ww -CLASS MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to all players who are not of the specified CLASS in a currently open /who instance." .. "|r")
+    print(YELLOW_CHAT_LUA .. "/ww N -CLASS MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to the first N count of players who are not of the specified CLASS in a currently open /who instance." .. "|r")
+    print(YELLOW_CHAT_LUA .. "/wl N MESSAGE" .. "|r" .. ": " .. "|r" .. "Sends the MESSAGE to the last N players who whispered you." .. "|r")
 
-    print(YELLOW_LUA .. "/rc" .. "|r" .. ": " .. "|r" .. "Perform a ready check." .. "|r")
-    print(YELLOW_LUA .. "/q" .. "|r" .. ": " .. "|r" .. "Leaves the current party or raid." .. "|r")
-    print(YELLOW_LUA .. "/ui" .. "|r" .. ": " .. "|r" .. "Reloads the user interface." .. "|r")
-    print(YELLOW_LUA .. "/gx" .. "|r" .. ": " .. "|r" .. "Restarts the graphics engine." .. "|r")
-    print(YELLOW_LUA .. "/lua" .. "|r" .. ": " .. "|r" .. "Toggles the display of LUA errors." .. "|r")
+    print(YELLOW_CHAT_LUA .. "/rc" .. "|r" .. ": " .. "|r" .. "Perform a ready check." .. "|r")
+    print(YELLOW_CHAT_LUA .. "/q" .. "|r" .. ": " .. "|r" .. "Leaves the current party or raid." .. "|r")
+    print(YELLOW_CHAT_LUA .. "/ui" .. "|r" .. ": " .. "|r" .. "Reloads the user interface." .. "|r")
+    print(YELLOW_CHAT_LUA .. "/gx" .. "|r" .. ": " .. "|r" .. "Restarts the graphics engine." .. "|r")
+    print(YELLOW_CHAT_LUA .. "/lua" .. "|r" .. ": " .. "|r" .. "Toggles the display of LUA errors." .. "|r")
 end
 
 local introEvents = CreateFrame("Frame")
@@ -41,7 +41,7 @@ local playerName = UnitName("player")
 
 
 local function keywordMatch(msg, senderName)
-    local playerLink = "|Hplayer:" .. senderName .. "|h" .. YELLOW_LUA .. "[" .. senderName .. "]: " .. "|r" .. "|h"
+    local playerLink = "|Hplayer:" .. senderName .. "|h" .. YELLOW_CHAT_LUA .. "[" .. senderName .. "]: " .. "|r" .. "|h"
     print(playerLink .. msg)
     PlaySound(3175, "Master", true)
 end
@@ -90,7 +90,7 @@ SLASH_FILTER1 = "/f"
 SlashCmdList["FILTER"] = function(msg)
     if msg == "" then
         wipe(keywordTable)
-        print(YELLOW_LUA .. "Filter:" .. "|r" .. " Cleared.")
+        print(YELLOW_CHAT_LUA .. "Filter:" .. "|r" .. " Cleared.")
         filterCommandEvents:UnregisterEvent("CHAT_MSG_CHANNEL")
     else
         if not filterCommandEvents:IsEventRegistered("CHAT_MSG_CHANNEL") then
@@ -126,7 +126,7 @@ SlashCmdList["FILTER"] = function(msg)
                 newKeywordsStr = newKeywordsStr .. ", "
             end
         end
-        print(YELLOW_LUA .. "Filtering:" .. "|r" .. " " .. newKeywordsStr:gsub('"', '') .. ".")
+        print(YELLOW_CHAT_LUA .. "Filtering:" .. "|r" .. " " .. newKeywordsStr:gsub('"', '') .. ".")
     end
 end
 
@@ -264,10 +264,10 @@ local function toggleLUAErrors()
     local currentSetting = GetCVar("scriptErrors")
     if currentSetting == "1" then
         SetCVar("scriptErrors", 0)
-        print(YELLOW_LUA .. "LUA Errors: " .. "|r" .. WHITE_LUA .. "Disabled" .. "|r")
+        print(YELLOW_CHAT_LUA .. "LUA Errors: " .. "|r" .. WHITE_CHAT_LUA .. "Disabled" .. "|r")
     else
         SetCVar("scriptErrors", 1)
-        print(YELLOW_LUA .. "LUA Errors: " .. "|r" .. WHITE_LUA .. "Enabled" .. "|r")
+        print(YELLOW_CHAT_LUA .. "LUA Errors: " .. "|r" .. WHITE_CHAT_LUA .. "Enabled" .. "|r")
     end
 end
 

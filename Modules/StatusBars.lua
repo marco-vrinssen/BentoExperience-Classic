@@ -3,10 +3,9 @@
 local xpBarBackdrop = CreateFrame("Frame", nil, MainMenuExpBar, "BackdropTemplate")
 xpBarBackdrop:SetPoint("TOPLEFT", MainMenuExpBar, "TOPLEFT", -3, 3)
 xpBarBackdrop:SetPoint("BOTTOMRIGHT", MainMenuExpBar, "BOTTOMRIGHT", 3, -3)
-xpBarBackdrop:SetBackdrop({edgeFile = EDGE, edgeSize = MEDIUM})
-xpBarBackdrop:SetBackdropBorderColor(unpack(GREY))
+xpBarBackdrop:SetBackdrop({edgeFile = BORD, edgeSize = 12})
+xpBarBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
 xpBarBackdrop:SetFrameLevel(MainMenuExpBar:GetFrameLevel() + 2)
-
 
 local function hideXPTextures()
     for i = 0, 3 do
@@ -17,7 +16,6 @@ local function hideXPTextures()
         end
     end
 end
-
 
 local function updateXPBar()
     if UnitLevel("player") == MAX_PLAYER_LEVEL then
@@ -33,7 +31,7 @@ local function updateXPBar()
     MainMenuExpBar:ClearAllPoints()
     MainMenuExpBar:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 16, -16)
     MainMenuExpBar:SetStatusBarTexture(BAR)
-    MainMenuExpBar:SetStatusBarColor(unpack(PURPLE))
+    MainMenuExpBar:SetStatusBarColor(unpack(VIOLET_UI))
     
     MainMenuExpBar:EnableMouse(true)
 end
@@ -52,27 +50,18 @@ xpBarEvents:SetScript("OnEvent", updateXPBar)
 local function xpTooltip()
     local currentExperience, maxExperience = UnitXP("player"), UnitXPMax("player")
     local restedExperience = GetXPExhaustion() or 0
-
-    local expTooltipContent = string.format(
-        "%sExperience%s\n" ..
-        "%sProgress:%s %s%d%%%s\n" ..
-        "%sRested:%s %s%d%%%s\n" ..
-        "%sCurrent:%s %s%d%s\n" ..
-        "%sMissing:%s %s%d%s\n" ..
-        "%sTotal:%s %s%d%s",
-        PURPLE_LUA, "|r",
-        YELLOW_LUA, "|r", WHITE_LUA, math.floor((currentExperience / maxExperience) * 100), "|r",
-        YELLOW_LUA, "|r", WHITE_LUA, math.floor((restedExperience / maxExperience) * 100), "|r",
-        YELLOW_LUA, "|r", WHITE_LUA, currentExperience, "|r",
-        YELLOW_LUA, "|r", WHITE_LUA, maxExperience - currentExperience, "|r",
-        YELLOW_LUA, "|r", WHITE_LUA, maxExperience, "|r"
-    )
-
+    local progressPercent = math.floor((currentExperience / maxExperience) * 100)
+    local restedPercent = math.floor((restedExperience / maxExperience) * 100)
+    
     GameTooltip:SetOwner(MainMenuExpBar, "ANCHOR_BOTTOMRIGHT", 4, -4)
-    GameTooltip:SetText(expTooltipContent, nil, nil, nil, nil, true)
+    GameTooltip:AddLine("Experience", unpack(VIOLET_UI))
+    GameTooltip:AddDoubleLine("Progress:", progressPercent.."%")
+    GameTooltip:AddDoubleLine("Rested:", restedPercent.."%")
+    GameTooltip:AddDoubleLine("Current:", currentExperience)
+    GameTooltip:AddDoubleLine("Missing:", maxExperience - currentExperience)
+    GameTooltip:AddDoubleLine("Total:", maxExperience)
     GameTooltip:Show()
 end
-
 
 MainMenuExpBar:HookScript("OnEnter", xpTooltip)
 MainMenuExpBar:HookScript("OnLeave", function() GameTooltip:Hide() end)
@@ -83,8 +72,8 @@ MainMenuExpBar:HookScript("OnLeave", function() GameTooltip:Hide() end)
 local repBackdrop = CreateFrame("Frame", nil, ReputationWatchBar.StatusBar, "BackdropTemplate")
 repBackdrop:SetPoint("TOPLEFT", ReputationWatchBar.StatusBar, "TOPLEFT", -3, 3)
 repBackdrop:SetPoint("BOTTOMRIGHT", ReputationWatchBar.StatusBar, "BOTTOMRIGHT", 3, -3)
-repBackdrop:SetBackdrop({edgeFile = EDGE, edgeSize = MEDIUM})
-repBackdrop:SetBackdropBorderColor(unpack(GREY))
+repBackdrop:SetBackdrop({edgeFile = BORD, edgeSize = 12})
+repBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
 repBackdrop:SetFrameLevel(ReputationWatchBar.StatusBar:GetFrameLevel() + 2)
 
 local function hideRepTextures()
@@ -115,12 +104,11 @@ local function updateRepBar()
     ReputationWatchBar.StatusBar:ClearAllPoints()
     ReputationWatchBar.StatusBar:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 16, -32)
     ReputationWatchBar.StatusBar:SetStatusBarTexture(BAR)
-    ReputationWatchBar.StatusBar:SetStatusBarColor(unpack(LIGHTBLUE))
+    ReputationWatchBar.StatusBar:SetStatusBarColor(unpack(BLUE_UI))
     
     ReputationWatchBar.StatusBar:EnableMouse(true)
     ReputationWatchBar.StatusBar:Show()
 end
-
 
 local repBarEvents = CreateFrame("Frame")
 repBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -137,27 +125,16 @@ local function repTooltip()
         local total = max - min
         local progressPercent = math.floor((progress / total) * 100)
 
-        local repTooltipContent = string.format(
-            "%sReputation%s\n" ..
-            "%sFaction:%s %s%s%s\n" ..
-            "%sStanding:%s %s%s%s\n" ..
-            "%sProgress:%s %s%d%%%s\n" ..
-            "%sCurrent:%s %s%d%s\n" ..
-            "%sTotal:%s %s%d%s",
-            LIGHTBLUE_LUA, "|r",
-            YELLOW_LUA, "|r", WHITE_LUA, name, "|r",
-            YELLOW_LUA, "|r", WHITE_LUA, _G["FACTION_STANDING_LABEL"..standing], "|r",
-            YELLOW_LUA, "|r", WHITE_LUA, progressPercent, "|r",
-            YELLOW_LUA, "|r", WHITE_LUA, progress, "|r",
-            YELLOW_LUA, "|r", WHITE_LUA, total, "|r"
-        )
-
         GameTooltip:SetOwner(ReputationWatchBar.StatusBar, "ANCHOR_BOTTOMRIGHT", 4, -4)
-        GameTooltip:SetText(repTooltipContent, nil, nil, nil, nil, true)
+        GameTooltip:AddLine("Reputation", unpack(BLUE_UI))
+        GameTooltip:AddDoubleLine("Faction:", name)
+        GameTooltip:AddDoubleLine("Standing:", _G["FACTION_STANDING_LABEL"..standing])
+        GameTooltip:AddDoubleLine("Progress:", progressPercent.."%")
+        GameTooltip:AddDoubleLine("Current:", progress)
+        GameTooltip:AddDoubleLine("Total:", total)
         GameTooltip:Show()
     end
 end
-
 
 ReputationWatchBar.StatusBar:HookScript("OnEnter", repTooltip)
 ReputationWatchBar.StatusBar:HookScript("OnLeave", function() GameTooltip:Hide() end)
@@ -171,8 +148,8 @@ local function exhTimerBackdrop(exhaustionTimer)
         local exhTimerBackdrop = CreateFrame("Frame", exhaustionTimer.."CustomBackdrop", _G[exhaustionTimer.."StatusBar"], "BackdropTemplate")
         exhTimerBackdrop:SetPoint("TOPLEFT", _G[exhaustionTimer.."StatusBar"], "TOPLEFT", -3, 3)
         exhTimerBackdrop:SetPoint("BOTTOMRIGHT", _G[exhaustionTimer.."StatusBar"], "BOTTOMRIGHT", 3, -3)
-        exhTimerBackdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = MEDIUM})
-        exhTimerBackdrop:SetBackdropBorderColor(unpack(GREY))
+        exhTimerBackdrop:SetBackdrop({ edgeFile = BORD, edgeSize = 12})
+        exhTimerBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
         exhTimerBackdrop:SetFrameLevel(_G[exhaustionTimer.."StatusBar"]:GetFrameLevel() + 2)
     end
 end

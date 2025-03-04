@@ -1,72 +1,44 @@
--- COLORS
+-- UI COLORS
 
--- #FFFFFF
-WHITE = {1, 1, 1}
-WHITE_LUA = "|cFFFFFFFF"
-
--- #000000
-BLACK = {0, 0, 0}
-BLACK_LUA = "|cFF000000"
-
--- #808080
-GREY = {0.5, 0.5, 0.5}
-GRAY_LUA = "|cFF808080"
-
--- #FBD134
-YELLOW = {0.984, 0.820, 0.204}
-YELLOW_LUA = "|cFFFBD134"
-
--- #FDFE9E
-LIGHTYELLOW = {0.992, 0.996, 0.620}
-LIGHTYELLOW_LUA = "|cFFFDFE9E"
-
--- #FB8128
-ORANGE = {0.984, 0.506, 0.157}
-ORANGE_LUA = "|cFFFB8128"
-
--- #EA2029
-RED = {0.918, 0.125, 0.161}
-RED_LUA = "|cFFEA2029"
-
--- #FB18B2
-PINK = {0.984, 0.094, 0.698}
-PINK_LUA = "|cFFFB18B2"
-
--- #FFCCFE
-LIGHTPINK = {1.000, 0.800, 0.996}
-LIGHTPINK_LUA = "|cFFFFCCFE"
-
--- #A43BEA
-PURPLE = {0.643, 0.231, 0.918}
-PURPLE_LUA = "|cFFA43BEA"
-
--- #2871D9
-LIGHTBLUE = {0.157, 0.443, 0.851}
-LIGHTBLUE_LUA = "|cFF2871D9"
-
--- #220FC9
-BLUE = {0.133, 0.059, 0.788}
-BLUE_LUA = "|cFF220FC9"
-
--- #00C800
-GREEN = {0.0, 0.784, 0.0}
-GREEN_LUA = "|cFF00C800"
+WHITE_UI = {1, 1, 1}                    -- #FFFFFF
+BLACK_UI = {0, 0, 0}                    -- #000000
+GREY_UI = {0.5, 0.5, 0.5}               -- #808080
+YELLOW_UI = {0.984, 0.820, 0.204}       -- #FBD134
+ORANGE_UI = {0.984, 0.506, 0.157}       -- #FB8128
+RED_UI = {0.918, 0.125, 0.161}          -- #EA2029
+PINK_UI = {0.984, 0.094, 0.698}         -- #FB18B2
+VIOLET_UI = {0.643, 0.231, 0.918}       -- #A43BEA
+BLUE_UI = {0.157, 0.443, 0.851}         -- #2871D9
+GREEN_UI = {0.188, 0.996, 0.192}        -- #30FE31
 
 
--- TEXTURES
+-- CHAT COLORS
 
-BAR = "Interface/RaidFrame/Raid-Bar-Hp-Fill.blp"
-BG = "Interface/Tooltips/UI-Tooltip-Background.blp"
-EDGE = "Interface/Tooltips/UI-Tooltip-Border.blp"
+WHITE_CHAT = {1.0, 1.0, 1.0}            -- #FFFFFF
+WHITE_CHAT_LUA = "|cFFFFFFFF"           -- #FFFFFF
+
+BEIGE_CHAT = {1.0, 0.75, 0.75}          -- #FFC0C0
+BEIGE_CHAT_LUA = "|cFFFFC0C0"           -- #FFC0C0
+
+YELLOW_CHAT = {0.99, 0.95, 0.45}        -- #FCF374
+YELLOW_CHAT_LUA = "|cFFFCF374"          -- #FCF374
+
+PINK_CHAT = {1.0, 0.5, 1.0}             -- #FF80FF
+PINK_CHAT_LUA = "|cFFFF80FF"            -- #FF80FF
+
+PINK_LIGHT_CHAT = {1.0, 0.8, 1.0}       -- #FFCCFF
+PINK_LIGHT_CHAT_LUA = "|cFFFFCCFF"      -- #FFCCFF
+
+BLUE_CHAT = {0.67, 0.67, 1.0}           -- #AAAAFF
+BLUE_CHAT_LUA = "|cFFAAAAFF"            -- #AAAAFF
+
+GREEN_CHAT = {0.25, 1.0, 0.25}          -- #40FF40
+GREEN_CHAT_LUA = "|cFF40FF40"           -- #40FF40
 
 
--- SIZES
-
-SMALL = 10
-MEDIUM = 12
-LARGE = 14
-
-
--- FONTS
+-- ELEMENTS
 
 FONT = STANDARD_TEXT_FONT
+BAR = "Interface/RaidFrame/Raid-Bar-Hp-Fill.blp"
+BG = "Interface/Tooltips/UI-Tooltip-Background.blp"
+BORD = "Interface/Tooltips/UI-Tooltip-Border.blp"

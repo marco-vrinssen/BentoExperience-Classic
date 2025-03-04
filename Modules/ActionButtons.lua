@@ -71,7 +71,7 @@ local function updateButtonUsability(self)
     local isUsable = IsUsableAction(self.action)
     local inRange = IsActionInRange(self.action)
 
-    local color = (not isUsable or inRange == false) and RED or WHITE
+    local color = (not isUsable or inRange == false) and RED_UI or WHITE_UI
     self.icon:SetVertexColor(unpack(color))
 end
 
@@ -102,8 +102,8 @@ local function updateActionButtonAppearance()
                 local backdrop = CreateFrame("Frame", nil, button, "BackdropTemplate")
                 backdrop:SetPoint("TOPLEFT", button, "TOPLEFT", -3, 3)
                 backdrop:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 3, -3)
-                backdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = MEDIUM })
-                backdrop:SetBackdropBorderColor(unpack(GREY))
+                backdrop:SetBackdrop({ edgeFile = BORD, edgeSize = 12 })
+                backdrop:SetBackdropBorderColor(unpack(GREY_UI))
                 backdrop:SetFrameLevel(button:GetFrameLevel() + 2)
                 button.customBorder = backdrop
             end
@@ -119,14 +119,14 @@ local function updateActionButtonAppearance()
         if button then
             local macroName = _G[button:GetName() .. "Name"]
             if macroName then
-                macroName:SetFont(FONT, SMALL, "OUTLINE")
-                macroName:SetTextColor(unpack(WHITE))
+                macroName:SetFont(FONT, 10, "OUTLINE")
+                macroName:SetTextColor(unpack(WHITE_UI))
                 macroName:SetAlpha(0.5)
             end
             local hotkey = _G[button:GetName() .. "HotKey"]
             if hotkey then
-                hotkey:SetFont(FONT, MEDIUM, "OUTLINE")
-                hotkey:SetTextColor(unpack(WHITE))
+                hotkey:SetFont(FONT, 12, "OUTLINE")
+                hotkey:SetTextColor(unpack(WHITE_UI))
                 hotkey:SetAlpha(0.75)
             end
         end
@@ -170,8 +170,8 @@ local function addCustomBorderToClassButton(button)
         local backdrop = CreateFrame("Frame", nil, button, "BackdropTemplate")
         backdrop:SetPoint("TOPLEFT", button, "TOPLEFT", -3, 3)
         backdrop:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 3, -3)
-        backdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = MEDIUM })
-        backdrop:SetBackdropBorderColor(unpack(GREY))
+        backdrop:SetBackdrop({ edgeFile = BORD, edgeSize = 12 })
+        backdrop:SetBackdropBorderColor(unpack(GREY_UI))
         backdrop:SetFrameLevel(button:GetFrameLevel() + 2)
         button.customBorder = backdrop
     end
@@ -252,8 +252,8 @@ local function addCustomBorderToPetButton(button)
         local backdrop = CreateFrame("Frame", nil, button, "BackdropTemplate")
         backdrop:SetPoint("TOPLEFT", button, "TOPLEFT", -3, 3)
         backdrop:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 3, -3)
-        backdrop:SetBackdrop({ edgeFile = EDGE, edgeSize = MEDIUM })
-        backdrop:SetBackdropBorderColor(unpack(GREY))
+        backdrop:SetBackdrop({ edgeFile = BORD, edgeSize = 12 })
+        backdrop:SetBackdropBorderColor(unpack(GREY_UI))
         backdrop:SetFrameLevel(button:GetFrameLevel() + 2)
         button.customBorder = backdrop
     end

@@ -6,10 +6,10 @@ local function customizeBagSlot(button)
         backdrop:SetPoint("TOPLEFT", button, "TOPLEFT", -3, 3)
         backdrop:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 3, -3)
         backdrop:SetBackdrop({
-            edgeFile = EDGE,
-            edgeSize = MEDIUM
+            edgeFile = BORD,
+            edgeSize = 12
         })
-        backdrop:SetBackdropBorderColor(unpack(GREY))
+        backdrop:SetBackdropBorderColor(unpack(GREY_UI))
         backdrop:SetFrameLevel(button:GetFrameLevel() + 2)
         button.customBorder = backdrop
         

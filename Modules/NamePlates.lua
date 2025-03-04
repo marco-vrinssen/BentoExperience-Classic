@@ -4,8 +4,8 @@ local function createBackdrop(parent)
     local backdrop = CreateFrame("Frame", nil, parent, "BackdropTemplate")
     backdrop:SetPoint("TOPLEFT", parent, "TOPLEFT", -3, 3)
     backdrop:SetPoint("BOTTOMRIGHT", parent, "BOTTOMRIGHT", 3, -3)
-    backdrop:SetBackdrop({edgeFile = EDGE, edgeSize = MEDIUM})
-    backdrop:SetBackdropBorderColor(unpack(GREY))
+    backdrop:SetBackdrop({edgeFile = BORD, edgeSize = 12})
+    backdrop:SetBackdropBorderColor(unpack(GREY_UI))
     backdrop:SetFrameStrata("HIGH")
     return backdrop
 end
@@ -35,7 +35,7 @@ local function nameplateCastbarSetup(nameplate)
 
     local namePlateCastBar = CreateFrame("StatusBar", nil, nameplate)
     namePlateCastBar:SetStatusBarTexture(BAR)
-    namePlateCastBar:SetStatusBarColor(unpack(YELLOW))
+    namePlateCastBar:SetStatusBarColor(unpack(YELLOW_UI))
     namePlateCastBar:SetSize(healthbarReference:GetWidth(), 10)
     -- Change this line to create 4px margin between healthbar and castbar
     namePlateCastBar:SetPoint("TOP", healthbarReference, "BOTTOM", 0, -4)
@@ -72,9 +72,9 @@ local function updateNamePlateCastBar(namePlateCastBar, unit)
         namePlateCastBar:SetValue(currentTimer)
 
         if spellInterruptible then
-            namePlateCastBar:SetStatusBarColor(unpack(GREY))
+            namePlateCastBar:SetStatusBarColor(unpack(GREY_UI))
         else
-            namePlateCastBar:SetStatusBarColor(unpack(YELLOW))
+            namePlateCastBar:SetStatusBarColor(unpack(YELLOW_UI))
         end
 
         namePlateCastBar.casting = name ~= nil
@@ -104,17 +104,17 @@ local function updateNamePlateHealthBar(nameplate, unitID)
     local unitTapState = UnitIsTapDenied(unitID)
     
     if unitThreat and unitThreat >= 2 then
-        nameplateHealthbar:SetStatusBarColor(unpack(ORANGE))
+        nameplateHealthbar:SetStatusBarColor(unpack(ORANGE_UI))
     elseif unitTapState then
-        nameplateHealthbar:SetStatusBarColor(unpack(GREY))
+        nameplateHealthbar:SetStatusBarColor(unpack(GREY_UI))
     elseif UnitCanAttack("player", unitID) then
         if UnitReaction(unitID, "player") <= 3 then
-            nameplateHealthbar:SetStatusBarColor(unpack(RED))
+            nameplateHealthbar:SetStatusBarColor(unpack(RED_UI))
         else
-            nameplateHealthbar:SetStatusBarColor(unpack(YELLOW))
+            nameplateHealthbar:SetStatusBarColor(unpack(YELLOW_UI))
         end
     else
-        nameplateHealthbar:SetStatusBarColor(unpack(GREEN))
+        nameplateHealthbar:SetStatusBarColor(unpack(GREEN_UI))
     end
 end
 
@@ -142,9 +142,9 @@ local function nameplateUpdate(nameplate, unitID)
 
     unitNameplate.name:ClearAllPoints()
     unitNameplate.name:SetPoint("BOTTOM", nameplateHealthbar, "TOP", 0, 8)
-    unitNameplate.name:SetFont(FONT, MEDIUM, "OUTLINE")
+    unitNameplate.name:SetFont(FONT, 12, "OUTLINE")
     
-    unitNameplate.name:SetTextColor(unpack(WHITE))
+    unitNameplate.name:SetTextColor(unpack(WHITE_UI))
     
     if unitNameplate.RaidTargetFrame then
         unitNameplate.RaidTargetFrame:ClearAllPoints()

@@ -3,8 +3,8 @@
 local PetFrameBackdrop = CreateFrame("Button", nil, PetFrame, "SecureUnitButtonTemplate, BackdropTemplate")
 PetFrameBackdrop:SetPoint("BOTTOMRIGHT", PlayerPortraitBackdrop, "BOTTOMLEFT", 0, 0)
 PetFrameBackdrop:SetSize(64, 24)
-PetFrameBackdrop:SetBackdrop({edgeFile = EDGE, edgeSize = MEDIUM})
-PetFrameBackdrop:SetBackdropBorderColor(unpack(GREY))
+PetFrameBackdrop:SetBackdrop({edgeFile = BORD, edgeSize = 12})
+PetFrameBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
 PetFrameBackdrop:SetFrameLevel(PetFrame:GetFrameLevel() + 2)
 PetFrameBackdrop:SetAttribute("unit", "pet")
 PetFrameBackdrop:RegisterForClicks("AnyUp")
@@ -27,8 +27,8 @@ local function updatePetFrame()
     PetName:ClearAllPoints()
     PetName:SetPoint("BOTTOMRIGHT", PetFrameBackdrop, "TOPRIGHT", -2, 2)
     PetName:SetWidth(PetFrameBackdrop:GetWidth() - 4)
-    PetName:SetFont(FONT, SMALL, "OUTLINE")
-    PetName:SetTextColor(unpack(WHITE))
+    PetName:SetFont(FONT, 10, "OUTLINE")
+    PetName:SetTextColor(unpack(WHITE_UI))
 
 	for i = 1, MAX_TARGET_BUFFS do
 		local PetBuff = _G["PetFrameBuff" .. i]
@@ -94,10 +94,10 @@ petHappinessBackdrop:SetSize(24, 24)
 petHappinessBackdrop:SetPoint("RIGHT", PetFrameBackdrop, "LEFT", 0, 0)
 petHappinessBackdrop:SetBackdrop({
     bgFile = "Interface\\Icons\\ability_hunter_beasttraining",
-    edgeFile = EDGE, edgeSize = MEDIUM,
+    edgeFile = BORD, edgeSize = 12,
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
-petHappinessBackdrop:SetBackdropBorderColor(unpack(GREY))
+petHappinessBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
 petHappinessBackdrop:SetFrameLevel(PetFrame:GetFrameLevel() + 2)
 
 

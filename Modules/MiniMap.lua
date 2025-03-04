@@ -39,12 +39,12 @@ minimapTimeBackdrop:SetSize(48, 24)
 minimapTimeBackdrop:SetPoint("CENTER", Minimap, "BOTTOM", 0, -2)
 minimapTimeBackdrop:SetBackdrop({
     bgFile = BG, -- Updated background
-    edgeFile = EDGE,
-    edgeSize = MEDIUM,
+    edgeFile = BORD,
+    edgeSize = 12,
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
 minimapTimeBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
-minimapTimeBackdrop:SetBackdropBorderColor(unpack(GREY))
+minimapTimeBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
 minimapTimeBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 2)
 
 local function updateMinimapTimer()
@@ -56,7 +56,7 @@ local function updateMinimapTimer()
     TimeManagerClockButton:SetParent(minimapTimeBackdrop)
     TimeManagerClockButton:SetAllPoints(minimapTimeBackdrop)
     TimeManagerClockTicker:SetPoint("CENTER", TimeManagerClockButton, "CENTER", 0, 0)
-    TimeManagerClockTicker:SetFont(FONT, MEDIUM)
+    TimeManagerClockTicker:SetFont(FONT, 12)
     TimeManagerFrame:ClearAllPoints()
     TimeManagerFrame:SetPoint("TOPRIGHT", minimapTimeBackdrop, "BOTTOMRIGHT", 0, -4)
 end
@@ -73,12 +73,12 @@ minimapMailBackdrop:SetPoint("TOPLEFT", MiniMapMailFrame, "TOPLEFT", -4, 4)
 minimapMailBackdrop:SetPoint("BOTTOMRIGHT", MiniMapMailFrame, "BOTTOMRIGHT", 4, -4)
 minimapMailBackdrop:SetBackdrop({
     bgFile = BG,
-    edgeFile = EDGE,
-    edgeSize = MEDIUM,
+    edgeFile = BORD,
+    edgeSize = 12,
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
 minimapMailBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
-minimapMailBackdrop:SetBackdropBorderColor(unpack(GREY))
+minimapMailBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
 minimapMailBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 2)
 
 local function updateMinimapMail()
@@ -104,12 +104,12 @@ minimapBFBackdrop:SetPoint("TOPLEFT", MiniMapBattlefieldFrame, "TOPLEFT", -4, 4)
 minimapBFBackdrop:SetPoint("BOTTOMRIGHT", MiniMapBattlefieldFrame, "BOTTOMRIGHT", 4, -4)
 minimapBFBackdrop:SetBackdrop({
     bgFile = BG, -- Updated background
-    edgeFile = EDGE,
-    edgeSize = MEDIUM,
+    edgeFile = BORD,
+    edgeSize = 12,
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
 minimapBFBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
-minimapBFBackdrop:SetBackdropBorderColor(unpack(GREY))
+minimapBFBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
 minimapBFBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 2)
 
 local function minimapBFUpdate()
@@ -139,12 +139,12 @@ minimapTrackingBackdrop:SetPoint("TOPLEFT", MiniMapTracking, "TOPLEFT", -4, 4)
 minimapTrackingBackdrop:SetPoint("BOTTOMRIGHT", MiniMapTracking, "BOTTOMRIGHT", 4, -4)
 minimapTrackingBackdrop:SetBackdrop({
     bgFile = BG, -- Updated background
-    edgeFile = EDGE,
-    edgeSize = MEDIUM,
+    edgeFile = BORD,
+    edgeSize = 12,
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
 minimapTrackingBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
-minimapTrackingBackdrop:SetBackdropBorderColor(unpack(GREY))
+minimapTrackingBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
 minimapTrackingBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 2)
 
 local function updateTracking()

@@ -7,8 +7,8 @@ if classIdentifier == "DRUID" then
     local druidManaBackdrop = CreateFrame("Frame", nil, PlayerFrame, "BackdropTemplate")
     druidManaBackdrop:SetPoint("TOP", PlayerFrameBackdrop, "BOTTOM", 0, 0)
     druidManaBackdrop:SetSize(PlayerFrameBackdrop:GetWidth() - 2, 16)
-    druidManaBackdrop:SetBackdrop({edgeFile = EDGE, edgeSize = MEDIUM})
-    druidManaBackdrop:SetBackdropBorderColor(unpack(GREY))
+    druidManaBackdrop:SetBackdrop({edgeFile = BORD, edgeSize = 12})
+    druidManaBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
     
 
     -- SET UP DRUID MANA BAR
@@ -17,7 +17,6 @@ if classIdentifier == "DRUID" then
     druidManaBar:SetSize(druidManaBackdrop:GetWidth() - 4, druidManaBackdrop:GetHeight() - 4)
     druidManaBar:SetPoint("CENTER", druidManaBackdrop, "CENTER", 0, 0)
     druidManaBar:SetStatusBarTexture(BAR)
-    druidManaBar:SetStatusBarColor(unpack(BLUE))
     druidManaBar:SetMinMaxValues(0, 1)
     
     druidManaBackdrop:SetFrameLevel(druidManaBar:GetFrameLevel() + 2)
@@ -28,7 +27,7 @@ if classIdentifier == "DRUID" then
     local druidManaEvents = druidManaBar:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
     druidManaEvents:SetPoint("CENTER", druidManaBar, "CENTER", 0, 0)
     druidManaEvents:SetTextColor(1, 1, 1)
-    druidManaEvents:SetFont(GameFontNormal:GetFont(), SMALL, "OUTLINE")
+    druidManaEvents:SetFont(GameFontNormal:GetFont(), 10, "OUTLINE")
     
       
     -- DRUID MANA BAR UPDATE FUNCTION
@@ -102,11 +101,11 @@ local function createComboPoint()
     cp:SetSize(pointSize, pointSize)
     cp:SetBackdrop({
         bgFile = BG,
-        edgeFile = EDGE,
-        edgeSize = MEDIUM,
+        edgeFile = BORD,
+        edgeSize = 12,
         insets = {left = 2, right = 2, top = 2, bottom = 2}
     })
-    cp:SetBackdropBorderColor(unpack(GREY))
+    cp:SetBackdropBorderColor(unpack(GREY_UI))
     return cp
 end
 
@@ -115,9 +114,9 @@ end
   
 local function comboPointTextures(cp, active)
     if active then
-        cp:SetBackdropColor(unpack(RED))
+        cp:SetBackdropColor(unpack(RED_UI))
     else
-        cp:SetBackdropColor(unpack(GREY))
+        cp:SetBackdropColor(unpack(GREY_UI))
     end
 end
 
