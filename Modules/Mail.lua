@@ -1,9 +1,10 @@
--- UPDATE MAIL FRAME AND CHECK MAIL
+-- REFRESH MAIL MULTIPLE TIMES AFTER DELAY
 
 function updateMailFrame()
     C_Timer.After(0.5, function()
         CheckInbox()
-        MailFrame_Update()
+        CheckInbox()
+        CheckInbox()
     end)
 end
 
