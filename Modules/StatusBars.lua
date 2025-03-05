@@ -15,6 +15,17 @@ local function hideXPTextures()
             texture:SetScript("OnShow", function(self) self:Hide() end)
         end
     end
+    
+    if ExhaustionLevelFillBar then
+        ExhaustionLevelFillBar:Hide()
+        ExhaustionLevelFillBar:SetScript("OnShow", function(self) self:Hide() end)
+    end
+    
+    if ExhaustionTick then
+        ExhaustionTick:Hide()
+        ExhaustionTick:SetScript("OnShow", function(self) self:Hide() end)
+        ExhaustionTick.Show = ExhaustionTick.Hide
+    end
 end
 
 local function updateXPBar()
