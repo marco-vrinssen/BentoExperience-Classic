@@ -20,6 +20,12 @@ WHITE_CHAT_LUA = "|cFFFFFFFF"           -- #FFFFFF
 CORAL_CHAT = {1.0, 0.898, 0.898}        -- #FFE5E5
 CORAL_CHAT_LUA = "|cFFFFE5E5"           -- #FFE5E5
 
+RED_CHAT = {1.0, 0.3, 0.3}              -- #FF4D4D
+RED_CHAT_LUA = "|cFFFF4D4D"             -- #FF4D4D
+
+ORANGE_CHAT = {1.0, 0.6, 0.0}           -- #FF9900
+ORANGE_CHAT_LUA = "|cFFFF9900"          -- #FF9900
+
 YELLOW_CHAT = {0.99, 0.95, 0.45}        -- #FCF374
 YELLOW_CHAT_LUA = "|cFFFCF374"          -- #FCF374
 
