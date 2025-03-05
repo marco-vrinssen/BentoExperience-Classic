@@ -158,38 +158,34 @@ local function setCustomChatColors()
     for i = 1, GetNumDisplayChannels() do
         local _, _, _, channelID = GetChannelDisplayInfo(i)
         if channelID then
-            ChangeChatColor("CHANNEL"..channelID, unpack(CORAL_CHAT))
+            ChangeChatColor("CHANNEL"..channelID, unpack(YELLOW_CHAT))
         end
     end
 
     -- COMBAT COLORS
-    ChangeChatColor("COMBAT_XP_GAIN", unpack(YELLOW_CHAT))
-    ChangeChatColor("COMBAT_HONOR_GAIN", unpack(YELLOW_CHAT)) 
-    ChangeChatColor("COMBAT_FACTION_CHANGE", unpack(YELLOW_CHAT))
-    ChangeChatColor("SKILL", unpack(YELLOW_CHAT))
-    ChangeChatColor("LOOT", unpack(YELLOW_CHAT))
-    ChangeChatColor("MONEY", unpack(YELLOW_CHAT))
-    ChangeChatColor("TRADESKILLS", unpack(YELLOW_CHAT))
-    ChangeChatColor("OPENING", unpack(YELLOW_CHAT))
-    ChangeChatColor("PET_INFO", unpack(YELLOW_CHAT))
-    ChangeChatColor("COMBAT_MISC_INFO", unpack(YELLOW_CHAT))
-
-    -- PVP COLORS 
-    ChangeChatColor("BG_HORDE", unpack(YELLOW_CHAT))
-    ChangeChatColor("BG_ALLIANCE", unpack(YELLOW_CHAT))
-    ChangeChatColor("BG_NEUTRAL", unpack(YELLOW_CHAT))
+    ChangeChatColor("COMBAT_XP_GAIN", unpack(WHITE_CHAT))
+    ChangeChatColor("COMBAT_HONOR_GAIN", unpack(WHITE_CHAT)) 
+    ChangeChatColor("COMBAT_FACTION_CHANGE", unpack(WHITE_CHAT))
+    ChangeChatColor("SKILL", unpack(WHITE_CHAT))
+    ChangeChatColor("LOOT", unpack(WHITE_CHAT))
+    ChangeChatColor("MONEY", unpack(WHITE_CHAT))
+    ChangeChatColor("TRADESKILLS", unpack(WHITE_CHAT))
+    ChangeChatColor("OPENING", unpack(WHITE_CHAT))
+    ChangeChatColor("PET_INFO", unpack(WHITE_CHAT))
+    ChangeChatColor("COMBAT_MISC_INFO", unpack(WHITE_CHAT))
 
     -- SYSTEM AND ERROR MESSAGES
-    ChangeChatColor("SYSTEM", unpack(YELLOW_CHAT))
+    ChangeChatColor("SYSTEM", unpack(WHITE_CHAT))
     ChangeChatColor("ERROR", unpack(RED_CHAT))
-
-    -- YELLOW_CHAT COLORS
-    ChangeChatColor("YELLOW_CHAT", unpack(YELLOW_CHAT))
-    ChangeChatColor("IGNORED", unpack(YELLOW_CHAT))
-    ChangeChatColor("CORAL_CHAT", unpack(YELLOW_CHAT))
-    ChangeChatColor("TARGETICONS", unpack(YELLOW_CHAT))
+    ChangeChatColor("IGNORED", unpack(RED_CHAT))
+    ChangeChatColor("TARGETICONS", unpack(WHITE_CHAT))
     ChangeChatColor("BN_INLINE_TOAST_ALERT", unpack(BLUE_CHAT))
 
+    -- PVP COLORS 
+    ChangeChatColor("BG_SYSTEM_ALLIANCE", unpack(ORANGE_CHAT))
+    ChangeChatColor("BG_SYSTEM_HORDE", unpack(ORANGE_CHAT))
+    ChangeChatColor("BG_SYSTEM_NEUTRAL", unpack(ORANGE_CHAT))
+    
     -- CREATURE COLORS
     ChangeChatColor("MONSTER_SAY", unpack(ORANGE_CHAT))
     ChangeChatColor("MONSTER_EMOTE", unpack(ORANGE_CHAT))
