@@ -23,6 +23,8 @@ local function hideFrameTextures(frame)
 end
 
 
+
+
 -- CHAT FRAME CUSTOMIZATION
 
 local function customizeChatTab(chatFrame)
@@ -53,9 +55,6 @@ local function addCustomBackdropToEditBox(editBox)
         editBox.customBackdrop = editBoxBackdrop
         
         editBoxBackdrop:SetFrameLevel(editBox:GetFrameLevel() - 1)
-        
-        -- Adjust text position for vertical centering
-        editBox:SetTextInsets(6, 6, 1, 1)
     end
 end
 
@@ -84,10 +83,6 @@ local function alignEditBoxHeaders()
         if editBox and editBoxHeader then
             editBoxHeader:ClearAllPoints()
             editBoxHeader:SetPoint("LEFT", editBox, "LEFT", 8, 0)
-            
-            -- Adjust header vertical position for better centering
-            editBoxHeader:SetPoint("TOP", editBox, "TOP", 0, -1)
-            editBoxHeader:SetPoint("BOTTOM", editBox, "BOTTOM", 0, 1)
         end
     end
 end
@@ -211,6 +206,21 @@ local function recolorWhisperMessages(self, event, message, sender, ...)
     if event == "CHAT_MSG_WHISPER" then
         return false, PINK_LIGHT_CHAT_LUA .. message .. "|r", sender, ...
     end
+end
+
+
+-- RESET CHAT FRAME CUSTOMIZATIONS
+
+local function resetChatFrameCustomizations(chatFrame)
+    chatFrame:ClearAllPoints()
+    chatFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 0, 0)
+    chatFrame:SetWidth(400)
+    chatFrame:SetHeight(200)
+    chatFrame:SetUserPlaced(false)
+    chatFrame:SetMovable(true)
+    chatFrame:SetResizable(true)
+    chatFrame:SetMinResize(200, 100)
+    chatFrame:SetMaxResize(800, 600)
 end
 
 
