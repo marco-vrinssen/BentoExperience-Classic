@@ -1,7 +1,7 @@
 -- CONFIGURE WORLD MAP APPEARANCE AND BEHAVIOR
 local function updateWorldMap()
     WorldMapFrame:ClearAllPoints()
-    WorldMapFrame:SetScale(0.75)
+    WorldMapFrame:SetScale(0.9)
     WorldMapFrame:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
     WorldMapFrame.BlackoutFrame.Show = function()
         WorldMapFrame.BlackoutFrame:Hide()
