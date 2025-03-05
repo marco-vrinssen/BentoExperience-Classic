@@ -57,16 +57,16 @@ local function updatePlayerFrame()
     PlayerName:SetFont(FONT, 12, "OUTLINE")
     PlayerName:SetTextColor(unpack(WHITE_UI))
 
-    PlayerLevelText:ClearAllPoints()
-    PlayerLevelText:SetPoint("TOP", PlayerPortraitBackdrop, "BOTTOM", 0, -4)
-    PlayerLevelText:SetFont(FONT, 12, "OUTLINE")
-    PlayerLevelText:SetTextColor(unpack(WHITE_UI))
-
     if UnitLevel("player") == MAX_PLAYER_LEVEL then
         PlayerLevelText:Hide()
     else
         PlayerLevelText:Show()
     end
+
+    PlayerLevelText:ClearAllPoints()
+    PlayerLevelText:SetPoint("TOP", PlayerPortraitBackdrop, "BOTTOM", 0, -4)
+    PlayerLevelText:SetFont(FONT, 12, "OUTLINE")
+    PlayerLevelText:SetTextColor(unpack(WHITE_UI))
 
     PlayerFrameHealthBar:ClearAllPoints()
     PlayerFrameHealthBar:SetSize(PlayerFrameBackground:GetWidth(), 16)
