@@ -32,10 +32,6 @@ end
 local function recolorCastBar(event)
     if event == "UNIT_SPELLCAST_START" then
         CastingBarFrame:SetStatusBarColor(unpack(YELLOW_UI))
-    elseif event == "UNIT_SPELLCAST_STOP" or event == "UNIT_SPELLCAST_INTERRUPTED" or event == "UNIT_SPELLCAST_FAILED" then
-        CastingBarFrame:SetStatusBarColor(unpack(RED_UI))
-    elseif event == "UNIT_SPELLCAST_SUCCEEDED" then
-        CastingBarFrame:SetStatusBarColor(unpack(GREEN_UI))
     end
 end  
 
@@ -45,10 +41,6 @@ end
 local castBarEvents = CreateFrame("Frame")
 castBarEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 castBarEvents:RegisterEvent("UNIT_SPELLCAST_START")
-castBarEvents:RegisterEvent("UNIT_SPELLCAST_STOP")
-castBarEvents:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
-castBarEvents:RegisterEvent("UNIT_SPELLCAST_FAILED")
-castBarEvents:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 castBarEvents:SetScript("OnEvent", function(self, event, ...)
     if event == "PLAYER_ENTERING_WORLD" then
         updateCastBar()
