@@ -16,7 +16,6 @@ Modules/Config.lua
 Modules/Dialogs.lua
 Modules/GameMetrics.lua
 Modules/Items.lua
-Modules/Mail.lua
 Modules/Menu.lua
 Modules/MiniMap.lua
 Modules/NamePlates.lua
