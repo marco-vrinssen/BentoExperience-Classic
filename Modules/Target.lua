@@ -198,7 +198,7 @@ local function updateTargetAuras()
         -- Fix icon texture
         local icon = _G[aura:GetName().."Icon"]
         if icon then
-            icon:SetTexCoord(0.15, 0.85, 0.15, 0.85)
+            icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
         end
     end
 

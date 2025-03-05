@@ -53,6 +53,9 @@ local function addCustomBackdropToEditBox(editBox)
         editBox.customBackdrop = editBoxBackdrop
         
         editBoxBackdrop:SetFrameLevel(editBox:GetFrameLevel() - 1)
+        
+        -- Adjust text position for vertical centering
+        editBox:SetTextInsets(6, 6, 1, 1)
     end
 end
 
@@ -81,6 +84,10 @@ local function alignEditBoxHeaders()
         if editBox and editBoxHeader then
             editBoxHeader:ClearAllPoints()
             editBoxHeader:SetPoint("LEFT", editBox, "LEFT", 8, 0)
+            
+            -- Adjust header vertical position for better centering
+            editBoxHeader:SetPoint("TOP", editBox, "TOP", 0, -1)
+            editBoxHeader:SetPoint("BOTTOM", editBox, "BOTTOM", 0, 1)
         end
     end
 end
