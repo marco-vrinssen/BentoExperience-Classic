@@ -179,9 +179,12 @@ local function setCustomChatColors()
     ChangeChatColor("BG_ALLIANCE", unpack(YELLOW_CHAT))
     ChangeChatColor("BG_NEUTRAL", unpack(YELLOW_CHAT))
 
+    -- SYSTEM AND ERROR MESSAGES
+    ChangeChatColor("SYSTEM", unpack(YELLOW_CHAT))
+    ChangeChatColor("ERROR", unpack(RED_CHAT))
+
     -- YELLOW_CHAT COLORS
     ChangeChatColor("YELLOW_CHAT", unpack(YELLOW_CHAT))
-    ChangeChatColor("ERRORS", unpack(RED_CHAT))
     ChangeChatColor("IGNORED", unpack(YELLOW_CHAT))
     ChangeChatColor("CORAL_CHAT", unpack(YELLOW_CHAT))
     ChangeChatColor("TARGETICONS", unpack(YELLOW_CHAT))
