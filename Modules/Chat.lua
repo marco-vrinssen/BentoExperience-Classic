@@ -23,8 +23,6 @@ local function hideFrameTextures(frame)
 end
 
 
-
-
 -- CHAT FRAME CUSTOMIZATION
 
 local function customizeChatTab(chatFrame)
