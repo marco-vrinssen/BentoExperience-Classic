@@ -4,7 +4,7 @@ TargetFrameBackdrop = CreateFrame("Button", nil, TargetFrame, "SecureUnitButtonT
 TargetFrameBackdrop:SetPoint("BOTTOM", UIParent, "BOTTOM", 190, 240)
 TargetFrameBackdrop:SetSize(124, 48)
 TargetFrameBackdrop:SetBackdrop({ edgeFile = BORD, edgeSize = 12 })
-TargetFrameBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
+TargetFrameBackdrop:SetBackdropBorderColor(unpack(GREY))
 TargetFrameBackdrop:SetFrameLevel(TargetFrame:GetFrameLevel() + 2)
 TargetFrameBackdrop:SetAttribute("unit", "target")
 TargetFrameBackdrop:RegisterForClicks("AnyUp")
@@ -15,7 +15,7 @@ TargetPortraitBackdrop = CreateFrame("Button", nil, TargetFrame, "SecureUnitButt
 TargetPortraitBackdrop:SetPoint("LEFT", TargetFrameBackdrop, "RIGHT", 0, 0)
 TargetPortraitBackdrop:SetSize(48, 48)
 TargetPortraitBackdrop:SetBackdrop({ edgeFile = BORD, edgeSize = 12 })
-TargetPortraitBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
+TargetPortraitBackdrop:SetBackdropBorderColor(unpack(GREY))
 TargetPortraitBackdrop:SetFrameLevel(TargetFrame:GetFrameLevel() + 2)
 TargetPortraitBackdrop:SetAttribute("unit", "target")
 TargetPortraitBackdrop:RegisterForClicks("AnyUp")
@@ -51,24 +51,24 @@ local function updateTargetFrame()
     TargetFrameTextureFrameLevelText:ClearAllPoints()
     TargetFrameTextureFrameLevelText:SetPoint("TOP", TargetPortraitBackdrop, "BOTTOM", 0, -4)
     TargetFrameTextureFrameLevelText:SetFont(FONT, 12, "OUTLINE")
-    TargetFrameTextureFrameLevelText:SetTextColor(unpack(WHITE_UI))
+    TargetFrameTextureFrameLevelText:SetTextColor(unpack(WHITE))
 
     TargetFrameTextureFrameHighLevelTexture:Hide()
 
     if UnitExists("target") then
         if UnitIsPlayer("target") then
             if UnitIsEnemy("player", "target") and UnitCanAttack("player", "target") then
-                TargetFrameTextureFrameName:SetTextColor(unpack(RED_UI)) -- Red for enemy players that can be attacked
+                TargetFrameTextureFrameName:SetTextColor(unpack(RED)) -- Red for enemy players that can be attacked
             else
-                TargetFrameTextureFrameName:SetTextColor(unpack(WHITE_UI)) -- White for neutral or friendly players
+                TargetFrameTextureFrameName:SetTextColor(unpack(WHITE)) -- White for neutral or friendly players
             end
         else
             if UnitIsEnemy("player", "target") and UnitCanAttack("player", "target") then
-                TargetFrameTextureFrameName:SetTextColor(unpack(RED_UI)) -- Red for hostile NPCs
+                TargetFrameTextureFrameName:SetTextColor(unpack(RED)) -- Red for hostile NPCs
             elseif UnitReaction("player", "target") == 4 and UnitCanAttack("player", "target") then
-                TargetFrameTextureFrameName:SetTextColor(unpack(YELLOW_UI)) -- Yellow for neutral but attackable NPCs
+                TargetFrameTextureFrameName:SetTextColor(unpack(YELLOW)) -- Yellow for neutral but attackable NPCs
             else
-                TargetFrameTextureFrameName:SetTextColor(unpack(WHITE_UI)) -- White for neutral non-attackable or friendly NPCs
+                TargetFrameTextureFrameName:SetTextColor(unpack(WHITE)) -- White for neutral non-attackable or friendly NPCs
             end
         end
     end
@@ -190,9 +190,9 @@ local function updateTargetAuras()
         
         -- Set border color based on aura type
         if isDebuff then
-            aura.backdrop:SetBackdropBorderColor(unpack(RED_UI))
+            aura.backdrop:SetBackdropBorderColor(unpack(RED))
         else
-            aura.backdrop:SetBackdropBorderColor(unpack(GREY_UI))
+            aura.backdrop:SetBackdropBorderColor(unpack(GREY))
         end
         
         -- Fix icon texture
@@ -263,23 +263,23 @@ local function targetClassificationUpdate()
     local targetClassification = UnitClassification("target")
     if targetClassification == "worldboss" then
         targetTypeText:SetText("Boss")
-        targetTypeText:SetTextColor(unpack(ORANGE_UI))
-        TargetFrameBackdrop:SetBackdropBorderColor(unpack(ORANGE_UI))
-        TargetPortraitBackdrop:SetBackdropBorderColor(unpack(ORANGE_UI))
+        targetTypeText:SetTextColor(unpack(ORANGE))
+        TargetFrameBackdrop:SetBackdropBorderColor(unpack(ORANGE))
+        TargetPortraitBackdrop:SetBackdropBorderColor(unpack(ORANGE))
     elseif targetClassification == "elite" then
         targetTypeText:SetText("Elite")
-        targetTypeText:SetTextColor(unpack(YELLOW_UI))
-        TargetFrameBackdrop:SetBackdropBorderColor(unpack(YELLOW_UI))
-        TargetPortraitBackdrop:SetBackdropBorderColor(unpack(YELLOW_UI))
+        targetTypeText:SetTextColor(unpack(YELLOW))
+        TargetFrameBackdrop:SetBackdropBorderColor(unpack(YELLOW))
+        TargetPortraitBackdrop:SetBackdropBorderColor(unpack(YELLOW))
     elseif targetClassification == "rare" then
         targetTypeText:SetText("Rare")
-        targetTypeText:SetTextColor(unpack(WHITE_UI))
-        TargetFrameBackdrop:SetBackdropBorderColor(unpack(WHITE_UI))
-        TargetPortraitBackdrop:SetBackdropBorderColor(unpack(WHITE_UI))
+        targetTypeText:SetTextColor(unpack(WHITE))
+        TargetFrameBackdrop:SetBackdropBorderColor(unpack(WHITE))
+        TargetPortraitBackdrop:SetBackdropBorderColor(unpack(WHITE))
     else
         targetTypeText:SetText("")
-        TargetFrameBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
-        TargetPortraitBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
+        TargetFrameBackdrop:SetBackdropBorderColor(unpack(GREY))
+        TargetPortraitBackdrop:SetBackdropBorderColor(unpack(GREY))
     end
 end
 
@@ -304,9 +304,9 @@ local function updateAggroStatus()
     if status and threatPct then
         targetThreatText:SetText(string.format("%d%%", threatPct))
         if threatPct == 100 then
-            targetThreatText:SetTextColor(unpack(RED_UI))
+            targetThreatText:SetTextColor(unpack(RED))
         else
-            targetThreatText:SetTextColor(unpack(YELLOW_UI))
+            targetThreatText:SetTextColor(unpack(YELLOW))
         end
         targetThreatText:Show()
     else
@@ -333,7 +333,7 @@ tragetRaidIconBackdrop:SetBackdrop({
     insets = {left = 3, right = 3, top = 3, bottom = 3}
 })
 tragetRaidIconBackdrop:SetBackdropColor(0, 0, 0, 1)
-tragetRaidIconBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
+tragetRaidIconBackdrop:SetBackdropBorderColor(unpack(GREY))
 tragetRaidIconBackdrop:Hide()
 
 local function updateTargetRaidIcon()
@@ -378,7 +378,7 @@ local targetSpellBarBackdrop = CreateFrame("Frame", nil, TargetFrameSpellBar, "B
 targetSpellBarBackdrop:SetPoint("TOP", TargetFrameBackdrop, "BOTTOM", 0, 0)
 targetSpellBarBackdrop:SetSize(TargetFrameBackdrop:GetWidth(), 24)
 targetSpellBarBackdrop:SetBackdrop({ edgeFile = BORD, edgeSize = 12 })
-targetSpellBarBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
+targetSpellBarBackdrop:SetBackdropBorderColor(unpack(GREY))
 targetSpellBarBackdrop:SetFrameLevel(TargetFrameSpellBar:GetFrameLevel() + 2)
 
 local function updateTargetCastbar()
@@ -386,7 +386,7 @@ local function updateTargetCastbar()
     TargetFrameSpellBar:SetPoint("TOPLEFT", targetSpellBarBackdrop, "TOPLEFT", 3, -2)
     TargetFrameSpellBar:SetPoint("BOTTOMRIGHT", targetSpellBarBackdrop, "BOTTOMRIGHT", -3, 2)
     TargetFrameSpellBar:SetStatusBarTexture(BAR)
-    TargetFrameSpellBar:SetStatusBarColor(unpack(YELLOW_UI))
+    TargetFrameSpellBar:SetStatusBarColor(unpack(YELLOW))
     TargetFrameSpellBar.Border:SetTexture(nil)
     TargetFrameSpellBar.Flash:SetTexture(nil)
     TargetFrameSpellBar.Spark:SetTexture(nil)

@@ -44,7 +44,7 @@ minimapTimeBackdrop:SetBackdrop({
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
 minimapTimeBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
-minimapTimeBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
+minimapTimeBackdrop:SetBackdropBorderColor(unpack(GREY))
 minimapTimeBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 2)
 
 local function updateMinimapTimer()
@@ -78,7 +78,7 @@ minimapMailBackdrop:SetBackdrop({
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
 minimapMailBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
-minimapMailBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
+minimapMailBackdrop:SetBackdropBorderColor(unpack(GREY))
 minimapMailBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 2)
 
 local function updateMinimapMail()
@@ -109,7 +109,7 @@ minimapBFBackdrop:SetBackdrop({
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
 minimapBFBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
-minimapBFBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
+minimapBFBackdrop:SetBackdropBorderColor(unpack(GREY))
 minimapBFBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 2)
 
 local function minimapBFUpdate()
@@ -144,7 +144,7 @@ minimapTrackingBackdrop:SetBackdrop({
     insets = {left = 2, right = 2, top = 2, bottom = 2}
 })
 minimapTrackingBackdrop:SetBackdropColor(0, 0, 0, 1) -- Commented out custom coloring
-minimapTrackingBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
+minimapTrackingBackdrop:SetBackdropBorderColor(unpack(GREY))
 minimapTrackingBackdrop:SetFrameLevel(Minimap:GetFrameLevel() + 2)
 
 local function updateTracking()

@@ -9,7 +9,7 @@ local function customizeBagSlot(button)
             edgeFile = BORD,
             edgeSize = 12
         })
-        backdrop:SetBackdropBorderColor(unpack(GREY_UI))
+        backdrop:SetBackdropBorderColor(unpack(GREY))
         backdrop:SetFrameLevel(button:GetFrameLevel() + 2)
         button.customBorder = backdrop
         

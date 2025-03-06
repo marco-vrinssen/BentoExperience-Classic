@@ -4,7 +4,7 @@ local castingBarBackdrop = CreateFrame("Frame", nil, CastingBarFrame, "BackdropT
 castingBarBackdrop:SetPoint("TOPLEFT", CastingBarFrame, "TOPLEFT", -3, 3)
 castingBarBackdrop:SetPoint("BOTTOMRIGHT", CastingBarFrame, "BOTTOMRIGHT", 3, -3)
 castingBarBackdrop:SetBackdrop({ edgeFile = BORD, edgeSize = 12})
-castingBarBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
+castingBarBackdrop:SetBackdropBorderColor(unpack(GREY))
 castingBarBackdrop:SetFrameLevel(CastingBarFrame:GetFrameLevel() + 2)
 
 
@@ -31,7 +31,7 @@ end
 
 local function recolorCastBar(event)
     if event == "UNIT_SPELLCAST_START" then
-        CastingBarFrame:SetStatusBarColor(unpack(YELLOW_UI))
+        CastingBarFrame:SetStatusBarColor(unpack(YELLOW))
     end
 end  
 

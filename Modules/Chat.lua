@@ -48,8 +48,8 @@ local function addCustomBackdropToEditBox(editBox)
             edgeSize = 12,
             insets = {left = 2, right = 2, top = 2, bottom = 2}
         })
-        editBoxBackdrop:SetBackdropColor(unpack(BLACK_UI))
-        editBoxBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
+        editBoxBackdrop:SetBackdropColor(unpack(BLACK))
+        editBoxBackdrop:SetBackdropBorderColor(unpack(GREY))
         editBox.customBackdrop = editBoxBackdrop
         
         editBoxBackdrop:SetFrameLevel(editBox:GetFrameLevel() - 1)

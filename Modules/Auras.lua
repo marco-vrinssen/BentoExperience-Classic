@@ -25,11 +25,11 @@ local function StyleAuraButton(button, borderColor)
         backdrop:SetPoint("TOPLEFT", button, "TOPLEFT", -3, 3)
         backdrop:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 3, -3)
         backdrop:SetBackdrop({ edgeFile = BORD, edgeSize = 12 })
-        backdrop:SetBackdropBorderColor(unpack(borderColor or GREY_UI))
+        backdrop:SetBackdropBorderColor(unpack(borderColor or GREY))
         backdrop:SetFrameLevel(button:GetFrameLevel() + 2)
         button.customBorder = backdrop
     else
-        button.customBorder:SetBackdropBorderColor(unpack(borderColor or GREY_UI))
+        button.customBorder:SetBackdropBorderColor(unpack(borderColor or GREY))
     end
 
     local icon = _G[button:GetName().."Icon"]
@@ -45,15 +45,15 @@ local function StyleAuraButton(button, borderColor)
 end
 
 local function StyleBuffButton(button)
-    StyleAuraButton(button, GREY_UI)
+    StyleAuraButton(button, GREY)
 end
 
 local function StyleDebuffButton(button)
-    StyleAuraButton(button, RED_UI)
+    StyleAuraButton(button, RED)
 end
 
 local function StyleTempEnchant(button)
-    StyleAuraButton(button, VIOLET_UI)
+    StyleAuraButton(button, VIOLET)
     
     local border = _G[button:GetName().."Border"]
     if border then

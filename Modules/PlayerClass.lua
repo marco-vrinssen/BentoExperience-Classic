@@ -8,7 +8,7 @@ if classIdentifier == "DRUID" then
     druidManaBackdrop:SetPoint("TOP", PlayerFrameBackdrop, "BOTTOM", 0, 0)
     druidManaBackdrop:SetSize(PlayerFrameBackdrop:GetWidth() - 2, 16)
     druidManaBackdrop:SetBackdrop({edgeFile = BORD, edgeSize = 12})
-    druidManaBackdrop:SetBackdropBorderColor(unpack(GREY_UI))
+    druidManaBackdrop:SetBackdropBorderColor(unpack(GREY))
     
 
     -- SET UP DRUID MANA BAR
@@ -105,7 +105,7 @@ local function createComboPoint()
         edgeSize = 12,
         insets = {left = 2, right = 2, top = 2, bottom = 2}
     })
-    cp:SetBackdropBorderColor(unpack(GREY_UI))
+    cp:SetBackdropBorderColor(unpack(GREY))
     return cp
 end
 
@@ -114,9 +114,9 @@ end
   
 local function comboPointTextures(cp, active)
     if active then
-        cp:SetBackdropColor(unpack(RED_UI))
+        cp:SetBackdropColor(unpack(RED))
     else
-        cp:SetBackdropColor(unpack(GREY_UI))
+        cp:SetBackdropColor(unpack(GREY))
     end
 end
 
