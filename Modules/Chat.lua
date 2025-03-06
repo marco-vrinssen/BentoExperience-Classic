@@ -126,7 +126,6 @@ local function setClassColorsForChatTypes()
         SetChatColorNameByClass("CORAL_CHAT" .. i, true)
     end
     
-    -- Set class colors for all channels
     local channels = { GetChannelList() }
     for i = 1, #channels, 3 do
         SetChatColorNameByClass("CHANNEL" .. channels[i], true)
@@ -134,7 +133,6 @@ local function setClassColorsForChatTypes()
 end
 
 local function setCustomChatColors()
-    -- PLAYER MESSAGES COLORS
     ChangeChatColor("SAY", unpack(CORAL_CHAT))
     ChangeChatColor("EMOTE", unpack(CORAL_CHAT))
     ChangeChatColor("YELL", unpack(CORAL_CHAT))
@@ -154,7 +152,6 @@ local function setCustomChatColors()
     ChangeChatColor("INSTANCE_CHAT", unpack(BLUE_CHAT))
     ChangeChatColor("INSTANCE_CHAT_LEADER", unpack(BLUE_CHAT))
 
-    -- CORAL_CHAT COLORS
     for i = 1, GetNumDisplayChannels() do
         local _, _, _, channelID = GetChannelDisplayInfo(i)
         if channelID then
@@ -162,7 +159,6 @@ local function setCustomChatColors()
         end
     end
 
-    -- COMBAT COLORS
     ChangeChatColor("COMBAT_XP_GAIN", unpack(WHITE_CHAT))
     ChangeChatColor("COMBAT_HONOR_GAIN", unpack(WHITE_CHAT)) 
     ChangeChatColor("COMBAT_FACTION_CHANGE", unpack(WHITE_CHAT))
@@ -174,19 +170,16 @@ local function setCustomChatColors()
     ChangeChatColor("PET_INFO", unpack(WHITE_CHAT))
     ChangeChatColor("COMBAT_MISC_INFO", unpack(WHITE_CHAT))
 
-    -- SYSTEM AND ERROR MESSAGES
     ChangeChatColor("SYSTEM", unpack(WHITE_CHAT))
     ChangeChatColor("ERROR", unpack(RED_CHAT))
     ChangeChatColor("IGNORED", unpack(RED_CHAT))
     ChangeChatColor("TARGETICONS", unpack(WHITE_CHAT))
     ChangeChatColor("BN_INLINE_TOAST_ALERT", unpack(BLUE_CHAT))
 
-    -- PVP COLORS 
     ChangeChatColor("BG_SYSTEM_ALLIANCE", unpack(ORANGE_CHAT))
     ChangeChatColor("BG_SYSTEM_HORDE", unpack(ORANGE_CHAT))
     ChangeChatColor("BG_SYSTEM_NEUTRAL", unpack(ORANGE_CHAT))
     
-    -- CREATURE COLORS
     ChangeChatColor("MONSTER_SAY", unpack(ORANGE_CHAT))
     ChangeChatColor("MONSTER_EMOTE", unpack(ORANGE_CHAT))
     ChangeChatColor("MONSTER_YELL", unpack(ORANGE_CHAT))
@@ -207,7 +200,7 @@ local function recolorWhisperMessages(self, event, message, sender, ...)
 end
 
 
--- RESET CHAT FRAME CUSTOMIZATIONS
+-- REPOSITION AND UPDATE CHAT FRAME
 
 local function resetChatFrameCustomizations(chatFrame)
     chatFrame:ClearAllPoints()
@@ -257,8 +250,7 @@ local function onChatFrameEvent(self, event, ...)
 end
 
 
--- EVENT REGISTRATION
-
+-- EVENT
 local chatFrameEvents = CreateFrame("Frame")
 chatFrameEvents:RegisterEvent("PLAYER_ENTERING_WORLD")
 chatFrameEvents:RegisterEvent("UPDATE_FLOATING_CHAT_WINDOWS")
