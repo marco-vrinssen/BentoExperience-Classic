@@ -51,7 +51,6 @@ local function updateTargetFrame()
     TargetFrameTextureFrameLevelText:ClearAllPoints()
     TargetFrameTextureFrameLevelText:SetPoint("TOP", TargetPortraitBackdrop, "BOTTOM", 0, -4)
     TargetFrameTextureFrameLevelText:SetFont(FONT, 12, "OUTLINE")
-    TargetFrameTextureFrameLevelText:SetTextColor(unpack(WHITE))
 
     TargetFrameTextureFrameHighLevelTexture:Hide()
 
