@@ -35,31 +35,33 @@ merchantEvents:RegisterEvent("MERCHANT_SHOW")
 merchantEvents:SetScript("OnEvent", autoSellRepair)
 
 
-
-
 -- SPEED UP AUTO LOOTING ITEMS
 
 local function lootItems()
-
+  if not GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") then
+    return
+  end
   
-  if GetCVarBool("autoLootDefault") ~= IsModifiedClick("AUTOLOOTTOGGLE") then
-    local lootMethod, masterLooter = GetLootMethod()
-    if lootMethod == "master" and masterLooter == UnitName("player") then
-      return
-    end
-    local numLoot = GetNumLootItems()
-    if not numLoot then return end
-    LootFrame:Hide()
-    LootFrame:SetAlpha(0)
-    for i = numLoot, 1, -1 do
-      LootSlot(i)
-    end
-    LootFrame:Show()
-    LootFrame:SetAlpha(1)
+  local lootMethod = GetLootMethod()
+  if lootMethod == "master" and UnitIsUnit("player", GetMasterLooterGUID()) then
+    return
+  end
+  
+  local numLoot = GetNumLootItems()
+  if not numLoot or numLoot <= 0 then 
+    return 
   end
 
+  if LootFrame:IsShown() then
+    LootFrame:SetAlpha(0)
+  end
+  
+  for i = numLoot, 1, -1 do
+    if GetLootSlotInfo(i) then
+      LootSlot(i)
+    end
+  end
 end
-
 
 local lootEvents = CreateFrame("Frame")
 lootEvents:RegisterEvent("LOOT_READY")
