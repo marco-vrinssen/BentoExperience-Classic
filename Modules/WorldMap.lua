@@ -1,14 +1,16 @@
 -- CONFIGURE WORLD MAP APPEARANCE AND BEHAVIOR
+local mapScale = 0.9
+
 local function updateWorldMap()
     WorldMapFrame:ClearAllPoints()
-    WorldMapFrame:SetScale(0.9)
+    WorldMapFrame:SetScale(mapScale)
     WorldMapFrame:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
     WorldMapFrame.BlackoutFrame.Show = function()
         WorldMapFrame.BlackoutFrame:Hide()
     end
     WorldMapFrame.ScrollContainer.GetCursorPosition = function()
         local mapWidth, mapHeight = MapCanvasScrollControllerMixin.GetCursorPosition()
-        return mapWidth / 0.75, mapHeight / 0.75
+        return mapWidth / mapScale, mapHeight / mapScale
     end
 end
 
