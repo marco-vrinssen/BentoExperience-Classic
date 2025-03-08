@@ -7,6 +7,7 @@ local function UpdateAuraTimer(aura)
         auraDuration:SetTextColor(1, 1, 1)
         auraDuration:ClearAllPoints()
         auraDuration:SetPoint("BOTTOM", aura, "BOTTOM", 2, -14)
+        auraDuration:SetTextColor(unpack(WHITE))
     end
 end
 
